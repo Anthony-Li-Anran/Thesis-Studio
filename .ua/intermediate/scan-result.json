@@ -1,0 +1,299 @@
+{
+  "scriptCompleted": true,
+  "contentDigest": "8bb53a9e29dc209a2fddeddfa7576b30f0d68378594f3b209bb8b7772236db52",
+  "files": [
+    {
+      "path": ".env.example",
+      "language": "config",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "AGENTS.md",
+      "language": "markdown",
+      "sizeLines": 30,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "sizeLines": 0,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 28,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "doc/ARCHITECTURE.md",
+      "language": "markdown",
+      "sizeLines": 0,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "doc/ROADMAP.md",
+      "language": "markdown",
+      "sizeLines": 50,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "doc/TECH_STACK.md",
+      "language": "markdown",
+      "sizeLines": 307,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "doc/WORKFLOW.md",
+      "language": "markdown",
+      "sizeLines": 615,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "main.py",
+      "language": "python",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "sizeLines": 62,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/thesisos/__init__.py",
+      "language": "python",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/analysis/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/api/__init__.py",
+      "language": "python",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/api/app.py",
+      "language": "python",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/config/__init__.py",
+      "language": "python",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/config/settings.py",
+      "language": "python",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/core/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/core/exceptions.py",
+      "language": "python",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/core/logging.py",
+      "language": "python",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/db/__init__.py",
+      "language": "python",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/db/chroma.py",
+      "language": "python",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/db/sqlite.py",
+      "language": "python",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/embedding/__init__.py",
+      "language": "python",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/embedding/base.py",
+      "language": "python",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/literature/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/llm/__init__.py",
+      "language": "python",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/llm/base.py",
+      "language": "python",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/llm/factory.py",
+      "language": "python",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/llm/ollama.py",
+      "language": "python",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/llm/openai.py",
+      "language": "python",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/models/__init__.py",
+      "language": "python",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/models/base.py",
+      "language": "python",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/ui/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/ui/chainlit_app.py",
+      "language": "python",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/ui/nicegui_app.py",
+      "language": "python",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/utils/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/workflow/__init__.py",
+      "language": "python",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/workflow/base.py",
+      "language": "python",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/thesisos/writing/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/conftest.py",
+      "language": "python",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/integration/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/unit/__init__.py",
+      "language": "python",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/unit/test_config.py",
+      "language": "python",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/unit/test_llm.py",
+      "language": "python",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tests/unit/test_workflow.py",
+      "language": "python",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    }
+  ],
+  "totalFiles": 46,
+  "filteredByIgnore": 20,
+  "estimatedComplexity": "moderate",
+  "stats": {
+    "filesScanned": 46,
+    "byCategory": {
+      "config": 2,
+      "docs": 7,
+      "code": 37
+    },
+    "byLanguage": {
+      "config": 1,
+      "markdown": 7,
+      "python": 37,
+      "toml": 1
+    }
+  }
+}
