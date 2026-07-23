@@ -1,4 +1,4 @@
-"""工作流引擎：阶段编排与上下文传递。"""
+"""工作流引擎（兼容保留）。工作流定义保留在此，编排逻辑在 application 层。"""
 
 from .base import StepResult, WorkflowContext, WorkflowStep
 

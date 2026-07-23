@@ -2,8 +2,8 @@
 
 import uvicorn
 
-from thesisos.api import create_app
 from thesisos.config import get_settings
+from thesisos.presentation.api import create_app
 
 app = create_app()
 

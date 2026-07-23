@@ -1,1 +1,5 @@
-"""核心抽象：异常基类、日志、生命周期。"""
+"""核心工具：日志、生命周期管理。"""
+
+from .logging import get_logger, setup_logging
+
+__all__ = ["get_logger", "setup_logging"]
