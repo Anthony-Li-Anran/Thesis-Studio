@@ -1,6 +1,6 @@
 """工作流模块测试。"""
 
-from thesisos.workflow import StepResult, WorkflowContext
+from thesis_studio.domain.workflow import StepResult, WorkflowContext
 
 
 def test_workflow_context_default_data() -> None:

@@ -1,12 +1,12 @@
-{
+﻿{
   "issues": [],
   "warnings": [
-    "Node 'file:src/thesisos/core/__init__.py' has no edges (orphan)",
-    "Node 'file:src/thesisos/literature/__init__.py' has no edges (orphan)",
-    "Node 'file:src/thesisos/ui/__init__.py' has no edges (orphan)",
-    "Node 'file:src/thesisos/utils/__init__.py' has no edges (orphan)",
-    "Node 'file:src/thesisos/writing/__init__.py' has no edges (orphan)",
-    "Node 'file:src/thesisos/analysis/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/core/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/literature/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/ui/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/utils/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/writing/__init__.py' has no edges (orphan)",
+    "Node 'file:src/thesis_studio/analysis/__init__.py' has no edges (orphan)",
     "Node 'file:tests/__init__.py' has no edges (orphan)",
     "Node 'file:tests/unit/__init__.py' has no edges (orphan)",
     "Node 'file:tests/integration/__init__.py' has no edges (orphan)",

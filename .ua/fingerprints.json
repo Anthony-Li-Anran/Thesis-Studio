@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "1.0.0",
   "gitCommitHash": "unknown",
   "generatedAt": "2026-07-23T09:15:57.158Z",
@@ -96,13 +96,13 @@
           ]
         },
         {
-          "source": "thesisos.api",
+          "source": "thesis_studio.api",
           "specifiers": [
             "create_app"
           ]
         },
         {
-          "source": "thesisos.config",
+          "source": "thesis_studio.config",
           "specifiers": [
             "get_settings"
           ]
@@ -122,8 +122,8 @@
       "totalLines": 63,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/__init__.py": {
-      "filePath": "src/thesisos/__init__.py",
+    "src/thesis_studio/__init__.py": {
+      "filePath": "src/thesis_studio/__init__.py",
       "contentHash": "da7e0f4a09aefc69975eb3bfccd5173649aa60768c3d0ea825dac9663655d3b7",
       "functions": [],
       "classes": [],
@@ -132,8 +132,8 @@
       "totalLines": 4,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/analysis/__init__.py": {
-      "filePath": "src/thesisos/analysis/__init__.py",
+    "src/thesis_studio/analysis/__init__.py": {
+      "filePath": "src/thesis_studio/analysis/__init__.py",
       "contentHash": "2c076701e9b919c8a420de6b1bc8b1a3140a5f1a5311ad01868ed423629de9d8",
       "functions": [],
       "classes": [],
@@ -142,8 +142,8 @@
       "totalLines": 2,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/api/__init__.py": {
-      "filePath": "src/thesisos/api/__init__.py",
+    "src/thesis_studio/api/__init__.py": {
+      "filePath": "src/thesis_studio/api/__init__.py",
       "contentHash": "3e7cd997e3a3811da5cb6a494e257d4abd346469dca44c1ae8a94f9ff72de5a4",
       "functions": [],
       "classes": [],
@@ -159,8 +159,8 @@
       "totalLines": 6,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/api/app.py": {
-      "filePath": "src/thesisos/api/app.py",
+    "src/thesis_studio/api/app.py": {
+      "filePath": "src/thesis_studio/api/app.py",
       "contentHash": "dd2fcfa63e0fbd85aac0cac6f68795c41b7cc3a903469b89c0944792c1faa184",
       "functions": [
         {
@@ -189,7 +189,7 @@
         {
           "source": "..core.exceptions",
           "specifiers": [
-            "ThesisOSError"
+            "Thesis StudioError"
           ]
         }
       ],
@@ -199,8 +199,8 @@
       "totalLines": 22,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/config/__init__.py": {
-      "filePath": "src/thesisos/config/__init__.py",
+    "src/thesis_studio/config/__init__.py": {
+      "filePath": "src/thesis_studio/config/__init__.py",
       "contentHash": "754f3181fa1e6671903e69b737542a3d55c9703618d4fc9a6ae0f96557817705",
       "functions": [],
       "classes": [],
@@ -217,8 +217,8 @@
       "totalLines": 6,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/config/settings.py": {
-      "filePath": "src/thesisos/config/settings.py",
+    "src/thesis_studio/config/settings.py": {
+      "filePath": "src/thesis_studio/config/settings.py",
       "contentHash": "ea3031cd6211d6e5ac34cd2230fbd3cd9351cea797ecd54a0c77a51a1252b4c9",
       "functions": [
         {
@@ -283,8 +283,8 @@
       "totalLines": 42,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/core/__init__.py": {
-      "filePath": "src/thesisos/core/__init__.py",
+    "src/thesis_studio/core/__init__.py": {
+      "filePath": "src/thesis_studio/core/__init__.py",
       "contentHash": "9ba5b16f440b90e51b87c3b854ba6685609add5b593d23290b90d74ab2a328b4",
       "functions": [],
       "classes": [],
@@ -293,13 +293,13 @@
       "totalLines": 2,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/core/exceptions.py": {
-      "filePath": "src/thesisos/core/exceptions.py",
+    "src/thesis_studio/core/exceptions.py": {
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "contentHash": "86830e351ff4012ae87567e5fbf615a21a25433c5baeb1297a67e8b2e0213b2d",
       "functions": [],
       "classes": [
         {
-          "name": "ThesisOSError",
+          "name": "Thesis StudioError",
           "methods": [],
           "properties": [],
           "exported": true,
@@ -343,7 +343,7 @@
       ],
       "imports": [],
       "exports": [
-        "ThesisOSError",
+        "Thesis StudioError",
         "ConfigError",
         "LLMError",
         "LLMUnavailableError",
@@ -353,8 +353,8 @@
       "totalLines": 26,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/core/logging.py": {
-      "filePath": "src/thesisos/core/logging.py",
+    "src/thesis_studio/core/logging.py": {
+      "filePath": "src/thesis_studio/core/logging.py",
       "contentHash": "92a9a067c445dc9c9d4c2d0cb8103ffaf88748ad69d30dc1d6cbab2e271994c7",
       "functions": [
         {
@@ -398,8 +398,8 @@
       "totalLines": 20,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/db/__init__.py": {
-      "filePath": "src/thesisos/db/__init__.py",
+    "src/thesis_studio/db/__init__.py": {
+      "filePath": "src/thesis_studio/db/__init__.py",
       "contentHash": "a366c7e9c4733d5faa875f61dab0f7cb78c46c21e7666438a6a2a9a05175c2a4",
       "functions": [],
       "classes": [],
@@ -423,8 +423,8 @@
       "totalLines": 12,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/db/chroma.py": {
-      "filePath": "src/thesisos/db/chroma.py",
+    "src/thesis_studio/db/chroma.py": {
+      "filePath": "src/thesis_studio/db/chroma.py",
       "contentHash": "028f60649af3e5af732e69a4866de24745d4af8c6fb0b11fa23ad608cbb5b8fc",
       "functions": [
         {
@@ -468,8 +468,8 @@
       "totalLines": 30,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/db/sqlite.py": {
-      "filePath": "src/thesisos/db/sqlite.py",
+    "src/thesis_studio/db/sqlite.py": {
+      "filePath": "src/thesis_studio/db/sqlite.py",
       "contentHash": "252c53c94f6b2170504eb1330ecb53f6fe7b06e4501e8967ee585f55811fb41b",
       "functions": [
         {
@@ -532,8 +532,8 @@
       "totalLines": 51,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/embedding/__init__.py": {
-      "filePath": "src/thesisos/embedding/__init__.py",
+    "src/thesis_studio/embedding/__init__.py": {
+      "filePath": "src/thesis_studio/embedding/__init__.py",
       "contentHash": "4106ad05ef705d3d439fd29e097713a343e3ed3e256ec7a8fe86939d8dde8e3b",
       "functions": [],
       "classes": [],
@@ -549,8 +549,8 @@
       "totalLines": 6,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/embedding/base.py": {
-      "filePath": "src/thesisos/embedding/base.py",
+    "src/thesis_studio/embedding/base.py": {
+      "filePath": "src/thesis_studio/embedding/base.py",
       "contentHash": "4ff02b5f37c3b1e05b3cea58c7627566412fc461b9bbd72a8abacc742611815e",
       "functions": [],
       "classes": [
@@ -580,8 +580,8 @@
       "totalLines": 13,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/literature/__init__.py": {
-      "filePath": "src/thesisos/literature/__init__.py",
+    "src/thesis_studio/literature/__init__.py": {
+      "filePath": "src/thesis_studio/literature/__init__.py",
       "contentHash": "dd70201dbc55d2225d6ba87e86771e5cb36553991128abc111766f7dc2542a86",
       "functions": [],
       "classes": [],
@@ -590,8 +590,8 @@
       "totalLines": 2,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/llm/__init__.py": {
-      "filePath": "src/thesisos/llm/__init__.py",
+    "src/thesis_studio/llm/__init__.py": {
+      "filePath": "src/thesis_studio/llm/__init__.py",
       "contentHash": "902bd93ecb2e90daf965a535ade2540b6db31bea1e6e98b8eee0cf1ecaf0dab7",
       "functions": [],
       "classes": [],
@@ -613,8 +613,8 @@
       "totalLines": 7,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/llm/base.py": {
-      "filePath": "src/thesisos/llm/base.py",
+    "src/thesis_studio/llm/base.py": {
+      "filePath": "src/thesis_studio/llm/base.py",
       "contentHash": "21792387580046ed6b5bfc7f0e83f62355cd9d948cbacb0045061b9b8b681e4a",
       "functions": [],
       "classes": [
@@ -643,8 +643,8 @@
       "totalLines": 17,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/llm/factory.py": {
-      "filePath": "src/thesisos/llm/factory.py",
+    "src/thesis_studio/llm/factory.py": {
+      "filePath": "src/thesis_studio/llm/factory.py",
       "contentHash": "3da6cde4fba654cf830321b0ae04b5580f1427e9f56514ff0ea194620412cda8",
       "functions": [
         {
@@ -691,8 +691,8 @@
       "totalLines": 25,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/llm/ollama.py": {
-      "filePath": "src/thesisos/llm/ollama.py",
+    "src/thesis_studio/llm/ollama.py": {
+      "filePath": "src/thesis_studio/llm/ollama.py",
       "contentHash": "9f4231cbb30e44fb84adbb3814e9375bdb0cde18ce2e55b868b9a955d4c3dba6",
       "functions": [],
       "classes": [
@@ -733,8 +733,8 @@
       "totalLines": 41,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/llm/openai.py": {
-      "filePath": "src/thesisos/llm/openai.py",
+    "src/thesis_studio/llm/openai.py": {
+      "filePath": "src/thesis_studio/llm/openai.py",
       "contentHash": "c4cb9e071db7ab211e2c002fa120ac96601e95683ebda2ca65339499c60c3c8c",
       "functions": [],
       "classes": [
@@ -769,8 +769,8 @@
       "totalLines": 42,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/models/__init__.py": {
-      "filePath": "src/thesisos/models/__init__.py",
+    "src/thesis_studio/models/__init__.py": {
+      "filePath": "src/thesis_studio/models/__init__.py",
       "contentHash": "3e21961058cd7c6df50fd332ed47608345187372a4bc0aca531fee2b1a5ab6cb",
       "functions": [],
       "classes": [],
@@ -786,8 +786,8 @@
       "totalLines": 6,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/models/base.py": {
-      "filePath": "src/thesisos/models/base.py",
+    "src/thesis_studio/models/base.py": {
+      "filePath": "src/thesis_studio/models/base.py",
       "contentHash": "97f1a4769ffabef0f1ed8c6f7c859b4f49193e073f50de0641901aaa97dddd6a",
       "functions": [],
       "classes": [
@@ -813,8 +813,8 @@
       "totalLines": 8,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/ui/__init__.py": {
-      "filePath": "src/thesisos/ui/__init__.py",
+    "src/thesis_studio/ui/__init__.py": {
+      "filePath": "src/thesis_studio/ui/__init__.py",
       "contentHash": "92f5e4f5c6cc173ce11c0536ba80e5cfd7cd4007459b9713dd22bd5cbe12335d",
       "functions": [],
       "classes": [],
@@ -823,8 +823,8 @@
       "totalLines": 2,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/ui/chainlit_app.py": {
-      "filePath": "src/thesisos/ui/chainlit_app.py",
+    "src/thesis_studio/ui/chainlit_app.py": {
+      "filePath": "src/thesis_studio/ui/chainlit_app.py",
       "contentHash": "b60edb82e2c919d6fe0b51e34d1457dedf3499a1657130476d38a24b3e9a1408",
       "functions": [
         {
@@ -866,8 +866,8 @@
       "totalLines": 20,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/ui/nicegui_app.py": {
-      "filePath": "src/thesisos/ui/nicegui_app.py",
+    "src/thesis_studio/ui/nicegui_app.py": {
+      "filePath": "src/thesis_studio/ui/nicegui_app.py",
       "contentHash": "4107eaf08467a06b85b0a398fe32e84ac71528e61d5927bffcf8b2947433ebc2",
       "functions": [
         {
@@ -907,8 +907,8 @@
       "totalLines": 23,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/utils/__init__.py": {
-      "filePath": "src/thesisos/utils/__init__.py",
+    "src/thesis_studio/utils/__init__.py": {
+      "filePath": "src/thesis_studio/utils/__init__.py",
       "contentHash": "da8b8f0719fd3d4447b33a8683264101e07e6a5d7580c8d2d4b3e22e101c1ef9",
       "functions": [],
       "classes": [],
@@ -917,8 +917,8 @@
       "totalLines": 2,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/workflow/__init__.py": {
-      "filePath": "src/thesisos/workflow/__init__.py",
+    "src/thesis_studio/workflow/__init__.py": {
+      "filePath": "src/thesis_studio/workflow/__init__.py",
       "contentHash": "3c2b1e06aeb9b4c92f08fa973593b27f0c18d370f259629534ee223450c7f13b",
       "functions": [],
       "classes": [],
@@ -936,8 +936,8 @@
       "totalLines": 6,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/workflow/base.py": {
-      "filePath": "src/thesisos/workflow/base.py",
+    "src/thesis_studio/workflow/base.py": {
+      "filePath": "src/thesis_studio/workflow/base.py",
       "contentHash": "da6e6f1bf75b381a50aa6a308c3c9fd4010543b773b54c00a2ef5c7f1a5c8522",
       "functions": [],
       "classes": [
@@ -998,8 +998,8 @@
       "totalLines": 31,
       "hasStructuralAnalysis": true
     },
-    "src/thesisos/writing/__init__.py": {
-      "filePath": "src/thesisos/writing/__init__.py",
+    "src/thesis_studio/writing/__init__.py": {
+      "filePath": "src/thesis_studio/writing/__init__.py",
       "contentHash": "2662008eae6d7feadd10d7585ade1cbcfbeef40a8546c7368912cc25506b98c4",
       "functions": [],
       "classes": [],
@@ -1054,7 +1054,7 @@
           ]
         },
         {
-          "source": "thesisos.config",
+          "source": "thesis_studio.config",
           "specifiers": [
             "Settings",
             "get_settings"
@@ -1111,7 +1111,7 @@
           ]
         },
         {
-          "source": "thesisos.config",
+          "source": "thesis_studio.config",
           "specifiers": [
             "Settings"
           ]
@@ -1145,20 +1145,20 @@
       "classes": [],
       "imports": [
         {
-          "source": "thesisos.config",
+          "source": "thesis_studio.config",
           "specifiers": [
             "Settings"
           ]
         },
         {
-          "source": "thesisos.llm",
+          "source": "thesis_studio.llm",
           "specifiers": [
             "LLMProvider",
             "create_llm"
           ]
         },
         {
-          "source": "thesisos.llm.ollama",
+          "source": "thesis_studio.llm.ollama",
           "specifiers": [
             "OllamaProvider"
           ]
@@ -1193,7 +1193,7 @@
       "classes": [],
       "imports": [
         {
-          "source": "thesisos.workflow",
+          "source": "thesis_studio.workflow",
           "specifiers": [
             "StepResult",
             "WorkflowContext"

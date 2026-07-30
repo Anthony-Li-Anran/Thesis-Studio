@@ -1,1 +1,1 @@
-"""ThesisOS 测试套件。"""
+"""Thesis Studio 测试套件。"""

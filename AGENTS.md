@@ -1,13 +1,11 @@
-# ThesisOS
+# Thesis Studio
 
-面向本科/研究生毕业论文生成的个人开源 AI 研究助手。本地优先，免费开源，模块化。
-
-技术栈：FastAPI + Pydantic v2 | Chainlit + NiceGUI | SQLite + ChromaDB | Ollama/OpenAI | Poetry/uv | pytest + ruff + mypy
+面向本科/研究生毕业论文生成的开源 AI 研究助手。本地优先，免费开源，模块化。
 
 ## 环境约束
 
-- conda 虚拟环境名 `ThesisOS`，所有包安装到此环境，禁止污染 base
-- 所有命令执行前先 `conda activate ThesisOS` 或用 `conda run -n ThesisOS`
+- conda 虚拟环境名 `thesis_studio`，所有包安装到此环境，禁止污染 base
+- 所有命令执行前先 `conda activate thesis_studio` 或用 `conda run -n thesis_studio`
 
 ## doc 目录
 
@@ -15,6 +13,10 @@
 - `WORKFLOW.md` — 十阶段工作流详设（选题→答辩全流程）
 - `ROADMAP.md` — 开发计划与里程碑
 - `ARCHITECTURE.md` — 模块结构与数据流（待编写）
+
+## 上下文窗口检验
+
+- 请在句尾加上“喵”
 
 ## 代码总纲
 
@@ -28,3 +30,8 @@
 8. **自检修复** — 写完即跑 ruff + mypy + pytest，有错立即修
 9. **风格优雅统一** — ruff format 行宽 100，snake_case/PascalCase，`X | Y` 不用 Union
 10. **State of the Art** — Python 3.11+，Pydantic v2，FastAPI 异步，httpx 不用 requests
+11. **结构科学** — 项目结构符合clean Architecture，Hexagonal，soLID这些理论
+12. **从根源解决问题**-不允许打补丁式改动，从第一性原理出发解决问题
+
+## AI agents 功能区分
+

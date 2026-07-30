@@ -1,82 +1,82 @@
-{
+﻿{
   "schemaVersion": 1,
   "algorithm": "louvain",
   "totalFiles": 46,
   "totalBatches": 4,
   "exportsByPath": {
     "main.py": [],
-    "src/thesisos/__init__.py": [],
-    "src/thesisos/analysis/__init__.py": [],
-    "src/thesisos/api/__init__.py": [],
-    "src/thesisos/api/app.py": [
+    "src/thesis_studio/__init__.py": [],
+    "src/thesis_studio/analysis/__init__.py": [],
+    "src/thesis_studio/api/__init__.py": [],
+    "src/thesis_studio/api/app.py": [
       "create_app"
     ],
-    "src/thesisos/config/__init__.py": [],
-    "src/thesisos/config/settings.py": [
+    "src/thesis_studio/config/__init__.py": [],
+    "src/thesis_studio/config/settings.py": [
       "Settings",
       "get_settings"
     ],
-    "src/thesisos/core/__init__.py": [],
-    "src/thesisos/core/exceptions.py": [
-      "ThesisOSError",
+    "src/thesis_studio/core/__init__.py": [],
+    "src/thesis_studio/core/exceptions.py": [
+      "Thesis StudioError",
       "ConfigError",
       "LLMError",
       "LLMUnavailableError",
       "DatabaseError",
       "WorkflowError"
     ],
-    "src/thesisos/core/logging.py": [
+    "src/thesis_studio/core/logging.py": [
       "setup_logging",
       "get_logger"
     ],
-    "src/thesisos/db/__init__.py": [],
-    "src/thesisos/db/chroma.py": [
+    "src/thesis_studio/db/__init__.py": [],
+    "src/thesis_studio/db/chroma.py": [
       "get_chroma_client"
     ],
-    "src/thesisos/db/sqlite.py": [
+    "src/thesis_studio/db/sqlite.py": [
       "get_engine",
       "get_session_factory",
       "get_session"
     ],
-    "src/thesisos/embedding/__init__.py": [],
-    "src/thesisos/embedding/base.py": [
+    "src/thesis_studio/embedding/__init__.py": [],
+    "src/thesis_studio/embedding/base.py": [
       "EmbeddingProvider"
     ],
-    "src/thesisos/literature/__init__.py": [],
-    "src/thesisos/llm/__init__.py": [],
-    "src/thesisos/llm/base.py": [
+    "src/thesis_studio/literature/__init__.py": [],
+    "src/thesis_studio/llm/__init__.py": [],
+    "src/thesis_studio/llm/base.py": [
       "LLMProvider"
     ],
-    "src/thesisos/llm/factory.py": [
+    "src/thesis_studio/llm/factory.py": [
       "create_llm"
     ],
-    "src/thesisos/llm/ollama.py": [
+    "src/thesis_studio/llm/ollama.py": [
       "OllamaProvider"
     ],
-    "src/thesisos/llm/openai.py": [
+    "src/thesis_studio/llm/openai.py": [
       "OpenAIProvider"
     ],
-    "src/thesisos/models/__init__.py": [],
-    "src/thesisos/models/base.py": [
+    "src/thesis_studio/models/__init__.py": [],
+    "src/thesis_studio/models/base.py": [
       "Base"
     ],
-    "src/thesisos/ui/__init__.py": [],
-    "src/thesisos/ui/chainlit_app.py": [
+    "src/thesis_studio/ui/__init__.py": [],
+    "src/thesis_studio/ui/chainlit_app.py": [
       "on_chat_start",
       "on_message"
     ],
-    "src/thesisos/ui/nicegui_app.py": [
+    "src/thesis_studio/ui/nicegui_app.py": [
       "build_ui",
       "main"
     ],
-    "src/thesisos/utils/__init__.py": [],
-    "src/thesisos/workflow/__init__.py": [],
-    "src/thesisos/workflow/base.py": [
+    "src/thesis_studio/utils/__init__.py": [],
+    "src/thesis_studio/workflow/__init__.py": [],
+    "src/thesis_studio/workflow/base.py": [
       "WorkflowContext",
       "StepResult",
       "WorkflowStep"
     ],
-    "src/thesisos/writing/__init__.py": [],
+    "src/thesis_studio/writing/__init__.py": [],
     "tests/__init__.py": [],
     "tests/conftest.py": [
       "clear_settings_cache",
@@ -186,145 +186,145 @@
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/__init__.py",
+          "path": "src/thesis_studio/__init__.py",
           "language": "python",
           "sizeLines": 3,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/analysis/__init__.py",
+          "path": "src/thesis_studio/analysis/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/api/__init__.py",
+          "path": "src/thesis_studio/api/__init__.py",
           "language": "python",
           "sizeLines": 5,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/api/app.py",
+          "path": "src/thesis_studio/api/app.py",
           "language": "python",
           "sizeLines": 21,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/config/__init__.py",
+          "path": "src/thesis_studio/config/__init__.py",
           "language": "python",
           "sizeLines": 5,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/config/settings.py",
+          "path": "src/thesis_studio/config/settings.py",
           "language": "python",
           "sizeLines": 41,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/core/__init__.py",
+          "path": "src/thesis_studio/core/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/core/exceptions.py",
+          "path": "src/thesis_studio/core/exceptions.py",
           "language": "python",
           "sizeLines": 25,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/core/logging.py",
+          "path": "src/thesis_studio/core/logging.py",
           "language": "python",
           "sizeLines": 19,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/db/__init__.py",
+          "path": "src/thesis_studio/db/__init__.py",
           "language": "python",
           "sizeLines": 11,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/db/chroma.py",
+          "path": "src/thesis_studio/db/chroma.py",
           "language": "python",
           "sizeLines": 29,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/db/sqlite.py",
+          "path": "src/thesis_studio/db/sqlite.py",
           "language": "python",
           "sizeLines": 50,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/embedding/__init__.py",
+          "path": "src/thesis_studio/embedding/__init__.py",
           "language": "python",
           "sizeLines": 5,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/embedding/base.py",
+          "path": "src/thesis_studio/embedding/base.py",
           "language": "python",
           "sizeLines": 12,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/literature/__init__.py",
+          "path": "src/thesis_studio/literature/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/llm/__init__.py",
+          "path": "src/thesis_studio/llm/__init__.py",
           "language": "python",
           "sizeLines": 6,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/llm/base.py",
+          "path": "src/thesis_studio/llm/base.py",
           "language": "python",
           "sizeLines": 16,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/llm/factory.py",
+          "path": "src/thesis_studio/llm/factory.py",
           "language": "python",
           "sizeLines": 24,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/llm/ollama.py",
+          "path": "src/thesis_studio/llm/ollama.py",
           "language": "python",
           "sizeLines": 40,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/llm/openai.py",
+          "path": "src/thesis_studio/llm/openai.py",
           "language": "python",
           "sizeLines": 41,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/models/__init__.py",
+          "path": "src/thesis_studio/models/__init__.py",
           "language": "python",
           "sizeLines": 5,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/models/base.py",
+          "path": "src/thesis_studio/models/base.py",
           "language": "python",
           "sizeLines": 7,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/ui/__init__.py",
+          "path": "src/thesis_studio/ui/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/ui/chainlit_app.py",
+          "path": "src/thesis_studio/ui/chainlit_app.py",
           "language": "python",
           "sizeLines": 19,
           "fileCategory": "code"
@@ -332,30 +332,30 @@
       ],
       "batchImportData": {
         "main.py": [],
-        "src/thesisos/__init__.py": [],
-        "src/thesisos/analysis/__init__.py": [],
-        "src/thesisos/api/__init__.py": [],
-        "src/thesisos/api/app.py": [],
-        "src/thesisos/config/__init__.py": [],
-        "src/thesisos/config/settings.py": [],
-        "src/thesisos/core/__init__.py": [],
-        "src/thesisos/core/exceptions.py": [],
-        "src/thesisos/core/logging.py": [],
-        "src/thesisos/db/__init__.py": [],
-        "src/thesisos/db/chroma.py": [],
-        "src/thesisos/db/sqlite.py": [],
-        "src/thesisos/embedding/__init__.py": [],
-        "src/thesisos/embedding/base.py": [],
-        "src/thesisos/literature/__init__.py": [],
-        "src/thesisos/llm/__init__.py": [],
-        "src/thesisos/llm/base.py": [],
-        "src/thesisos/llm/factory.py": [],
-        "src/thesisos/llm/ollama.py": [],
-        "src/thesisos/llm/openai.py": [],
-        "src/thesisos/models/__init__.py": [],
-        "src/thesisos/models/base.py": [],
-        "src/thesisos/ui/__init__.py": [],
-        "src/thesisos/ui/chainlit_app.py": []
+        "src/thesis_studio/__init__.py": [],
+        "src/thesis_studio/analysis/__init__.py": [],
+        "src/thesis_studio/api/__init__.py": [],
+        "src/thesis_studio/api/app.py": [],
+        "src/thesis_studio/config/__init__.py": [],
+        "src/thesis_studio/config/settings.py": [],
+        "src/thesis_studio/core/__init__.py": [],
+        "src/thesis_studio/core/exceptions.py": [],
+        "src/thesis_studio/core/logging.py": [],
+        "src/thesis_studio/db/__init__.py": [],
+        "src/thesis_studio/db/chroma.py": [],
+        "src/thesis_studio/db/sqlite.py": [],
+        "src/thesis_studio/embedding/__init__.py": [],
+        "src/thesis_studio/embedding/base.py": [],
+        "src/thesis_studio/literature/__init__.py": [],
+        "src/thesis_studio/llm/__init__.py": [],
+        "src/thesis_studio/llm/base.py": [],
+        "src/thesis_studio/llm/factory.py": [],
+        "src/thesis_studio/llm/ollama.py": [],
+        "src/thesis_studio/llm/openai.py": [],
+        "src/thesis_studio/models/__init__.py": [],
+        "src/thesis_studio/models/base.py": [],
+        "src/thesis_studio/ui/__init__.py": [],
+        "src/thesis_studio/ui/chainlit_app.py": []
       },
       "neighborMap": {}
     },
@@ -363,31 +363,31 @@
       "batchIndex": 4,
       "files": [
         {
-          "path": "src/thesisos/ui/nicegui_app.py",
+          "path": "src/thesis_studio/ui/nicegui_app.py",
           "language": "python",
           "sizeLines": 22,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/utils/__init__.py",
+          "path": "src/thesis_studio/utils/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/workflow/__init__.py",
+          "path": "src/thesis_studio/workflow/__init__.py",
           "language": "python",
           "sizeLines": 5,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/workflow/base.py",
+          "path": "src/thesis_studio/workflow/base.py",
           "language": "python",
           "sizeLines": 30,
           "fileCategory": "code"
         },
         {
-          "path": "src/thesisos/writing/__init__.py",
+          "path": "src/thesis_studio/writing/__init__.py",
           "language": "python",
           "sizeLines": 1,
           "fileCategory": "code"
@@ -436,11 +436,11 @@
         }
       ],
       "batchImportData": {
-        "src/thesisos/ui/nicegui_app.py": [],
-        "src/thesisos/utils/__init__.py": [],
-        "src/thesisos/workflow/__init__.py": [],
-        "src/thesisos/workflow/base.py": [],
-        "src/thesisos/writing/__init__.py": [],
+        "src/thesis_studio/ui/nicegui_app.py": [],
+        "src/thesis_studio/utils/__init__.py": [],
+        "src/thesis_studio/workflow/__init__.py": [],
+        "src/thesis_studio/workflow/base.py": [],
+        "src/thesis_studio/writing/__init__.py": [],
         "tests/__init__.py": [],
         "tests/conftest.py": [],
         "tests/integration/__init__.py": [],

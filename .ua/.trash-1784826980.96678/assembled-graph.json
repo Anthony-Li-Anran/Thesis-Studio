@@ -1,7 +1,7 @@
-{
+﻿{
   "version": "1.0.0",
   "project": {
-    "name": "ThesisOS",
+    "name": "Thesis Studio",
     "languages": [
       "Python"
     ],
@@ -31,20 +31,20 @@
       ]
     },
     {
-      "id": "file:src/thesisos/__init__.py",
+      "id": "file:src/thesis_studio/__init__.py",
       "type": "file",
       "name": "__init__.py",
-      "filePath": "src/thesisos/__init__.py",
-      "summary": "ThesisOS 包初始化，定义版本号",
+      "filePath": "src/thesis_studio/__init__.py",
+      "summary": "Thesis Studio 包初始化，定义版本号",
       "tags": [
         "package-init"
       ]
     },
     {
-      "id": "file:src/thesisos/api/__init__.py",
+      "id": "file:src/thesis_studio/api/__init__.py",
       "type": "file",
       "name": "api/__init__.py",
-      "filePath": "src/thesisos/api/__init__.py",
+      "filePath": "src/thesis_studio/api/__init__.py",
       "summary": "API 包入口，导出 create_app",
       "tags": [
         "package-init",
@@ -52,10 +52,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/api/app.py",
+      "id": "file:src/thesis_studio/api/app.py",
       "type": "file",
       "name": "app.py",
-      "filePath": "src/thesisos/api/app.py",
+      "filePath": "src/thesis_studio/api/app.py",
       "summary": "FastAPI 应用工厂：健康检查端点与全局异常处理",
       "tags": [
         "fastapi",
@@ -65,10 +65,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/config/__init__.py",
+      "id": "file:src/thesis_studio/config/__init__.py",
       "type": "file",
       "name": "config/__init__.py",
-      "filePath": "src/thesisos/config/__init__.py",
+      "filePath": "src/thesis_studio/config/__init__.py",
       "summary": "配置包入口，导出 Settings 和 get_settings",
       "tags": [
         "package-init",
@@ -76,10 +76,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/config/settings.py",
+      "id": "file:src/thesis_studio/config/settings.py",
       "type": "file",
       "name": "settings.py",
-      "filePath": "src/thesisos/config/settings.py",
+      "filePath": "src/thesis_studio/config/settings.py",
       "summary": "全局配置：Pydantic Settings，从 .env 加载，环境变量前缀 THESISOS_",
       "tags": [
         "pydantic",
@@ -89,10 +89,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/core/__init__.py",
+      "id": "file:src/thesis_studio/core/__init__.py",
       "type": "file",
       "name": "core/__init__.py",
-      "filePath": "src/thesisos/core/__init__.py",
+      "filePath": "src/thesis_studio/core/__init__.py",
       "summary": "核心抽象层包初始化",
       "tags": [
         "package-init",
@@ -100,11 +100,11 @@
       ]
     },
     {
-      "id": "file:src/thesisos/core/exceptions.py",
+      "id": "file:src/thesis_studio/core/exceptions.py",
       "type": "file",
       "name": "exceptions.py",
-      "filePath": "src/thesisos/core/exceptions.py",
-      "summary": "领域异常层级：所有业务异常继承 ThesisOSError",
+      "filePath": "src/thesis_studio/core/exceptions.py",
+      "summary": "领域异常层级：所有业务异常继承 Thesis StudioError",
       "tags": [
         "exceptions",
         "error-handling"
@@ -112,10 +112,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/core/logging.py",
+      "id": "file:src/thesis_studio/core/logging.py",
       "type": "file",
       "name": "logging.py",
-      "filePath": "src/thesisos/core/logging.py",
+      "filePath": "src/thesis_studio/core/logging.py",
       "summary": "结构化日志配置，输出到 stderr",
       "tags": [
         "logging",
@@ -124,10 +124,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/db/__init__.py",
+      "id": "file:src/thesis_studio/db/__init__.py",
       "type": "file",
       "name": "db/__init__.py",
-      "filePath": "src/thesisos/db/__init__.py",
+      "filePath": "src/thesis_studio/db/__init__.py",
       "summary": "数据库包入口，导出 SQLite 引擎与 ChromaDB 客户端",
       "tags": [
         "package-init",
@@ -135,10 +135,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/db/chroma.py",
+      "id": "file:src/thesis_studio/db/chroma.py",
       "type": "file",
       "name": "chroma.py",
-      "filePath": "src/thesisos/db/chroma.py",
+      "filePath": "src/thesis_studio/db/chroma.py",
       "summary": "ChromaDB 向量数据库客户端单例（线程安全）",
       "tags": [
         "chromadb",
@@ -148,10 +148,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/db/sqlite.py",
+      "id": "file:src/thesis_studio/db/sqlite.py",
       "type": "file",
       "name": "sqlite.py",
-      "filePath": "src/thesisos/db/sqlite.py",
+      "filePath": "src/thesis_studio/db/sqlite.py",
       "summary": "SQLite 异步引擎与会话管理，基于 SQLAlchemy async",
       "tags": [
         "sqlite",
@@ -161,10 +161,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/embedding/__init__.py",
+      "id": "file:src/thesis_studio/embedding/__init__.py",
       "type": "file",
       "name": "embedding/__init__.py",
-      "filePath": "src/thesisos/embedding/__init__.py",
+      "filePath": "src/thesis_studio/embedding/__init__.py",
       "summary": "嵌入模型包入口，导出 EmbeddingProvider",
       "tags": [
         "package-init",
@@ -172,10 +172,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/embedding/base.py",
+      "id": "file:src/thesis_studio/embedding/base.py",
       "type": "file",
       "name": "base.py",
-      "filePath": "src/thesisos/embedding/base.py",
+      "filePath": "src/thesis_studio/embedding/base.py",
       "summary": "嵌入模型统一接口 Protocol，定义 embed 和 embed_batch",
       "tags": [
         "protocol",
@@ -185,10 +185,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/literature/__init__.py",
+      "id": "file:src/thesis_studio/literature/__init__.py",
       "type": "file",
       "name": "literature/__init__.py",
-      "filePath": "src/thesisos/literature/__init__.py",
+      "filePath": "src/thesis_studio/literature/__init__.py",
       "summary": "文献检索与管理模块（占位）",
       "tags": [
         "placeholder",
@@ -196,10 +196,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/llm/__init__.py",
+      "id": "file:src/thesis_studio/llm/__init__.py",
       "type": "file",
       "name": "llm/__init__.py",
-      "filePath": "src/thesisos/llm/__init__.py",
+      "filePath": "src/thesis_studio/llm/__init__.py",
       "summary": "LLM 包入口，导出 LLMProvider 和 create_llm",
       "tags": [
         "package-init",
@@ -207,10 +207,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/llm/base.py",
+      "id": "file:src/thesis_studio/llm/base.py",
       "type": "file",
       "name": "base.py",
-      "filePath": "src/thesisos/llm/base.py",
+      "filePath": "src/thesis_studio/llm/base.py",
       "summary": "LLM 提供商统一接口 Protocol，定义 generate 方法",
       "tags": [
         "protocol",
@@ -220,10 +220,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/llm/factory.py",
+      "id": "file:src/thesis_studio/llm/factory.py",
       "type": "file",
       "name": "factory.py",
-      "filePath": "src/thesisos/llm/factory.py",
+      "filePath": "src/thesis_studio/llm/factory.py",
       "summary": "LLM 工厂：根据配置创建 Ollama 或 OpenAI 提供商实例",
       "tags": [
         "factory",
@@ -233,10 +233,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/llm/ollama.py",
+      "id": "file:src/thesis_studio/llm/ollama.py",
       "type": "file",
       "name": "ollama.py",
-      "filePath": "src/thesisos/llm/ollama.py",
+      "filePath": "src/thesis_studio/llm/ollama.py",
       "summary": "Ollama 本地模型提供商，通过 httpx 调用 Ollama API",
       "tags": [
         "ollama",
@@ -246,10 +246,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/llm/openai.py",
+      "id": "file:src/thesis_studio/llm/openai.py",
       "type": "file",
       "name": "openai.py",
-      "filePath": "src/thesisos/llm/openai.py",
+      "filePath": "src/thesis_studio/llm/openai.py",
       "summary": "OpenAI 云端模型提供商，通过 httpx 调用 Chat Completions API",
       "tags": [
         "openai",
@@ -259,10 +259,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/models/__init__.py",
+      "id": "file:src/thesis_studio/models/__init__.py",
       "type": "file",
       "name": "models/__init__.py",
-      "filePath": "src/thesisos/models/__init__.py",
+      "filePath": "src/thesis_studio/models/__init__.py",
       "summary": "领域模型包入口，导出 ORM 基类 Base",
       "tags": [
         "package-init",
@@ -270,10 +270,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/models/base.py",
+      "id": "file:src/thesis_studio/models/base.py",
       "type": "file",
       "name": "base.py",
-      "filePath": "src/thesisos/models/base.py",
+      "filePath": "src/thesis_studio/models/base.py",
       "summary": "SQLAlchemy ORM 基类 DeclarativeBase",
       "tags": [
         "sqlalchemy",
@@ -283,10 +283,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/ui/__init__.py",
+      "id": "file:src/thesis_studio/ui/__init__.py",
       "type": "file",
       "name": "ui/__init__.py",
-      "filePath": "src/thesisos/ui/__init__.py",
+      "filePath": "src/thesis_studio/ui/__init__.py",
       "summary": "用户界面包：Chainlit 对话 + NiceGUI 管理面板",
       "tags": [
         "package-init",
@@ -294,10 +294,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/ui/chainlit_app.py",
+      "id": "file:src/thesis_studio/ui/chainlit_app.py",
       "type": "file",
       "name": "chainlit_app.py",
-      "filePath": "src/thesisos/ui/chainlit_app.py",
+      "filePath": "src/thesis_studio/ui/chainlit_app.py",
       "summary": "Chainlit 对话交互界面，处理用户消息并调用 LLM 生成回复",
       "tags": [
         "chainlit",
@@ -307,10 +307,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/ui/nicegui_app.py",
+      "id": "file:src/thesis_studio/ui/nicegui_app.py",
       "type": "file",
       "name": "nicegui_app.py",
-      "filePath": "src/thesisos/ui/nicegui_app.py",
+      "filePath": "src/thesis_studio/ui/nicegui_app.py",
       "summary": "NiceGUI 管理面板：文献库、项目进度、数据分析、设置",
       "tags": [
         "nicegui",
@@ -319,10 +319,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/workflow/__init__.py",
+      "id": "file:src/thesis_studio/workflow/__init__.py",
       "type": "file",
       "name": "workflow/__init__.py",
-      "filePath": "src/thesisos/workflow/__init__.py",
+      "filePath": "src/thesis_studio/workflow/__init__.py",
       "summary": "工作流包入口，导出 WorkflowStep、WorkflowContext、StepResult",
       "tags": [
         "package-init",
@@ -330,10 +330,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/workflow/base.py",
+      "id": "file:src/thesis_studio/workflow/base.py",
       "type": "file",
       "name": "base.py",
-      "filePath": "src/thesisos/workflow/base.py",
+      "filePath": "src/thesis_studio/workflow/base.py",
       "summary": "工作流阶段接口与上下文：WorkflowContext 传递数据，StepResult 记录结果",
       "tags": [
         "workflow",
@@ -343,10 +343,10 @@
       "complexity": "low"
     },
     {
-      "id": "file:src/thesisos/utils/__init__.py",
+      "id": "file:src/thesis_studio/utils/__init__.py",
       "type": "file",
       "name": "utils/__init__.py",
-      "filePath": "src/thesisos/utils/__init__.py",
+      "filePath": "src/thesis_studio/utils/__init__.py",
       "summary": "通用工具函数模块（占位）",
       "tags": [
         "placeholder",
@@ -354,10 +354,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/writing/__init__.py",
+      "id": "file:src/thesis_studio/writing/__init__.py",
       "type": "file",
       "name": "writing/__init__.py",
-      "filePath": "src/thesisos/writing/__init__.py",
+      "filePath": "src/thesis_studio/writing/__init__.py",
       "summary": "论文撰写与文档生成模块（占位）",
       "tags": [
         "placeholder",
@@ -365,10 +365,10 @@
       ]
     },
     {
-      "id": "file:src/thesisos/analysis/__init__.py",
+      "id": "file:src/thesis_studio/analysis/__init__.py",
       "type": "file",
       "name": "analysis/__init__.py",
-      "filePath": "src/thesisos/analysis/__init__.py",
+      "filePath": "src/thesis_studio/analysis/__init__.py",
       "summary": "数据分析与可视化模块（占位）",
       "tags": [
         "placeholder",
@@ -556,10 +556,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/api/app.py:create_app",
+      "id": "function:src/thesis_studio/api/app.py:create_app",
       "type": "function",
       "name": "create_app",
-      "filePath": "src/thesisos/api/app.py",
+      "filePath": "src/thesis_studio/api/app.py",
       "summary": "创建并配置 FastAPI 应用实例，注册健康检查和异常处理",
       "tags": [
         "factory",
@@ -567,10 +567,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/config/settings.py:Settings",
+      "id": "class:src/thesis_studio/config/settings.py:Settings",
       "type": "class",
       "name": "Settings",
-      "filePath": "src/thesisos/config/settings.py",
+      "filePath": "src/thesis_studio/config/settings.py",
       "summary": "全局配置类，从 .env 加载，包含 LLM、数据库、服务、文献检索配置",
       "tags": [
         "pydantic",
@@ -579,10 +579,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/config/settings.py:get_settings",
+      "id": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "function",
       "name": "get_settings",
-      "filePath": "src/thesisos/config/settings.py",
+      "filePath": "src/thesis_studio/config/settings.py",
       "summary": "获取全局配置单例（lru_cache 缓存）",
       "tags": [
         "singleton",
@@ -591,21 +591,21 @@
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "id": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "class",
-      "name": "ThesisOSError",
-      "filePath": "src/thesisos/core/exceptions.py",
-      "summary": "所有 ThesisOS 领域异常的基类",
+      "name": "Thesis StudioError",
+      "filePath": "src/thesis_studio/core/exceptions.py",
+      "summary": "所有 Thesis Studio 领域异常的基类",
       "tags": [
         "exception",
         "base"
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:ConfigError",
+      "id": "class:src/thesis_studio/core/exceptions.py:ConfigError",
       "type": "class",
       "name": "ConfigError",
-      "filePath": "src/thesisos/core/exceptions.py",
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "summary": "配置相关错误",
       "tags": [
         "exception",
@@ -613,10 +613,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:LLMError",
+      "id": "class:src/thesis_studio/core/exceptions.py:LLMError",
       "type": "class",
       "name": "LLMError",
-      "filePath": "src/thesisos/core/exceptions.py",
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "summary": "LLM 调用相关错误",
       "tags": [
         "exception",
@@ -624,10 +624,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:LLMUnavailableError",
+      "id": "class:src/thesis_studio/core/exceptions.py:LLMUnavailableError",
       "type": "class",
       "name": "LLMUnavailableError",
-      "filePath": "src/thesisos/core/exceptions.py",
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "summary": "LLM 服务不可用（如 Ollama 未启动）",
       "tags": [
         "exception",
@@ -636,10 +636,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:DatabaseError",
+      "id": "class:src/thesis_studio/core/exceptions.py:DatabaseError",
       "type": "class",
       "name": "DatabaseError",
-      "filePath": "src/thesisos/core/exceptions.py",
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "summary": "数据库操作相关错误",
       "tags": [
         "exception",
@@ -647,10 +647,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/core/exceptions.py:WorkflowError",
+      "id": "class:src/thesis_studio/core/exceptions.py:WorkflowError",
       "type": "class",
       "name": "WorkflowError",
-      "filePath": "src/thesisos/core/exceptions.py",
+      "filePath": "src/thesis_studio/core/exceptions.py",
       "summary": "工作流执行相关错误",
       "tags": [
         "exception",
@@ -658,10 +658,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/core/logging.py:setup_logging",
+      "id": "function:src/thesis_studio/core/logging.py:setup_logging",
       "type": "function",
       "name": "setup_logging",
-      "filePath": "src/thesisos/core/logging.py",
+      "filePath": "src/thesis_studio/core/logging.py",
       "summary": "配置全局日志，输出到 stderr",
       "tags": [
         "logging",
@@ -669,10 +669,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/core/logging.py:get_logger",
+      "id": "function:src/thesis_studio/core/logging.py:get_logger",
       "type": "function",
       "name": "get_logger",
-      "filePath": "src/thesisos/core/logging.py",
+      "filePath": "src/thesis_studio/core/logging.py",
       "summary": "获取模块日志器",
       "tags": [
         "logging",
@@ -680,10 +680,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/db/chroma.py:get_chroma_client",
+      "id": "function:src/thesis_studio/db/chroma.py:get_chroma_client",
       "type": "function",
       "name": "get_chroma_client",
-      "filePath": "src/thesisos/db/chroma.py",
+      "filePath": "src/thesis_studio/db/chroma.py",
       "summary": "获取 ChromaDB 客户端单例（线程安全双重检查锁）",
       "tags": [
         "chromadb",
@@ -692,10 +692,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/db/sqlite.py:get_engine",
+      "id": "function:src/thesis_studio/db/sqlite.py:get_engine",
       "type": "function",
       "name": "get_engine",
-      "filePath": "src/thesisos/db/sqlite.py",
+      "filePath": "src/thesis_studio/db/sqlite.py",
       "summary": "获取全局异步 SQLite 引擎单例",
       "tags": [
         "sqlite",
@@ -705,10 +705,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/db/sqlite.py:get_session_factory",
+      "id": "function:src/thesis_studio/db/sqlite.py:get_session_factory",
       "type": "function",
       "name": "get_session_factory",
-      "filePath": "src/thesisos/db/sqlite.py",
+      "filePath": "src/thesis_studio/db/sqlite.py",
       "summary": "获取异步会话工厂",
       "tags": [
         "sqlalchemy",
@@ -717,10 +717,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/db/sqlite.py:get_session",
+      "id": "function:src/thesis_studio/db/sqlite.py:get_session",
       "type": "function",
       "name": "get_session",
-      "filePath": "src/thesisos/db/sqlite.py",
+      "filePath": "src/thesis_studio/db/sqlite.py",
       "summary": "FastAPI 依赖：获取数据库会话（异步生成器）",
       "tags": [
         "fastapi",
@@ -730,10 +730,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/embedding/base.py:EmbeddingProvider",
+      "id": "class:src/thesis_studio/embedding/base.py:EmbeddingProvider",
       "type": "class",
       "name": "EmbeddingProvider",
-      "filePath": "src/thesisos/embedding/base.py",
+      "filePath": "src/thesis_studio/embedding/base.py",
       "summary": "嵌入模型接口 Protocol，定义 embed 和 embed_batch 方法",
       "tags": [
         "protocol",
@@ -742,10 +742,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/llm/base.py:LLMProvider",
+      "id": "class:src/thesis_studio/llm/base.py:LLMProvider",
       "type": "class",
       "name": "LLMProvider",
-      "filePath": "src/thesisos/llm/base.py",
+      "filePath": "src/thesis_studio/llm/base.py",
       "summary": "LLM 提供商接口 Protocol，定义 generate 方法",
       "tags": [
         "protocol",
@@ -754,10 +754,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/llm/factory.py:create_llm",
+      "id": "function:src/thesis_studio/llm/factory.py:create_llm",
       "type": "function",
       "name": "create_llm",
-      "filePath": "src/thesisos/llm/factory.py",
+      "filePath": "src/thesis_studio/llm/factory.py",
       "summary": "根据配置创建 LLM 提供商实例（Ollama 或 OpenAI）",
       "tags": [
         "factory",
@@ -766,10 +766,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/llm/ollama.py:OllamaProvider",
+      "id": "class:src/thesis_studio/llm/ollama.py:OllamaProvider",
       "type": "class",
       "name": "OllamaProvider",
-      "filePath": "src/thesisos/llm/ollama.py",
+      "filePath": "src/thesis_studio/llm/ollama.py",
       "summary": "Ollama 本地模型提供商实现，通过 httpx 调用 Ollama API",
       "tags": [
         "ollama",
@@ -779,10 +779,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/llm/openai.py:OpenAIProvider",
+      "id": "class:src/thesis_studio/llm/openai.py:OpenAIProvider",
       "type": "class",
       "name": "OpenAIProvider",
-      "filePath": "src/thesisos/llm/openai.py",
+      "filePath": "src/thesis_studio/llm/openai.py",
       "summary": "OpenAI 云端模型提供商实现，通过 httpx 调用 Chat Completions API",
       "tags": [
         "openai",
@@ -792,10 +792,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/models/base.py:Base",
+      "id": "class:src/thesis_studio/models/base.py:Base",
       "type": "class",
       "name": "Base",
-      "filePath": "src/thesisos/models/base.py",
+      "filePath": "src/thesis_studio/models/base.py",
       "summary": "SQLAlchemy ORM 基类 DeclarativeBase",
       "tags": [
         "sqlalchemy",
@@ -804,10 +804,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/ui/chainlit_app.py:on_chat_start",
+      "id": "function:src/thesis_studio/ui/chainlit_app.py:on_chat_start",
       "type": "function",
       "name": "on_chat_start",
-      "filePath": "src/thesisos/ui/chainlit_app.py",
+      "filePath": "src/thesis_studio/ui/chainlit_app.py",
       "summary": "Chainlit 对话初始化回调",
       "tags": [
         "chainlit",
@@ -815,10 +815,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/ui/chainlit_app.py:on_message",
+      "id": "function:src/thesis_studio/ui/chainlit_app.py:on_message",
       "type": "function",
       "name": "on_message",
-      "filePath": "src/thesisos/ui/chainlit_app.py",
+      "filePath": "src/thesis_studio/ui/chainlit_app.py",
       "summary": "处理用户消息，调用 LLM 生成回复",
       "tags": [
         "chainlit",
@@ -827,10 +827,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/ui/nicegui_app.py:build_ui",
+      "id": "function:src/thesis_studio/ui/nicegui_app.py:build_ui",
       "type": "function",
       "name": "build_ui",
-      "filePath": "src/thesisos/ui/nicegui_app.py",
+      "filePath": "src/thesis_studio/ui/nicegui_app.py",
       "summary": "构建 NiceGUI 管理面板界面",
       "tags": [
         "nicegui",
@@ -838,10 +838,10 @@
       ]
     },
     {
-      "id": "function:src/thesisos/ui/nicegui_app.py:main",
+      "id": "function:src/thesis_studio/ui/nicegui_app.py:main",
       "type": "function",
       "name": "main",
-      "filePath": "src/thesisos/ui/nicegui_app.py",
+      "filePath": "src/thesis_studio/ui/nicegui_app.py",
       "summary": "启动 NiceGUI 管理面板",
       "tags": [
         "nicegui",
@@ -849,10 +849,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/workflow/base.py:WorkflowContext",
+      "id": "class:src/thesis_studio/workflow/base.py:WorkflowContext",
       "type": "class",
       "name": "WorkflowContext",
-      "filePath": "src/thesisos/workflow/base.py",
+      "filePath": "src/thesis_studio/workflow/base.py",
       "summary": "工作流上下文，在阶段间传递数据",
       "tags": [
         "dataclass",
@@ -861,10 +861,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/workflow/base.py:StepResult",
+      "id": "class:src/thesis_studio/workflow/base.py:StepResult",
       "type": "class",
       "name": "StepResult",
-      "filePath": "src/thesisos/workflow/base.py",
+      "filePath": "src/thesis_studio/workflow/base.py",
       "summary": "单个工作流阶段的执行结果",
       "tags": [
         "dataclass",
@@ -873,10 +873,10 @@
       ]
     },
     {
-      "id": "class:src/thesisos/workflow/base.py:WorkflowStep",
+      "id": "class:src/thesis_studio/workflow/base.py:WorkflowStep",
       "type": "class",
       "name": "WorkflowStep",
-      "filePath": "src/thesisos/workflow/base.py",
+      "filePath": "src/thesis_studio/workflow/base.py",
       "summary": "工作流阶段接口 Protocol，定义 execute 方法",
       "tags": [
         "protocol",
@@ -888,427 +888,427 @@
   "edges": [
     {
       "source": "file:main.py",
-      "target": "file:src/thesisos/api/app.py",
+      "target": "file:src/thesis_studio/api/app.py",
       "type": "imports",
       "weight": 0.7
     },
     {
       "source": "file:main.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/api/app.py",
-      "target": "file:src/thesisos/core/exceptions.py",
+      "source": "file:src/thesis_studio/api/app.py",
+      "target": "file:src/thesis_studio/core/exceptions.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/api/__init__.py",
-      "target": "file:src/thesisos/api/app.py",
+      "source": "file:src/thesis_studio/api/__init__.py",
+      "target": "file:src/thesis_studio/api/app.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/config/__init__.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "source": "file:src/thesis_studio/config/__init__.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/__init__.py",
-      "target": "file:src/thesisos/db/chroma.py",
+      "source": "file:src/thesis_studio/db/__init__.py",
+      "target": "file:src/thesis_studio/db/chroma.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/__init__.py",
-      "target": "file:src/thesisos/db/sqlite.py",
+      "source": "file:src/thesis_studio/db/__init__.py",
+      "target": "file:src/thesis_studio/db/sqlite.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/chroma.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "source": "file:src/thesis_studio/db/chroma.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/chroma.py",
-      "target": "file:src/thesisos/core/logging.py",
+      "source": "file:src/thesis_studio/db/chroma.py",
+      "target": "file:src/thesis_studio/core/logging.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/sqlite.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "source": "file:src/thesis_studio/db/sqlite.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/db/sqlite.py",
-      "target": "file:src/thesisos/core/logging.py",
+      "source": "file:src/thesis_studio/db/sqlite.py",
+      "target": "file:src/thesis_studio/core/logging.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/embedding/__init__.py",
-      "target": "file:src/thesisos/embedding/base.py",
+      "source": "file:src/thesis_studio/embedding/__init__.py",
+      "target": "file:src/thesis_studio/embedding/base.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/__init__.py",
-      "target": "file:src/thesisos/llm/base.py",
+      "source": "file:src/thesis_studio/llm/__init__.py",
+      "target": "file:src/thesis_studio/llm/base.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/__init__.py",
-      "target": "file:src/thesisos/llm/factory.py",
+      "source": "file:src/thesis_studio/llm/__init__.py",
+      "target": "file:src/thesis_studio/llm/factory.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "file:src/thesisos/core/exceptions.py",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "file:src/thesis_studio/core/exceptions.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "file:src/thesisos/llm/base.py",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "file:src/thesis_studio/llm/base.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "file:src/thesisos/llm/ollama.py",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "file:src/thesis_studio/llm/ollama.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "file:src/thesisos/llm/openai.py",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "file:src/thesis_studio/llm/openai.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/ollama.py",
-      "target": "file:src/thesisos/core/exceptions.py",
+      "source": "file:src/thesis_studio/llm/ollama.py",
+      "target": "file:src/thesis_studio/core/exceptions.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/ollama.py",
-      "target": "file:src/thesisos/core/logging.py",
+      "source": "file:src/thesis_studio/llm/ollama.py",
+      "target": "file:src/thesis_studio/core/logging.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/llm/openai.py",
-      "target": "file:src/thesisos/core/logging.py",
+      "source": "file:src/thesis_studio/llm/openai.py",
+      "target": "file:src/thesis_studio/core/logging.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/models/__init__.py",
-      "target": "file:src/thesisos/models/base.py",
+      "source": "file:src/thesis_studio/models/__init__.py",
+      "target": "file:src/thesis_studio/models/base.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/ui/chainlit_app.py",
-      "target": "file:src/thesisos/llm/factory.py",
+      "source": "file:src/thesis_studio/ui/chainlit_app.py",
+      "target": "file:src/thesis_studio/llm/factory.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/ui/nicegui_app.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "source": "file:src/thesis_studio/ui/nicegui_app.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/workflow/__init__.py",
-      "target": "file:src/thesisos/workflow/base.py",
+      "source": "file:src/thesis_studio/workflow/__init__.py",
+      "target": "file:src/thesis_studio/workflow/base.py",
       "type": "imports",
       "weight": 0.7
     },
     {
-      "source": "file:src/thesisos/api/app.py",
-      "target": "function:src/thesisos/api/app.py:create_app",
+      "source": "file:src/thesis_studio/api/app.py",
+      "target": "function:src/thesis_studio/api/app.py:create_app",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/config/settings.py",
-      "target": "class:src/thesisos/config/settings.py:Settings",
+      "source": "file:src/thesis_studio/config/settings.py",
+      "target": "class:src/thesis_studio/config/settings.py:Settings",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/config/settings.py",
-      "target": "function:src/thesisos/config/settings.py:get_settings",
+      "source": "file:src/thesis_studio/config/settings.py",
+      "target": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:ConfigError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:ConfigError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:LLMError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:LLMError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:LLMUnavailableError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:LLMUnavailableError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:DatabaseError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:DatabaseError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/exceptions.py",
-      "target": "class:src/thesisos/core/exceptions.py:WorkflowError",
+      "source": "file:src/thesis_studio/core/exceptions.py",
+      "target": "class:src/thesis_studio/core/exceptions.py:WorkflowError",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/logging.py",
-      "target": "function:src/thesisos/core/logging.py:setup_logging",
+      "source": "file:src/thesis_studio/core/logging.py",
+      "target": "function:src/thesis_studio/core/logging.py:setup_logging",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/core/logging.py",
-      "target": "function:src/thesisos/core/logging.py:get_logger",
+      "source": "file:src/thesis_studio/core/logging.py",
+      "target": "function:src/thesis_studio/core/logging.py:get_logger",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/db/chroma.py",
-      "target": "function:src/thesisos/db/chroma.py:get_chroma_client",
+      "source": "file:src/thesis_studio/db/chroma.py",
+      "target": "function:src/thesis_studio/db/chroma.py:get_chroma_client",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/db/sqlite.py",
-      "target": "function:src/thesisos/db/sqlite.py:get_engine",
+      "source": "file:src/thesis_studio/db/sqlite.py",
+      "target": "function:src/thesis_studio/db/sqlite.py:get_engine",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/db/sqlite.py",
-      "target": "function:src/thesisos/db/sqlite.py:get_session_factory",
+      "source": "file:src/thesis_studio/db/sqlite.py",
+      "target": "function:src/thesis_studio/db/sqlite.py:get_session_factory",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/db/sqlite.py",
-      "target": "function:src/thesisos/db/sqlite.py:get_session",
+      "source": "file:src/thesis_studio/db/sqlite.py",
+      "target": "function:src/thesis_studio/db/sqlite.py:get_session",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/embedding/base.py",
-      "target": "class:src/thesisos/embedding/base.py:EmbeddingProvider",
+      "source": "file:src/thesis_studio/embedding/base.py",
+      "target": "class:src/thesis_studio/embedding/base.py:EmbeddingProvider",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/llm/base.py",
-      "target": "class:src/thesisos/llm/base.py:LLMProvider",
+      "source": "file:src/thesis_studio/llm/base.py",
+      "target": "class:src/thesis_studio/llm/base.py:LLMProvider",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/llm/factory.py",
-      "target": "function:src/thesisos/llm/factory.py:create_llm",
+      "source": "file:src/thesis_studio/llm/factory.py",
+      "target": "function:src/thesis_studio/llm/factory.py:create_llm",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/llm/ollama.py",
-      "target": "class:src/thesisos/llm/ollama.py:OllamaProvider",
+      "source": "file:src/thesis_studio/llm/ollama.py",
+      "target": "class:src/thesis_studio/llm/ollama.py:OllamaProvider",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/llm/openai.py",
-      "target": "class:src/thesisos/llm/openai.py:OpenAIProvider",
+      "source": "file:src/thesis_studio/llm/openai.py",
+      "target": "class:src/thesis_studio/llm/openai.py:OpenAIProvider",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/models/base.py",
-      "target": "class:src/thesisos/models/base.py:Base",
+      "source": "file:src/thesis_studio/models/base.py",
+      "target": "class:src/thesis_studio/models/base.py:Base",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/ui/chainlit_app.py",
-      "target": "function:src/thesisos/ui/chainlit_app.py:on_chat_start",
+      "source": "file:src/thesis_studio/ui/chainlit_app.py",
+      "target": "function:src/thesis_studio/ui/chainlit_app.py:on_chat_start",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/ui/chainlit_app.py",
-      "target": "function:src/thesisos/ui/chainlit_app.py:on_message",
+      "source": "file:src/thesis_studio/ui/chainlit_app.py",
+      "target": "function:src/thesis_studio/ui/chainlit_app.py:on_message",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/ui/nicegui_app.py",
-      "target": "function:src/thesisos/ui/nicegui_app.py:build_ui",
+      "source": "file:src/thesis_studio/ui/nicegui_app.py",
+      "target": "function:src/thesis_studio/ui/nicegui_app.py:build_ui",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/ui/nicegui_app.py",
-      "target": "function:src/thesisos/ui/nicegui_app.py:main",
+      "source": "file:src/thesis_studio/ui/nicegui_app.py",
+      "target": "function:src/thesis_studio/ui/nicegui_app.py:main",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/workflow/base.py",
-      "target": "class:src/thesisos/workflow/base.py:WorkflowContext",
+      "source": "file:src/thesis_studio/workflow/base.py",
+      "target": "class:src/thesis_studio/workflow/base.py:WorkflowContext",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/workflow/base.py",
-      "target": "class:src/thesisos/workflow/base.py:StepResult",
+      "source": "file:src/thesis_studio/workflow/base.py",
+      "target": "class:src/thesis_studio/workflow/base.py:StepResult",
       "type": "contains",
       "weight": 1.0
     },
     {
-      "source": "file:src/thesisos/workflow/base.py",
-      "target": "class:src/thesisos/workflow/base.py:WorkflowStep",
+      "source": "file:src/thesis_studio/workflow/base.py",
+      "target": "class:src/thesis_studio/workflow/base.py:WorkflowStep",
       "type": "contains",
       "weight": 1.0
     },
     {
       "source": "file:main.py",
-      "target": "function:src/thesisos/api/app.py:create_app",
+      "target": "function:src/thesis_studio/api/app.py:create_app",
       "type": "calls",
       "weight": 0.8
     },
     {
       "source": "file:main.py",
-      "target": "function:src/thesisos/config/settings.py:get_settings",
+      "target": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/ui/chainlit_app.py:on_message",
-      "target": "function:src/thesisos/llm/factory.py:create_llm",
+      "source": "function:src/thesis_studio/ui/chainlit_app.py:on_message",
+      "target": "function:src/thesis_studio/llm/factory.py:create_llm",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/llm/factory.py:create_llm",
-      "target": "class:src/thesisos/llm/ollama.py:OllamaProvider",
+      "source": "function:src/thesis_studio/llm/factory.py:create_llm",
+      "target": "class:src/thesis_studio/llm/ollama.py:OllamaProvider",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/llm/factory.py:create_llm",
-      "target": "class:src/thesisos/llm/openai.py:OpenAIProvider",
+      "source": "function:src/thesis_studio/llm/factory.py:create_llm",
+      "target": "class:src/thesis_studio/llm/openai.py:OpenAIProvider",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/db/chroma.py:get_chroma_client",
-      "target": "function:src/thesisos/config/settings.py:get_settings",
+      "source": "function:src/thesis_studio/db/chroma.py:get_chroma_client",
+      "target": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/db/sqlite.py:get_engine",
-      "target": "function:src/thesisos/config/settings.py:get_settings",
+      "source": "function:src/thesis_studio/db/sqlite.py:get_engine",
+      "target": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "function:src/thesisos/ui/nicegui_app.py:main",
-      "target": "function:src/thesisos/config/settings.py:get_settings",
+      "source": "function:src/thesis_studio/ui/nicegui_app.py:main",
+      "target": "function:src/thesis_studio/config/settings.py:get_settings",
       "type": "calls",
       "weight": 0.8
     },
     {
-      "source": "class:src/thesisos/core/exceptions.py:ConfigError",
-      "target": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "source": "class:src/thesis_studio/core/exceptions.py:ConfigError",
+      "target": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "inherits",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/core/exceptions.py:LLMError",
-      "target": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "source": "class:src/thesis_studio/core/exceptions.py:LLMError",
+      "target": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "inherits",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/core/exceptions.py:LLMUnavailableError",
-      "target": "class:src/thesisos/core/exceptions.py:LLMError",
+      "source": "class:src/thesis_studio/core/exceptions.py:LLMUnavailableError",
+      "target": "class:src/thesis_studio/core/exceptions.py:LLMError",
       "type": "inherits",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/core/exceptions.py:DatabaseError",
-      "target": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "source": "class:src/thesis_studio/core/exceptions.py:DatabaseError",
+      "target": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "inherits",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/core/exceptions.py:WorkflowError",
-      "target": "class:src/thesisos/core/exceptions.py:ThesisOSError",
+      "source": "class:src/thesis_studio/core/exceptions.py:WorkflowError",
+      "target": "class:src/thesis_studio/core/exceptions.py:Thesis StudioError",
       "type": "inherits",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/llm/ollama.py:OllamaProvider",
-      "target": "class:src/thesisos/llm/base.py:LLMProvider",
+      "source": "class:src/thesis_studio/llm/ollama.py:OllamaProvider",
+      "target": "class:src/thesis_studio/llm/base.py:LLMProvider",
       "type": "implements",
       "weight": 0.9
     },
     {
-      "source": "class:src/thesisos/llm/openai.py:OpenAIProvider",
-      "target": "class:src/thesisos/llm/base.py:LLMProvider",
+      "source": "class:src/thesis_studio/llm/openai.py:OpenAIProvider",
+      "target": "class:src/thesis_studio/llm/base.py:LLMProvider",
       "type": "implements",
       "weight": 0.9
     },
     {
       "source": "config:.env.example",
-      "target": "file:src/thesisos/config/settings.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "configures",
       "weight": 0.6
     },
     {
       "source": "config:pyproject.toml",
-      "target": "file:src/thesisos/__init__.py",
+      "target": "file:src/thesis_studio/__init__.py",
       "type": "configures",
       "weight": 0.6
     },
@@ -1320,7 +1320,7 @@
     },
     {
       "source": "document:AGENTS.md",
-      "target": "file:src/thesisos/__init__.py",
+      "target": "file:src/thesis_studio/__init__.py",
       "type": "documents",
       "weight": 0.5
     },
@@ -1332,43 +1332,43 @@
     },
     {
       "source": "document:doc/WORKFLOW.md",
-      "target": "file:src/thesisos/workflow/base.py",
+      "target": "file:src/thesis_studio/workflow/base.py",
       "type": "documents",
       "weight": 0.5
     },
     {
       "source": "document:doc/ROADMAP.md",
-      "target": "file:src/thesisos/__init__.py",
+      "target": "file:src/thesis_studio/__init__.py",
       "type": "documents",
       "weight": 0.5
     },
     {
       "source": "file:tests/unit/test_config.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "tested_by",
       "weight": 0.5
     },
     {
       "source": "file:tests/unit/test_llm.py",
-      "target": "file:src/thesisos/llm/factory.py",
+      "target": "file:src/thesis_studio/llm/factory.py",
       "type": "tested_by",
       "weight": 0.5
     },
     {
       "source": "file:tests/unit/test_llm.py",
-      "target": "file:src/thesisos/llm/ollama.py",
+      "target": "file:src/thesis_studio/llm/ollama.py",
       "type": "tested_by",
       "weight": 0.5
     },
     {
       "source": "file:tests/unit/test_workflow.py",
-      "target": "file:src/thesisos/workflow/base.py",
+      "target": "file:src/thesis_studio/workflow/base.py",
       "type": "tested_by",
       "weight": 0.5
     },
     {
       "source": "file:tests/conftest.py",
-      "target": "file:src/thesisos/config/settings.py",
+      "target": "file:src/thesis_studio/config/settings.py",
       "type": "tested_by",
       "weight": 0.5
     }
@@ -1387,8 +1387,8 @@
       "name": "API 层",
       "description": "FastAPI 应用工厂、路由与异常处理",
       "nodeIds": [
-        "file:src/thesisos/api/__init__.py",
-        "file:src/thesisos/api/app.py"
+        "file:src/thesis_studio/api/__init__.py",
+        "file:src/thesis_studio/api/app.py"
       ]
     },
     {
@@ -1396,8 +1396,8 @@
       "name": "配置层",
       "description": "全局配置管理，从 .env 加载，环境变量前缀 THESISOS_",
       "nodeIds": [
-        "file:src/thesisos/config/__init__.py",
-        "file:src/thesisos/config/settings.py",
+        "file:src/thesis_studio/config/__init__.py",
+        "file:src/thesis_studio/config/settings.py",
         "config:.env.example",
         "config:pyproject.toml"
       ]
@@ -1407,9 +1407,9 @@
       "name": "核心层",
       "description": "领域异常层级与结构化日志",
       "nodeIds": [
-        "file:src/thesisos/core/__init__.py",
-        "file:src/thesisos/core/exceptions.py",
-        "file:src/thesisos/core/logging.py"
+        "file:src/thesis_studio/core/__init__.py",
+        "file:src/thesis_studio/core/exceptions.py",
+        "file:src/thesis_studio/core/logging.py"
       ]
     },
     {
@@ -1417,9 +1417,9 @@
       "name": "数据库层",
       "description": "SQLite 异步引擎与会话管理、ChromaDB 向量数据库客户端",
       "nodeIds": [
-        "file:src/thesisos/db/__init__.py",
-        "file:src/thesisos/db/chroma.py",
-        "file:src/thesisos/db/sqlite.py"
+        "file:src/thesis_studio/db/__init__.py",
+        "file:src/thesis_studio/db/chroma.py",
+        "file:src/thesis_studio/db/sqlite.py"
       ]
     },
     {
@@ -1427,11 +1427,11 @@
       "name": "LLM 层",
       "description": "大语言模型统一接口、工厂模式、Ollama/OpenAI 双实现",
       "nodeIds": [
-        "file:src/thesisos/llm/__init__.py",
-        "file:src/thesisos/llm/base.py",
-        "file:src/thesisos/llm/factory.py",
-        "file:src/thesisos/llm/ollama.py",
-        "file:src/thesisos/llm/openai.py"
+        "file:src/thesis_studio/llm/__init__.py",
+        "file:src/thesis_studio/llm/base.py",
+        "file:src/thesis_studio/llm/factory.py",
+        "file:src/thesis_studio/llm/ollama.py",
+        "file:src/thesis_studio/llm/openai.py"
       ]
     },
     {
@@ -1439,8 +1439,8 @@
       "name": "嵌入层",
       "description": "文本嵌入模型统一接口 Protocol",
       "nodeIds": [
-        "file:src/thesisos/embedding/__init__.py",
-        "file:src/thesisos/embedding/base.py"
+        "file:src/thesis_studio/embedding/__init__.py",
+        "file:src/thesis_studio/embedding/base.py"
       ]
     },
     {
@@ -1448,8 +1448,8 @@
       "name": "模型层",
       "description": "SQLAlchemy ORM 基类",
       "nodeIds": [
-        "file:src/thesisos/models/__init__.py",
-        "file:src/thesisos/models/base.py"
+        "file:src/thesis_studio/models/__init__.py",
+        "file:src/thesis_studio/models/base.py"
       ]
     },
     {
@@ -1457,8 +1457,8 @@
       "name": "工作流层",
       "description": "十阶段工作流接口与上下文传递",
       "nodeIds": [
-        "file:src/thesisos/workflow/__init__.py",
-        "file:src/thesisos/workflow/base.py"
+        "file:src/thesis_studio/workflow/__init__.py",
+        "file:src/thesis_studio/workflow/base.py"
       ]
     },
     {
@@ -1466,9 +1466,9 @@
       "name": "界面层",
       "description": "Chainlit 对话交互 + NiceGUI 管理面板",
       "nodeIds": [
-        "file:src/thesisos/ui/__init__.py",
-        "file:src/thesisos/ui/chainlit_app.py",
-        "file:src/thesisos/ui/nicegui_app.py"
+        "file:src/thesis_studio/ui/__init__.py",
+        "file:src/thesis_studio/ui/chainlit_app.py",
+        "file:src/thesis_studio/ui/nicegui_app.py"
       ]
     },
     {
@@ -1476,10 +1476,10 @@
       "name": "占位模块",
       "description": "待开发的功能模块：文献检索、数据分析、论文撰写、通用工具",
       "nodeIds": [
-        "file:src/thesisos/literature/__init__.py",
-        "file:src/thesisos/analysis/__init__.py",
-        "file:src/thesisos/writing/__init__.py",
-        "file:src/thesisos/utils/__init__.py"
+        "file:src/thesis_studio/literature/__init__.py",
+        "file:src/thesis_studio/analysis/__init__.py",
+        "file:src/thesis_studio/writing/__init__.py",
+        "file:src/thesis_studio/utils/__init__.py"
       ]
     },
     {
@@ -1513,9 +1513,9 @@
     {
       "id": "layer:package-init",
       "name": "包初始化",
-      "description": "ThesisOS 顶层包初始化",
+      "description": "Thesis Studio 顶层包初始化",
       "nodeIds": [
-        "file:src/thesisos/__init__.py"
+        "file:src/thesis_studio/__init__.py"
       ]
     }
   ],
@@ -1542,16 +1542,16 @@
       "title": "配置管理",
       "description": "Pydantic Settings 从 .env 加载全局配置，lru_cache 单例",
       "nodeIds": [
-        "file:src/thesisos/config/settings.py",
+        "file:src/thesis_studio/config/settings.py",
         "config:.env.example"
       ]
     },
     {
       "order": 4,
       "title": "核心异常",
-      "description": "领域异常层级，所有业务异常继承 ThesisOSError",
+      "description": "领域异常层级，所有业务异常继承 Thesis StudioError",
       "nodeIds": [
-        "file:src/thesisos/core/exceptions.py"
+        "file:src/thesis_studio/core/exceptions.py"
       ]
     },
     {
@@ -1559,7 +1559,7 @@
       "title": "日志配置",
       "description": "结构化日志，输出到 stderr",
       "nodeIds": [
-        "file:src/thesisos/core/logging.py"
+        "file:src/thesis_studio/core/logging.py"
       ]
     },
     {
@@ -1567,10 +1567,10 @@
       "title": "LLM 抽象层",
       "description": "Protocol 接口 + 工厂模式 + Ollama/OpenAI 双实现，配置驱动切换",
       "nodeIds": [
-        "file:src/thesisos/llm/base.py",
-        "file:src/thesisos/llm/factory.py",
-        "file:src/thesisos/llm/ollama.py",
-        "file:src/thesisos/llm/openai.py"
+        "file:src/thesis_studio/llm/base.py",
+        "file:src/thesis_studio/llm/factory.py",
+        "file:src/thesis_studio/llm/ollama.py",
+        "file:src/thesis_studio/llm/openai.py"
       ]
     },
     {
@@ -1578,8 +1578,8 @@
       "title": "数据库层",
       "description": "SQLite 异步引擎与会话管理、ChromaDB 向量数据库客户端",
       "nodeIds": [
-        "file:src/thesisos/db/sqlite.py",
-        "file:src/thesisos/db/chroma.py"
+        "file:src/thesis_studio/db/sqlite.py",
+        "file:src/thesis_studio/db/chroma.py"
       ]
     },
     {
@@ -1587,7 +1587,7 @@
       "title": "工作流引擎",
       "description": "十阶段工作流接口与上下文传递机制",
       "nodeIds": [
-        "file:src/thesisos/workflow/base.py"
+        "file:src/thesis_studio/workflow/base.py"
       ]
     },
     {
@@ -1595,7 +1595,7 @@
       "title": "API 层",
       "description": "FastAPI 应用工厂：健康检查端点与全局异常处理",
       "nodeIds": [
-        "file:src/thesisos/api/app.py"
+        "file:src/thesis_studio/api/app.py"
       ]
     },
     {
@@ -1603,8 +1603,8 @@
       "title": "界面层",
       "description": "Chainlit 对话交互 + NiceGUI 管理面板",
       "nodeIds": [
-        "file:src/thesisos/ui/chainlit_app.py",
-        "file:src/thesisos/ui/nicegui_app.py"
+        "file:src/thesis_studio/ui/chainlit_app.py",
+        "file:src/thesis_studio/ui/nicegui_app.py"
       ]
     },
     {

@@ -1,9 +1,9 @@
 """LLM 模块测试。"""
 
-from thesisos.config import Settings
-from thesisos.domain.ports.llm_port import LLMProvider
-from thesisos.infrastructure.llm.factory import LLMFactory
-from thesisos.infrastructure.llm.ollama_adapter import OllamaAdapter
+from thesis_studio.config import Settings
+from thesis_studio.domain.ports.llm_port import LLMProvider
+from thesis_studio.infrastructure.llm.factory import LLMFactory
+from thesis_studio.infrastructure.llm.ollama_adapter import OllamaAdapter
 
 
 def test_create_llm_ollama() -> None:

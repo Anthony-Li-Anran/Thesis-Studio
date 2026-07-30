@@ -1,4 +1,4 @@
-# ThesisOS 架构文档
+# Thesis Studio 架构文档
 
 > 基于 **Clean Architecture + Hexagonal Architecture + SOLID** 原则构建的 AI 论文研究助手。
 
@@ -56,7 +56,7 @@ domain/
 **设计原则**:
 - 所有实体是纯 Python `dataclass`，无 ORM 注解、无框架依赖
 - 端口接口使用 `typing.Protocol`（结构化类型），不依赖具体实现
-- 异常层级清晰：`ThesisOSError → LLMError → LLMUnavailableError`
+- 异常层级清晰：`Thesis StudioError → LLMError → LLMUnavailableError`
 - `Paper.from_dict()` 封装了检索结果到领域实体的映射逻辑
 
 ### 2.2 应用层 (`application/`) — 用例编排

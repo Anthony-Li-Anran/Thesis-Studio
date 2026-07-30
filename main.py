@@ -1,9 +1,9 @@
-"""ThesisOS 启动入口。"""
+"""Thesis Studio 启动入口。"""
 
 import uvicorn
 
-from thesisos.config import get_settings
-from thesisos.presentation.api import create_app
+from thesis_studio.config import get_settings
+from thesis_studio.presentation.api import create_app
 
 app = create_app()
 

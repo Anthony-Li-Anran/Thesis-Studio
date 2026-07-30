@@ -1,16 +1,16 @@
-"""生成 ThesisOS 知识图谱 JSON。"""
+﻿"""生成 Thesis Studio 知识图谱 JSON。"""
 import json
 import os
 from datetime import datetime
 
-PROJECT_ROOT = r"e:\AutoResearch\ThesisOS"
+PROJECT_ROOT = r"e:\AutoResearch\Thesis Studio"
 UA_DIR = os.path.join(PROJECT_ROOT, ".ua")
 os.makedirs(os.path.join(UA_DIR, "intermediate"), exist_ok=True)
 
 graph = {
     "version": "1.0.0",
     "project": {
-        "name": "ThesisOS",
+        "name": "Thesis Studio",
         "languages": ["python", "markdown", "toml"],
         "frameworks": ["FastAPI", "Pydantic", "SQLAlchemy", "Chainlit", "NiceGUI", "ChromaDB", "Ollama", "OpenAI"],
         "description": "面向毕业论文生成的 AI 研究助手 — Clean Architecture + Hexagonal + SOLID",
@@ -27,46 +27,46 @@ nodes = []
 
 # --- Domain Layer ---
 domain = [
-    ("src/thesisos/domain/__init__.py", "领域层入口", ["domain", "entry"]),
-    ("src/thesisos/domain/exceptions.py", "领域异常层级（13种异常）", ["domain", "exceptions"]),
-    ("src/thesisos/domain/models/__init__.py", "领域实体导出", ["domain", "models"]),
-    ("src/thesisos/domain/models/paper.py", "论文实体 + PaperStatus 枚举", ["domain", "entity", "paper"]),
-    ("src/thesisos/domain/models/project.py", "项目实体 + ProjectStatus 枚举", ["domain", "entity", "project"]),
-    ("src/thesisos/domain/models/search.py", "检索值对象 SearchQuery/SearchResult", ["domain", "value-object", "search"]),
-    ("src/thesisos/domain/ports/__init__.py", "端口接口导出", ["domain", "ports"]),
-    ("src/thesisos/domain/ports/llm_port.py", "LLMProvider 协议（generate + generate_stream）", ["domain", "port", "llm"]),
-    ("src/thesisos/domain/ports/embedding_port.py", "EmbeddingProvider 协议", ["domain", "port", "embedding"]),
-    ("src/thesisos/domain/ports/repository_port.py", "PaperRepository + ProjectRepository 协议", ["domain", "port", "repository"]),
-    ("src/thesisos/domain/ports/search_port.py", "LiteratureSearchProvider 协议", ["domain", "port", "search"]),
+    ("src/thesis_studio/domain/__init__.py", "领域层入口", ["domain", "entry"]),
+    ("src/thesis_studio/domain/exceptions.py", "领域异常层级（13种异常）", ["domain", "exceptions"]),
+    ("src/thesis_studio/domain/models/__init__.py", "领域实体导出", ["domain", "models"]),
+    ("src/thesis_studio/domain/models/paper.py", "论文实体 + PaperStatus 枚举", ["domain", "entity", "paper"]),
+    ("src/thesis_studio/domain/models/project.py", "项目实体 + ProjectStatus 枚举", ["domain", "entity", "project"]),
+    ("src/thesis_studio/domain/models/search.py", "检索值对象 SearchQuery/SearchResult", ["domain", "value-object", "search"]),
+    ("src/thesis_studio/domain/ports/__init__.py", "端口接口导出", ["domain", "ports"]),
+    ("src/thesis_studio/domain/ports/llm_port.py", "LLMProvider 协议（generate + generate_stream）", ["domain", "port", "llm"]),
+    ("src/thesis_studio/domain/ports/embedding_port.py", "EmbeddingProvider 协议", ["domain", "port", "embedding"]),
+    ("src/thesis_studio/domain/ports/repository_port.py", "PaperRepository + ProjectRepository 协议", ["domain", "port", "repository"]),
+    ("src/thesis_studio/domain/ports/search_port.py", "LiteratureSearchProvider 协议", ["domain", "port", "search"]),
 ]
 for fp, summary, tags in domain:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "simple"})
 
 # --- Application Layer ---
 app = [
-    ("src/thesisos/application/__init__.py", "应用层入口", ["application"]),
-    ("src/thesisos/application/literature/__init__.py", "文献用例导出", ["application", "literature"]),
-    ("src/thesisos/application/literature/search_service.py", "文献检索用例：多源检索→去重→入库", ["application", "literature", "search"]),
-    ("src/thesisos/application/literature/manage_service.py", "文献管理用例：筛选/分类/综述生成", ["application", "literature", "manage"]),
-    ("src/thesisos/application/analysis/__init__.py", "数据分析用例：数据理解/结果解释", ["application", "analysis"]),
-    ("src/thesisos/application/writing/__init__.py", "论文撰写用例：大纲/章节/润色", ["application", "writing"]),
+    ("src/thesis_studio/application/__init__.py", "应用层入口", ["application"]),
+    ("src/thesis_studio/application/literature/__init__.py", "文献用例导出", ["application", "literature"]),
+    ("src/thesis_studio/application/literature/search_service.py", "文献检索用例：多源检索→去重→入库", ["application", "literature", "search"]),
+    ("src/thesis_studio/application/literature/manage_service.py", "文献管理用例：筛选/分类/综述生成", ["application", "literature", "manage"]),
+    ("src/thesis_studio/application/analysis/__init__.py", "数据分析用例：数据理解/结果解释", ["application", "analysis"]),
+    ("src/thesis_studio/application/writing/__init__.py", "论文撰写用例：大纲/章节/润色", ["application", "writing"]),
 ]
 for fp, summary, tags in app:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "moderate"})
 
 # --- Infrastructure Layer ---
 infra = [
-    ("src/thesisos/infrastructure/__init__.py", "基础设施层入口", ["infrastructure"]),
-    ("src/thesisos/infrastructure/db/__init__.py", "数据库适配器导出", ["infrastructure", "db"]),
-    ("src/thesisos/infrastructure/db/sqlite.py", "SQLite 异步引擎 + ORM 模型 + 会话管理", ["infrastructure", "db", "sqlite", "orm"]),
-    ("src/thesisos/infrastructure/db/chroma.py", "ChromaDB 向量数据库客户端（线程安全单例）", ["infrastructure", "db", "chromadb", "vector"]),
-    ("src/thesisos/infrastructure/db/repositories.py", "SQLite 仓储实现（PaperRepository + ProjectRepository）", ["infrastructure", "db", "repository"]),
-    ("src/thesisos/infrastructure/llm/__init__.py", "LLM 适配器导出", ["infrastructure", "llm"]),
-    ("src/thesisos/infrastructure/llm/ollama_adapter.py", "Ollama 本地模型适配器（实现 LLMProvider）", ["infrastructure", "llm", "ollama"]),
-    ("src/thesisos/infrastructure/llm/openai_adapter.py", "OpenAI 云端模型适配器（实现 LLMProvider）", ["infrastructure", "llm", "openai"]),
-    ("src/thesisos/infrastructure/llm/factory.py", "LLM 适配器工厂（按配置创建实例）", ["infrastructure", "llm", "factory"]),
-    ("src/thesisos/infrastructure/embedding/__init__.py", "嵌入适配器（占位，Phase 2 实现）", ["infrastructure", "embedding"]),
-    ("src/thesisos/infrastructure/search/__init__.py", "检索适配器（占位，Phase 2 实现）", ["infrastructure", "search"]),
+    ("src/thesis_studio/infrastructure/__init__.py", "基础设施层入口", ["infrastructure"]),
+    ("src/thesis_studio/infrastructure/db/__init__.py", "数据库适配器导出", ["infrastructure", "db"]),
+    ("src/thesis_studio/infrastructure/db/sqlite.py", "SQLite 异步引擎 + ORM 模型 + 会话管理", ["infrastructure", "db", "sqlite", "orm"]),
+    ("src/thesis_studio/infrastructure/db/chroma.py", "ChromaDB 向量数据库客户端（线程安全单例）", ["infrastructure", "db", "chromadb", "vector"]),
+    ("src/thesis_studio/infrastructure/db/repositories.py", "SQLite 仓储实现（PaperRepository + ProjectRepository）", ["infrastructure", "db", "repository"]),
+    ("src/thesis_studio/infrastructure/llm/__init__.py", "LLM 适配器导出", ["infrastructure", "llm"]),
+    ("src/thesis_studio/infrastructure/llm/ollama_adapter.py", "Ollama 本地模型适配器（实现 LLMProvider）", ["infrastructure", "llm", "ollama"]),
+    ("src/thesis_studio/infrastructure/llm/openai_adapter.py", "OpenAI 云端模型适配器（实现 LLMProvider）", ["infrastructure", "llm", "openai"]),
+    ("src/thesis_studio/infrastructure/llm/factory.py", "LLM 适配器工厂（按配置创建实例）", ["infrastructure", "llm", "factory"]),
+    ("src/thesis_studio/infrastructure/embedding/__init__.py", "嵌入适配器（占位，Phase 2 实现）", ["infrastructure", "embedding"]),
+    ("src/thesis_studio/infrastructure/search/__init__.py", "检索适配器（占位，Phase 2 实现）", ["infrastructure", "search"]),
 ]
 for fp, summary, tags in infra:
     cpx = "complex" if "repositories" in fp else "moderate"
@@ -74,60 +74,60 @@ for fp, summary, tags in infra:
 
 # --- Presentation Layer ---
 pres = [
-    ("src/thesisos/presentation/__init__.py", "接口层入口", ["presentation"]),
-    ("src/thesisos/presentation/api/__init__.py", "API 模块导出", ["presentation", "api"]),
-    ("src/thesisos/presentation/api/app.py", "FastAPI 应用工厂 + CORS + 异常处理", ["presentation", "api", "fastapi"]),
-    ("src/thesisos/presentation/api/routes.py", "API 路由：/health, /papers, /writing, /analysis", ["presentation", "api", "routes"]),
-    ("src/thesisos/presentation/api/dependencies.py", "依赖注入容器：Services 单例组装所有用例", ["presentation", "api", "di"]),
-    ("src/thesisos/presentation/ui/__init__.py", "UI 模块导出", ["presentation", "ui"]),
-    ("src/thesisos/presentation/ui/chainlit_app.py", "Chainlit 对话交互界面（复用 LLM 实例）", ["presentation", "ui", "chainlit"]),
-    ("src/thesisos/presentation/ui/nicegui_app.py", "NiceGUI 管理面板（文献库/进度/分析/设置）", ["presentation", "ui", "nicegui"]),
+    ("src/thesis_studio/presentation/__init__.py", "接口层入口", ["presentation"]),
+    ("src/thesis_studio/presentation/api/__init__.py", "API 模块导出", ["presentation", "api"]),
+    ("src/thesis_studio/presentation/api/app.py", "FastAPI 应用工厂 + CORS + 异常处理", ["presentation", "api", "fastapi"]),
+    ("src/thesis_studio/presentation/api/routes.py", "API 路由：/health, /papers, /writing, /analysis", ["presentation", "api", "routes"]),
+    ("src/thesis_studio/presentation/api/dependencies.py", "依赖注入容器：Services 单例组装所有用例", ["presentation", "api", "di"]),
+    ("src/thesis_studio/presentation/ui/__init__.py", "UI 模块导出", ["presentation", "ui"]),
+    ("src/thesis_studio/presentation/ui/chainlit_app.py", "Chainlit 对话交互界面（复用 LLM 实例）", ["presentation", "ui", "chainlit"]),
+    ("src/thesis_studio/presentation/ui/nicegui_app.py", "NiceGUI 管理面板（文献库/进度/分析/设置）", ["presentation", "ui", "nicegui"]),
 ]
 for fp, summary, tags in pres:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "moderate"})
 
 # --- Config & Core ---
 cc = [
-    ("src/thesisos/config/__init__.py", "配置模块导出", ["config"]),
-    ("src/thesisos/config/settings.py", "Pydantic Settings：LLM/DB/API 全局配置", ["config", "pydantic", "settings"]),
-    ("src/thesisos/core/__init__.py", "核心工具导出", ["core"]),
-    ("src/thesisos/core/logging.py", "结构化日志配置（stderr 输出）", ["core", "logging"]),
-    ("src/thesisos/core/exceptions.py", "异常兼容重导出 → domain.exceptions", ["core", "exceptions", "compat"]),
+    ("src/thesis_studio/config/__init__.py", "配置模块导出", ["config"]),
+    ("src/thesis_studio/config/settings.py", "Pydantic Settings：LLM/DB/API 全局配置", ["config", "pydantic", "settings"]),
+    ("src/thesis_studio/core/__init__.py", "核心工具导出", ["core"]),
+    ("src/thesis_studio/core/logging.py", "结构化日志配置（stderr 输出）", ["core", "logging"]),
+    ("src/thesis_studio/core/exceptions.py", "异常兼容重导出 → domain.exceptions", ["core", "exceptions", "compat"]),
 ]
 for fp, summary, tags in cc:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "simple"})
 
 # --- Compat Layer ---
 compat = [
-    ("src/thesisos/api/__init__.py", "API 兼容重导出 → presentation.api", ["compat"]),
-    ("src/thesisos/api/app.py", "旧 API 工厂（兼容）", ["compat"]),
-    ("src/thesisos/ui/__init__.py", "UI 兼容重导出 → presentation.ui", ["compat"]),
-    ("src/thesisos/ui/chainlit_app.py", "旧 Chainlit（兼容）", ["compat"]),
-    ("src/thesisos/ui/nicegui_app.py", "旧 NiceGUI（兼容）", ["compat"]),
-    ("src/thesisos/db/__init__.py", "DB 兼容重导出 → infrastructure.db", ["compat"]),
-    ("src/thesisos/db/sqlite.py", "旧 SQLite 引擎（兼容）", ["compat"]),
-    ("src/thesisos/db/chroma.py", "旧 ChromaDB（兼容）", ["compat"]),
-    ("src/thesisos/llm/__init__.py", "LLM 兼容重导出 → infrastructure.llm", ["compat"]),
-    ("src/thesisos/llm/base.py", "旧 LLMProvider 协议（兼容）", ["compat"]),
-    ("src/thesisos/llm/ollama.py", "旧 OllamaProvider（兼容）", ["compat"]),
-    ("src/thesisos/llm/openai.py", "旧 OpenAIProvider（兼容）", ["compat"]),
-    ("src/thesisos/llm/factory.py", "旧 LLM 工厂（兼容）", ["compat"]),
-    ("src/thesisos/embedding/__init__.py", "Embedding 兼容重导出", ["compat"]),
-    ("src/thesisos/embedding/base.py", "旧 EmbeddingProvider 协议（兼容）", ["compat"]),
-    ("src/thesisos/models/__init__.py", "Models 兼容重导出", ["compat"]),
-    ("src/thesisos/models/base.py", "旧 ORM 基类（兼容）", ["compat"]),
+    ("src/thesis_studio/api/__init__.py", "API 兼容重导出 → presentation.api", ["compat"]),
+    ("src/thesis_studio/api/app.py", "旧 API 工厂（兼容）", ["compat"]),
+    ("src/thesis_studio/ui/__init__.py", "UI 兼容重导出 → presentation.ui", ["compat"]),
+    ("src/thesis_studio/ui/chainlit_app.py", "旧 Chainlit（兼容）", ["compat"]),
+    ("src/thesis_studio/ui/nicegui_app.py", "旧 NiceGUI（兼容）", ["compat"]),
+    ("src/thesis_studio/db/__init__.py", "DB 兼容重导出 → infrastructure.db", ["compat"]),
+    ("src/thesis_studio/db/sqlite.py", "旧 SQLite 引擎（兼容）", ["compat"]),
+    ("src/thesis_studio/db/chroma.py", "旧 ChromaDB（兼容）", ["compat"]),
+    ("src/thesis_studio/llm/__init__.py", "LLM 兼容重导出 → infrastructure.llm", ["compat"]),
+    ("src/thesis_studio/llm/base.py", "旧 LLMProvider 协议（兼容）", ["compat"]),
+    ("src/thesis_studio/llm/ollama.py", "旧 OllamaProvider（兼容）", ["compat"]),
+    ("src/thesis_studio/llm/openai.py", "旧 OpenAIProvider（兼容）", ["compat"]),
+    ("src/thesis_studio/llm/factory.py", "旧 LLM 工厂（兼容）", ["compat"]),
+    ("src/thesis_studio/embedding/__init__.py", "Embedding 兼容重导出", ["compat"]),
+    ("src/thesis_studio/embedding/base.py", "旧 EmbeddingProvider 协议（兼容）", ["compat"]),
+    ("src/thesis_studio/models/__init__.py", "Models 兼容重导出", ["compat"]),
+    ("src/thesis_studio/models/base.py", "旧 ORM 基类（兼容）", ["compat"]),
 ]
 for fp, summary, tags in compat:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "simple"})
 
 # --- Placeholder ---
 ph = [
-    ("src/thesisos/analysis/__init__.py", "分析模块（占位）", ["placeholder"]),
-    ("src/thesisos/literature/__init__.py", "文献模块（占位）", ["placeholder"]),
-    ("src/thesisos/writing/__init__.py", "写作模块（占位）", ["placeholder"]),
-    ("src/thesisos/utils/__init__.py", "工具模块（占位）", ["placeholder"]),
-    ("src/thesisos/workflow/__init__.py", "工作流模块（占位）", ["placeholder"]),
-    ("src/thesisos/workflow/base.py", "工作流协议：WorkflowContext + StepResult + WorkflowStep", ["workflow", "protocol"]),
+    ("src/thesis_studio/analysis/__init__.py", "分析模块（占位）", ["placeholder"]),
+    ("src/thesis_studio/literature/__init__.py", "文献模块（占位）", ["placeholder"]),
+    ("src/thesis_studio/writing/__init__.py", "写作模块（占位）", ["placeholder"]),
+    ("src/thesis_studio/utils/__init__.py", "工具模块（占位）", ["placeholder"]),
+    ("src/thesis_studio/workflow/__init__.py", "工作流模块（占位）", ["placeholder"]),
+    ("src/thesis_studio/workflow/base.py", "工作流协议：WorkflowContext + StepResult + WorkflowStep", ["workflow", "protocol"]),
 ]
 for fp, summary, tags in ph:
     nodes.append({"id": f"file:{fp}", "type": "file", "name": os.path.basename(fp), "filePath": fp, "summary": summary, "tags": tags, "complexity": "simple"})
@@ -186,67 +186,67 @@ def e(src, tgt, etype, weight=0.7):
     edges.append({"source": f"file:{src}", "target": f"file:{tgt}", "type": etype, "weight": weight})
 
 # Application → Domain ports
-e("src/thesisos/application/literature/search_service.py", "src/thesisos/domain/ports/search_port.py", "imports")
-e("src/thesisos/application/literature/search_service.py", "src/thesisos/domain/ports/repository_port.py", "imports")
-e("src/thesisos/application/literature/search_service.py", "src/thesisos/domain/models/paper.py", "imports")
-e("src/thesisos/application/literature/search_service.py", "src/thesisos/domain/models/search.py", "imports")
-e("src/thesisos/application/literature/manage_service.py", "src/thesisos/domain/ports/repository_port.py", "imports")
-e("src/thesisos/application/literature/manage_service.py", "src/thesisos/domain/ports/llm_port.py", "imports")
-e("src/thesisos/application/writing/__init__.py", "src/thesisos/domain/ports/llm_port.py", "imports")
-e("src/thesisos/application/writing/__init__.py", "src/thesisos/domain/ports/repository_port.py", "imports")
-e("src/thesisos/application/analysis/__init__.py", "src/thesisos/domain/ports/llm_port.py", "imports")
+e("src/thesis_studio/application/literature/search_service.py", "src/thesis_studio/domain/ports/search_port.py", "imports")
+e("src/thesis_studio/application/literature/search_service.py", "src/thesis_studio/domain/ports/repository_port.py", "imports")
+e("src/thesis_studio/application/literature/search_service.py", "src/thesis_studio/domain/models/paper.py", "imports")
+e("src/thesis_studio/application/literature/search_service.py", "src/thesis_studio/domain/models/search.py", "imports")
+e("src/thesis_studio/application/literature/manage_service.py", "src/thesis_studio/domain/ports/repository_port.py", "imports")
+e("src/thesis_studio/application/literature/manage_service.py", "src/thesis_studio/domain/ports/llm_port.py", "imports")
+e("src/thesis_studio/application/writing/__init__.py", "src/thesis_studio/domain/ports/llm_port.py", "imports")
+e("src/thesis_studio/application/writing/__init__.py", "src/thesis_studio/domain/ports/repository_port.py", "imports")
+e("src/thesis_studio/application/analysis/__init__.py", "src/thesis_studio/domain/ports/llm_port.py", "imports")
 
 # Infrastructure implements Domain ports
-e("src/thesisos/infrastructure/llm/ollama_adapter.py", "src/thesisos/domain/ports/llm_port.py", "implements", 0.9)
-e("src/thesisos/infrastructure/llm/openai_adapter.py", "src/thesisos/domain/ports/llm_port.py", "implements", 0.9)
-e("src/thesisos/infrastructure/db/repositories.py", "src/thesisos/domain/ports/repository_port.py", "implements", 0.9)
+e("src/thesis_studio/infrastructure/llm/ollama_adapter.py", "src/thesis_studio/domain/ports/llm_port.py", "implements", 0.9)
+e("src/thesis_studio/infrastructure/llm/openai_adapter.py", "src/thesis_studio/domain/ports/llm_port.py", "implements", 0.9)
+e("src/thesis_studio/infrastructure/db/repositories.py", "src/thesis_studio/domain/ports/repository_port.py", "implements", 0.9)
 
 # Infrastructure internal
-e("src/thesisos/infrastructure/db/repositories.py", "src/thesisos/infrastructure/db/sqlite.py", "imports")
-e("src/thesisos/infrastructure/llm/factory.py", "src/thesisos/infrastructure/llm/ollama_adapter.py", "imports")
-e("src/thesisos/infrastructure/llm/factory.py", "src/thesisos/infrastructure/llm/openai_adapter.py", "imports")
-e("src/thesisos/infrastructure/db/sqlite.py", "src/thesisos/config/settings.py", "imports")
-e("src/thesisos/infrastructure/db/chroma.py", "src/thesisos/config/settings.py", "imports")
-e("src/thesisos/infrastructure/llm/factory.py", "src/thesisos/config/settings.py", "imports")
+e("src/thesis_studio/infrastructure/db/repositories.py", "src/thesis_studio/infrastructure/db/sqlite.py", "imports")
+e("src/thesis_studio/infrastructure/llm/factory.py", "src/thesis_studio/infrastructure/llm/ollama_adapter.py", "imports")
+e("src/thesis_studio/infrastructure/llm/factory.py", "src/thesis_studio/infrastructure/llm/openai_adapter.py", "imports")
+e("src/thesis_studio/infrastructure/db/sqlite.py", "src/thesis_studio/config/settings.py", "imports")
+e("src/thesis_studio/infrastructure/db/chroma.py", "src/thesis_studio/config/settings.py", "imports")
+e("src/thesis_studio/infrastructure/llm/factory.py", "src/thesis_studio/config/settings.py", "imports")
 
 # Presentation → Application + Infrastructure
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/application/literature/search_service.py", "imports")
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/application/literature/manage_service.py", "imports")
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/application/writing/__init__.py", "imports")
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/application/analysis/__init__.py", "imports")
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/infrastructure/llm/factory.py", "imports")
-e("src/thesisos/presentation/api/dependencies.py", "src/thesisos/infrastructure/db/repositories.py", "imports")
-e("src/thesisos/presentation/api/routes.py", "src/thesisos/presentation/api/dependencies.py", "imports")
-e("src/thesisos/presentation/api/app.py", "src/thesisos/presentation/api/routes.py", "imports")
-e("src/thesisos/presentation/ui/chainlit_app.py", "src/thesisos/presentation/api/dependencies.py", "imports")
-e("src/thesisos/presentation/ui/nicegui_app.py", "src/thesisos/config/settings.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/application/literature/search_service.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/application/literature/manage_service.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/application/writing/__init__.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/application/analysis/__init__.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/infrastructure/llm/factory.py", "imports")
+e("src/thesis_studio/presentation/api/dependencies.py", "src/thesis_studio/infrastructure/db/repositories.py", "imports")
+e("src/thesis_studio/presentation/api/routes.py", "src/thesis_studio/presentation/api/dependencies.py", "imports")
+e("src/thesis_studio/presentation/api/app.py", "src/thesis_studio/presentation/api/routes.py", "imports")
+e("src/thesis_studio/presentation/ui/chainlit_app.py", "src/thesis_studio/presentation/api/dependencies.py", "imports")
+e("src/thesis_studio/presentation/ui/nicegui_app.py", "src/thesis_studio/config/settings.py", "imports")
 
 # Entry point
-e("main.py", "src/thesisos/presentation/api/app.py", "imports")
-e("main.py", "src/thesisos/config/settings.py", "imports")
+e("main.py", "src/thesis_studio/presentation/api/app.py", "imports")
+e("main.py", "src/thesis_studio/config/settings.py", "imports")
 
 # Compat → New
-e("src/thesisos/api/__init__.py", "src/thesisos/presentation/api/app.py", "imports")
-e("src/thesisos/llm/__init__.py", "src/thesisos/domain/ports/llm_port.py", "imports")
-e("src/thesisos/llm/__init__.py", "src/thesisos/infrastructure/llm/factory.py", "imports")
-e("src/thesisos/db/__init__.py", "src/thesisos/infrastructure/db/sqlite.py", "imports")
-e("src/thesisos/db/__init__.py", "src/thesisos/infrastructure/db/chroma.py", "imports")
-e("src/thesisos/models/__init__.py", "src/thesisos/domain/models/paper.py", "imports")
-e("src/thesisos/models/__init__.py", "src/thesisos/domain/models/project.py", "imports")
-e("src/thesisos/models/__init__.py", "src/thesisos/infrastructure/db/sqlite.py", "imports")
-e("src/thesisos/embedding/__init__.py", "src/thesisos/domain/ports/embedding_port.py", "imports")
+e("src/thesis_studio/api/__init__.py", "src/thesis_studio/presentation/api/app.py", "imports")
+e("src/thesis_studio/llm/__init__.py", "src/thesis_studio/domain/ports/llm_port.py", "imports")
+e("src/thesis_studio/llm/__init__.py", "src/thesis_studio/infrastructure/llm/factory.py", "imports")
+e("src/thesis_studio/db/__init__.py", "src/thesis_studio/infrastructure/db/sqlite.py", "imports")
+e("src/thesis_studio/db/__init__.py", "src/thesis_studio/infrastructure/db/chroma.py", "imports")
+e("src/thesis_studio/models/__init__.py", "src/thesis_studio/domain/models/paper.py", "imports")
+e("src/thesis_studio/models/__init__.py", "src/thesis_studio/domain/models/project.py", "imports")
+e("src/thesis_studio/models/__init__.py", "src/thesis_studio/infrastructure/db/sqlite.py", "imports")
+e("src/thesis_studio/embedding/__init__.py", "src/thesis_studio/domain/ports/embedding_port.py", "imports")
 
 # Tests → source (tested_by)
-e("tests/unit/test_llm.py", "src/thesisos/infrastructure/llm/factory.py", "tested_by", 0.5)
-e("tests/unit/test_llm.py", "src/thesisos/domain/ports/llm_port.py", "tested_by", 0.5)
-e("tests/unit/test_config.py", "src/thesisos/config/settings.py", "tested_by", 0.5)
-e("tests/unit/test_workflow.py", "src/thesisos/workflow/base.py", "tested_by", 0.5)
-e("tests/conftest.py", "src/thesisos/config/settings.py", "imports")
+e("tests/unit/test_llm.py", "src/thesis_studio/infrastructure/llm/factory.py", "tested_by", 0.5)
+e("tests/unit/test_llm.py", "src/thesis_studio/domain/ports/llm_port.py", "tested_by", 0.5)
+e("tests/unit/test_config.py", "src/thesis_studio/config/settings.py", "tested_by", 0.5)
+e("tests/unit/test_workflow.py", "src/thesis_studio/workflow/base.py", "tested_by", 0.5)
+e("tests/conftest.py", "src/thesis_studio/config/settings.py", "imports")
 
 # Docs → code
-edges.append({"source": "document:doc/ROADMAP.md", "target": "file:src/thesisos/infrastructure/db/sqlite.py", "type": "documents", "weight": 0.5})
-edges.append({"source": "document:doc/TECH_STACK.md", "target": "file:src/thesisos/infrastructure/llm/ollama_adapter.py", "type": "documents", "weight": 0.5})
-edges.append({"source": "document:doc/WORKFLOW.md", "target": "file:src/thesisos/application/writing/__init__.py", "type": "documents", "weight": 0.5})
+edges.append({"source": "document:doc/ROADMAP.md", "target": "file:src/thesis_studio/infrastructure/db/sqlite.py", "type": "documents", "weight": 0.5})
+edges.append({"source": "document:doc/TECH_STACK.md", "target": "file:src/thesis_studio/infrastructure/llm/ollama_adapter.py", "type": "documents", "weight": 0.5})
+edges.append({"source": "document:doc/WORKFLOW.md", "target": "file:src/thesis_studio/application/writing/__init__.py", "type": "documents", "weight": 0.5})
 
 graph["edges"] = edges
 
@@ -259,31 +259,31 @@ graph["layers"] = [
         "id": "layer:domain",
         "name": "领域层 (Domain)",
         "description": "最内层，零外部依赖。领域实体（Paper/Project/SearchQuery）、端口接口（LLMProvider/Repository/SearchProvider）、领域异常。Clean Architecture 核心，不依赖任何框架。",
-        "nodeIds": ids_in("src/thesisos/domain/"),
+        "nodeIds": ids_in("src/thesis_studio/domain/"),
     },
     {
         "id": "layer:application",
         "name": "应用层 (Application)",
         "description": "用例/服务编排层。LiteratureSearchService、LiteratureManageService、AnalysisService、WritingService。只依赖领域端口（DIP），不依赖基础设施实现。",
-        "nodeIds": ids_in("src/thesisos/application/"),
+        "nodeIds": ids_in("src/thesis_studio/application/"),
     },
     {
         "id": "layer:infrastructure",
         "name": "基础设施层 (Infrastructure)",
         "description": "端口适配器实现。OllamaAdapter/OpenAIAdapter 实现 LLMProvider、SQLitePaperRepository 实现 PaperRepository、ChromaDB 客户端、LLMFactory。依赖外部框架（httpx/SQLAlchemy/chromadb）。",
-        "nodeIds": ids_in("src/thesisos/infrastructure/"),
+        "nodeIds": ids_in("src/thesis_studio/infrastructure/"),
     },
     {
         "id": "layer:presentation",
         "name": "接口层 (Presentation)",
         "description": "FastAPI REST API（app/routes/dependencies）+ Chainlit 对话界面 + NiceGUI 管理面板。依赖注入容器（Services）组装所有用例服务。",
-        "nodeIds": ids_in("src/thesisos/presentation/"),
+        "nodeIds": ids_in("src/thesis_studio/presentation/"),
     },
     {
         "id": "layer:config-core",
         "name": "配置与核心 (Config & Core)",
         "description": "Pydantic Settings 全局配置管理（.env 加载，单例模式）+ 结构化日志 + 异常兼容层。",
-        "nodeIds": ids_in("src/thesisos/config/") + ids_in("src/thesisos/core/"),
+        "nodeIds": ids_in("src/thesis_studio/config/") + ids_in("src/thesis_studio/core/"),
     },
     {
         "id": "layer:compat",
@@ -312,11 +312,11 @@ graph["tour"] = [
         "title": "领域层 — 核心实体与端口",
         "description": "Clean Architecture 最内层：Paper/Project 领域实体、LLMProvider/Repository 端口协议、13 种领域异常层级。零外部依赖。",
         "nodeIds": [
-            "file:src/thesisos/domain/models/paper.py",
-            "file:src/thesisos/domain/models/project.py",
-            "file:src/thesisos/domain/ports/llm_port.py",
-            "file:src/thesisos/domain/ports/repository_port.py",
-            "file:src/thesisos/domain/exceptions.py",
+            "file:src/thesis_studio/domain/models/paper.py",
+            "file:src/thesis_studio/domain/models/project.py",
+            "file:src/thesis_studio/domain/ports/llm_port.py",
+            "file:src/thesis_studio/domain/ports/repository_port.py",
+            "file:src/thesis_studio/domain/exceptions.py",
         ],
     },
     {
@@ -324,9 +324,9 @@ graph["tour"] = [
         "title": "应用层 — 用例编排",
         "description": "LiteratureSearchService 编排多源检索→去重→入库流程；WritingService 处理大纲生成和章节撰写。只依赖领域端口（DIP）。",
         "nodeIds": [
-            "file:src/thesisos/application/literature/search_service.py",
-            "file:src/thesisos/application/literature/manage_service.py",
-            "file:src/thesisos/application/writing/__init__.py",
+            "file:src/thesis_studio/application/literature/search_service.py",
+            "file:src/thesis_studio/application/literature/manage_service.py",
+            "file:src/thesis_studio/application/writing/__init__.py",
         ],
     },
     {
@@ -334,10 +334,10 @@ graph["tour"] = [
         "title": "基础设施层 — 适配器实现",
         "description": "OllamaAdapter/OpenAIAdapter 实现 LLMProvider 端口；SQLitePaperRepository 实现 PaperRepository 端口；LLMFactory 按配置创建对应适配器。",
         "nodeIds": [
-            "file:src/thesisos/infrastructure/llm/ollama_adapter.py",
-            "file:src/thesisos/infrastructure/llm/openai_adapter.py",
-            "file:src/thesisos/infrastructure/llm/factory.py",
-            "file:src/thesisos/infrastructure/db/repositories.py",
+            "file:src/thesis_studio/infrastructure/llm/ollama_adapter.py",
+            "file:src/thesis_studio/infrastructure/llm/openai_adapter.py",
+            "file:src/thesis_studio/infrastructure/llm/factory.py",
+            "file:src/thesis_studio/infrastructure/db/repositories.py",
         ],
     },
     {
@@ -345,16 +345,16 @@ graph["tour"] = [
         "title": "接口层 — API 与依赖注入",
         "description": "FastAPI 应用工厂 + CORS + 异常处理；RESTful 路由（/health, /papers, /writing, /analysis）；Services 依赖注入容器组装所有用例。",
         "nodeIds": [
-            "file:src/thesisos/presentation/api/app.py",
-            "file:src/thesisos/presentation/api/routes.py",
-            "file:src/thesisos/presentation/api/dependencies.py",
+            "file:src/thesis_studio/presentation/api/app.py",
+            "file:src/thesis_studio/presentation/api/routes.py",
+            "file:src/thesis_studio/presentation/api/dependencies.py",
         ],
     },
     {
         "order": 6,
         "title": "配置与启动",
         "description": "Pydantic Settings 从 .env 加载配置，支持 Ollama/OpenAI 切换；main.py 启动 uvicorn；SQLite + ChromaDB 双数据库。",
-        "nodeIds": ["file:src/thesisos/config/settings.py", "file:main.py", "config:pyproject.toml"],
+        "nodeIds": ["file:src/thesis_studio/config/settings.py", "file:main.py", "config:pyproject.toml"],
     },
     {
         "order": 7,

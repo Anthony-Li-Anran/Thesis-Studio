@@ -1,4 +1,4 @@
-# ThesisOS
+# Thesis Studio
 
 面向本科毕业论文生成的个人开源 AI 研究助手系统。
 
@@ -17,8 +17,8 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/yourusername/thesisos.git
-cd thesisos
+git clone https://github.com/yourusername/thesis_studio.git
+cd thesis_studio
 poetry install
 poetry run python main.py
 ```

@@ -1,8 +1,8 @@
-# ThesisOS 技术栈
+# Thesis Studio 技术栈
 
 ## 概述
 
-本文档列出 ThesisOS 系统所需的核心技术栈，按功能模块分类，并提供推荐版本和选型理由。
+本文档列出 Thesis Studio 系统所需的核心技术栈，按功能模块分类，并提供推荐版本和选型理由。
 
 ---
 
@@ -223,9 +223,9 @@ LLM:
 
 ```toml
 [tool.poetry]
-name = "thesisos"
+name = "thesis_studio"
 version = "0.1.0"
-description = "面向本科毕业论文生成的 ThesisOS 系统"
+description = "面向本科毕业论文生成的 Thesis Studio 系统"
 authors = ["Your Name <your.email@example.com>"]
 license = "MIT"
 readme = "README.md"
@@ -290,8 +290,8 @@ build-backend = "poetry.core.masonry.api"
 
 ```bash
 # 克隆项目
-git clone https://github.com/yourusername/thesisos.git
-cd thesisos
+git clone https://github.com/yourusername/thesis_studio.git
+cd thesis_studio
 
 # 安装依赖
 poetry install

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from thesisos.config import Settings, get_settings
+from thesis_studio.config import Settings, get_settings
 
 
 @pytest.fixture(autouse=True)
