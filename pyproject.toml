@@ -1,7 +1,7 @@
 [project]
 name = "thesis_studio"
 version = "0.1.0"
-description = "面向本科生毕业论文生成的开源 AI AutoResearch OS"
+description = "面向本科生毕业论文生成的开源 AI AutoResearch Studio"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.11"

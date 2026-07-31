@@ -8,7 +8,6 @@
 - infrastructure/ 基础设施层：端口适配器实现（依赖外部框架）
 - presentation/ 接口层：FastAPI、Chainlit、NiceGUI
 - config/     配置管理
-- core/       核心工具
 """
 
 __version__ = "0.1.0"
