@@ -1,4 +1,4 @@
-"""SQLite 异步引擎、ORM 模型与会话管理。"""
+"""SQLite async engine, ORM models, and session management."""
 
 from collections.abc import AsyncIterator
 
@@ -18,22 +18,22 @@ logger = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# ORM 基类与模型（基础设施层内部使用，不暴露到领域层）
+# ORM base and models (internal infrastructure, not exposed to domain)
 # ---------------------------------------------------------------------------
 
 
 class Base(DeclarativeBase):
-    """所有 ORM 模型的基类。"""
+    """Base class for all ORM models."""
 
 
 class PaperModel(Base):
-    """论文 ORM 模型。"""
+    """Paper ORM model."""
 
     __tablename__ = "papers"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(500), nullable=False, index=True)
-    authors = Column(Text, default="")  # JSON 编码的列表
+    authors = Column(Text, default="")  # JSON-encoded list
     abstract = Column(Text, default="")
     year = Column(Integer, nullable=True)
     doi = Column(String(200), nullable=True, unique=True)
@@ -50,26 +50,45 @@ class PaperModel(Base):
 
 
 class ProjectModel(Base):
-    """项目 ORM 模型。"""
+    """Project ORM model."""
 
     __tablename__ = "projects"
 
     id = Column(String(50), primary_key=True)
+    user_id = Column(String(50), default="", index=True)
     title = Column(String(500), nullable=False)
     description = Column(Text, default="")
     research_question = Column(Text, default="")
     hypothesis = Column(Text, default="")
     methodology = Column(Text, default="")
     keywords = Column(Text, default="")
-    status = Column(String(50), default="draft")
+    status = Column(String(50), default="init")
     paper_ids = Column(Text, default="")
     outline = Column(Text, default="")
     created_at = Column(Text, default="")
     updated_at = Column(Text, default="")
 
 
+class UserModel(Base):
+    """User ORM model."""
+
+    __tablename__ = "users"
+
+    id = Column(String(50), primary_key=True)
+    email = Column(String(200), nullable=False, unique=True, index=True)
+    name = Column(String(100), default="")
+    password_hash = Column(Text, default="")
+    created_at = Column(Text, default="")
+class UserSettingsModel(Base):
+    """User settings ORM model. JSON stored in TEXT column."""
+
+    __tablename__ = "user_settings"
+
+    user_id = Column(String(50), primary_key=True)
+    settings_json = Column(Text, default="")
+
 # ---------------------------------------------------------------------------
-# 引擎与会话管理
+# Engine and session management
 # ---------------------------------------------------------------------------
 
 _engine: AsyncEngine | None = None
@@ -77,7 +96,7 @@ _session_factory: async_sessionmaker[AsyncSession] | None = None
 
 
 def get_engine() -> AsyncEngine:
-    """获取全局异步引擎单例。"""
+    """Get global async engine singleton."""
     global _engine
     if _engine is None:
         settings = get_settings()
@@ -86,12 +105,12 @@ def get_engine() -> AsyncEngine:
             f"sqlite+aiosqlite:///{settings.db_path}",
             echo=False,
         )
-        logger.info("SQLite 引擎已初始化: %s", settings.db_path)
+        logger.info("SQLite engine initialized: %s", settings.db_path)
     return _engine
 
 
 def get_session_factory() -> async_sessionmaker[AsyncSession]:
-    """获取会话工厂。"""
+    """Get session factory."""
     global _session_factory
     if _session_factory is None:
         _session_factory = async_sessionmaker(
@@ -102,15 +121,16 @@ def get_session_factory() -> async_sessionmaker[AsyncSession]:
 
 
 async def get_session() -> AsyncIterator[AsyncSession]:
-    """FastAPI 依赖：获取数据库会话。"""
+    """FastAPI dependency: get database session."""
     factory = get_session_factory()
     async with factory() as session:
         yield session
 
 
 async def init_db() -> None:
-    """初始化数据库表。"""
+    """Initialize database tables."""
     engine = get_engine()
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    logger.info("数据库表已初始化")
+    logger.info("Database tables initialized")
+

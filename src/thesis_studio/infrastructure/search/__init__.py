@@ -1,7 +1,5 @@
-"""文献检索适配器（占位）。"""
+﻿"""文献检索适配器。"""
 
-from ..logging import get_logger
+from .arxiv_client import ArxivClient
 
-logger = get_logger(__name__)
-
-__all__: list[str] = []
+__all__ = ["ArxivClient"]

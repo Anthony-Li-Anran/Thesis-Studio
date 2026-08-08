@@ -165,6 +165,22 @@ input { outline: none; }
 .ts-btn-secondary:hover {
   background-color: var(--button-secondary-bg-hover);
 }
+/* Override Quasar bg-primary/text-white on QBtn inside dialogs (higher specificity) */
+.ts-dialog-card .q-btn.ts-btn-primary {
+  background-color: var(--button-primary-bg) !important;
+  color: var(--button-primary-text) !important;
+}
+.ts-dialog-card .q-btn.ts-btn-primary:hover {
+  background-color: var(--button-primary-bg-hover) !important;
+  color: var(--button-primary-text-hover) !important;
+}
+.ts-dialog-card .q-btn.ts-btn-secondary {
+  background-color: var(--button-secondary-bg) !important;
+  color: var(--button-secondary-text) !important;
+}
+.ts-dialog-card .q-btn.ts-btn-secondary:hover {
+  background-color: var(--button-secondary-bg-hover) !important;
+}
 .ts-nav-active {
   background-color: var(--nav-bg-active);
   color: var(--text-nav-primary);
@@ -192,6 +208,132 @@ input { outline: none; }
   background-color: var(--optionmenu-bg-hover);
   color: var(--fg-primary);
 }
+/* === Dialog card system: clean, minimal, Prism-native === */
+.ts-dialog-card {
+  background-color: var(--bg-sidepanel);
+  border: 1px solid var(--border-outline);
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+.ts-dialog-body { padding: 36px; overflow-y: auto; max-height: 90vh; }
+.ts-dialog-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 30px; height: 30px; display: flex;
+  align-items: center; justify-content: center;
+  color: var(--text-nav-tertiary); cursor: pointer;
+  border-radius: 8px; transition: all 0.15s; z-index: 10;
+}
+.ts-dialog-close:hover { color: var(--text-nav-primary); background: var(--nav-bg-hover-strong); }
+.ts-dialog-header { margin-bottom: 28px; }
+.ts-dialog-title { font-size: 20px; font-weight: 600; color: var(--text-nav-primary); letter-spacing: -0.01em; }
+.ts-dialog-subtitle { font-size: 13px; color: var(--text-nav-tertiary); margin-top: 4px; }
+.ts-dialog-form { display: flex; flex-direction: column; gap: 18px; }
+.ts-dialog-field { display: flex; flex-direction: column; }
+.ts-dialog-label { font-size: 12px; font-weight: 500; color: var(--text-nav-secondary); margin-bottom: 6px; }
+.ts-dialog-input { width: 100% !important; }
+.ts-dialog-input .q-field__control {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: 10px !important; min-height: 42px;
+  transition: border-color 0.15s;
+}
+.ts-dialog-input .q-field__native { color: var(--text-editor-primary); padding: 0 14px; font-size: 14px; }
+.ts-dialog-input .q-field__native::placeholder { color: var(--text-editor-tertiary); }
+.ts-dialog-input .q-field__control::before, .ts-dialog-input .q-field__control::after { border: none !important; }
+.ts-dialog-input.q-field--focused .q-field__control { border-color: var(--input-border-active) !important; }
+.ts-dialog-textarea .q-field__control { min-height: 84px !important; align-items: flex-start; padding-top: 10px; }
+.ts-dialog-input .q-field__append { padding: 0 10px; cursor: pointer; }
+.ts-dialog-error { color: #ef4444; font-size: 13px; min-height: 18px; margin-top: 8px; }
+.ts-dialog-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-outline); }
+.ts-dialog-card .q-btn {
+  min-height: 42px !important; border-radius: 10px !important;
+  text-transform: none !important; padding: 0 20px !important;
+  font-weight: 500; font-size: 14px;
+}
+.ts-dialog-links { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 13px; margin-top: 20px; }
+.ts-dialog-link { color: var(--text-nav-primary); cursor: pointer; transition: opacity 0.15s; user-select: none; }
+.ts-dialog-link:hover { opacity: 0.65; }
+.ts-dialog-dot { color: var(--text-nav-tertiary); }
+.ts-dialog-hint { color: var(--text-nav-secondary); }
+.ts-kw-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ts-kw-chip {
+  display: inline-flex; align-items: center; gap: 2px;
+  background: var(--button-secondary-bg); color: var(--button-secondary-text);
+  border-radius: 999px; padding: 4px 4px 4px 12px; font-size: 12px; font-weight: 500;
+}
+.ts-kw-chip-x {
+  border: none; background: none; color: inherit; cursor: pointer;
+  display: flex; padding: 2px; border-radius: 999px; transition: background 0.15s;
+}
+.ts-kw-chip-x:hover { background: var(--nav-bg-hover-strong); }
+.ts-eye-toggle {
+  color: var(--text-editor-tertiary); display: flex; align-items: center;
+  transition: color 0.15s; border: none; background: none;
+}
+.ts-eye-toggle:hover { color: var(--text-editor-primary); }
+/* === Settings: larger dialog === */
+.ts-settings-dialog { min-width: 720px; max-width: 800px; }
+.ts-settings-dialog .ts-dialog-body { padding: 32px; max-height: 85vh; }
+
+/* === Settings: tab navigation === */
+.ts-settings-tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--border-outline); }
+.ts-settings-tab { padding: 10px 20px; font-size: 13px; font-weight: 500; color: var(--text-nav-tertiary); cursor: pointer; transition: all 0.15s; border-bottom: 2px solid transparent; background: none; user-select: none; }
+.ts-settings-tab:hover { color: var(--text-nav-primary); }
+.ts-settings-tab.ts-settings-tab--active { color: var(--text-nav-primary); border-bottom-color: var(--fg-primary); }
+
+/* === Settings: agent dropdown === */
+.ts-agent-dropdown { position: relative; }
+.ts-agent-dropdown-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 10px; color: var(--text-editor-primary); font-size: 14px; cursor: pointer; transition: border-color 0.15s; }
+.ts-agent-dropdown-btn:hover { border-color: var(--input-border-hover); }
+.ts-agent-dropdown-arrow { transition: transform 0.15s; display: inline-flex; }
+.ts-agent-dropdown-btn.ts-agent-dropdown--open .ts-agent-dropdown-arrow { transform: rotate(180deg); }
+.ts-agent-dropdown-menu { position: absolute; top: 100%; left: 0; right: 0; z-index: 50; background: var(--bg-sidepanel); border: 1px solid var(--border-outline); border-radius: 10px; margin-top: 4px; box-shadow: 0 12px 32px rgba(0,0,0,0.3); overflow: hidden; }
+.ts-agent-dropdown-item { display: flex; align-items: center; gap: 8px; padding: 8px 14px; cursor: pointer; transition: background 0.1s; font-size: 13px; color: var(--text-nav-primary); user-select: none; }
+.ts-agent-dropdown-item:hover { background: var(--nav-bg-hover-strong); }
+.ts-agent-checkbox { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--input-border); display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+.ts-agent-checkbox--checked { background: var(--fg-primary); border-color: var(--fg-primary); }
+.ts-agent-checkbox svg { width: 10px; height: 10px; color: var(--bg-sidepanel); display: none; }
+.ts-agent-checkbox--checked svg { display: block; }
+.ts-agent-dropdown-divider { height: 1px; background: var(--border-outline); margin: 4px 0; }
+.ts-agent-dropdown-select-all { font-weight: 500; color: var(--text-nav-secondary); }
+
+/* === Settings: external API card === */
+.ts-external-api-card { background: var(--bg-sidepanel-secondary); border: 1px solid var(--border-outline); border-radius: 12px; padding: 18px; margin-bottom: 12px; }
+.ts-external-api-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ts-external-api-name { font-size: 15px; font-weight: 600; color: var(--text-nav-primary); }
+.ts-external-api-status { font-size: 11px; padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+.ts-external-api-status--enabled { background: rgba(34,197,94,0.12); color: #22c55e; }
+.ts-external-api-status--disabled { background: rgba(156,163,175,0.12); color: #9ca3af; }
+.ts-external-api-fields { display: flex; flex-direction: column; gap: 10px; }
+.ts-external-api-row { display: flex; gap: 10px; align-items: flex-end; }
+.ts-external-api-row .ts-dialog-field { flex: 1; }
+
+/* === Settings: test button === */
+.ts-test-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; background: var(--button-secondary-bg); color: var(--button-secondary-text); border: none; white-space: nowrap; position: relative; }
+.ts-test-btn:hover { background: var(--button-secondary-bg-hover); }
+
+
+/* === Settings: AI config list card === */
+.ts-ai-config-card { background: var(--bg-sidepanel-secondary); border: 1px solid var(--border-outline); border-radius: 12px; padding: 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ts-ai-config-info { flex: 1; min-width: 0; }
+.ts-ai-config-name { font-size: 14px; font-weight: 600; color: var(--text-nav-primary); }
+.ts-ai-config-meta { font-size: 12px; color: var(--text-nav-tertiary); margin-top: 2px; }
+.ts-ai-config-agents { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+.ts-ai-config-agent-tag { font-size: 10px; padding: 2px 6px; border-radius: 999px; background: var(--nav-bg-hover-strong); color: var(--text-nav-secondary); }
+.ts-ai-config-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+
+/* === Settings: add button area === */
+.ts-settings-add-area { display: flex; gap: 8px; margin-top: 16px; }
+
+/* === Settings: external API toggle === */
+.ts-external-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.ts-external-toggle-switch { width: 40px; height: 22px; border-radius: 999px; background: var(--input-border); transition: background 0.15s; position: relative; flex-shrink: 0; }
+.ts-external-toggle-switch--on { background: #22c55e; }
+.ts-external-toggle-knob { width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: left 0.15s; }
+.ts-external-toggle-switch--on .ts-external-toggle-knob { left: 20px; }
+
 </style>
 """
 

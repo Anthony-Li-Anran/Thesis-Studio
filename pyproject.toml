@@ -10,6 +10,7 @@ dependencies = [
     "uvicorn[standard]>=0.27",
     "pydantic-settings>=2.1",
     "httpx>=0.27",
+    "langgraph>=0.3",
     "sqlalchemy[asyncio]>=2.0",
     "aiosqlite>=0.19",
     "chromadb>=0.4",
@@ -43,6 +44,9 @@ select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/thesis_studio/presentation/ui/home_page.py" = ["SIM117", "E501"]
+"src/thesis_studio/presentation/ui/auth_card.py" = ["SIM117", "E501"]
+"src/thesis_studio/presentation/ui/new_project_card.py" = ["SIM117", "E501"]
+"src/thesis_studio/presentation/ui/theme.py" = ["E501"]
 
 [tool.ruff.format]
 quote-style = "double"

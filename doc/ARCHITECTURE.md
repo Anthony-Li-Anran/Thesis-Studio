@@ -85,7 +85,7 @@ application/
 infrastructure/
 ├── __init__.py
 ├── bootstrap/
-│   └── __init__.py          # ★ 组合根：唯一知道所有具体实现的模块
+?   ??? __init__.py          # ? ????get_services / get_current_user_repo / clear_guest_projects
 ├── db/
 │   ├── __init__.py
 │   ├── sqlite.py            # SQLite 异步引擎 + ORM 模型 + 会话管理
@@ -120,8 +120,16 @@ presentation/
 │   └── dependencies.py      # DI 重导出（桥接 infrastructure.bootstrap）
 └── ui/
     ├── __init__.py
-    ├── chainlit_app.py      # Chainlit 对话界面（复用 LLM 实例）
-    └── nicegui_app.py       # NiceGUI 管理面板
+    ??? auth_card.py          # 登录/注册/游客认证卡片
+    ??? delete_confirm_card.py # ?????????
+    ??? edit_project_card.py  # 项目编辑卡片
+    ??? home_page.py          # 首页（项目列表/搜索/排序/视图切换）
+    ??? i18n.py               # 中英文国际化
+    ??? new_project_card.py   # 新建项目卡片
+    ??? project_menu.py       # 项目三点菜单（编辑/删除）
+    ??? project_page.py       # 项目详情页
+    ??? settings_card.py      # 设置卡片（齿轮入口）
+    ??? theme.py              # 主题 & 样式系统
 ```
 
 **设计原则**:
@@ -233,4 +241,7 @@ from ..infrastructure.llm.factory import LLMFactory
 2. **组合根在 Infrastructure**: 遵循 Clean Architecture——组合根在最外层，Presentation 通过重导出桥接
 3. **领域实体含 `id`**: `Paper` 和 `Project` 自带 `uuid4` 生成的 `id`，Repository 的 `update()` 按 id 定位
 4. **`from_dict()` 在领域层**: 检索结果到实体的映射逻辑归属领域层，避免应用层包含数据转换代码
-5. **领域异常替代 `ValueError`**: 应用层统一抛出 `ValidationError`，接口层按类型映射 HTTP 状态码
+
+## 多Agents团队配置
+
+Researcher / Executor / Reviewer / Writer / Debater

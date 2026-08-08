@@ -27,6 +27,7 @@ class OpenAIAdapter:
         self,
         prompt: str,
         *,
+        system: str | None = None,
         temperature: float = 0.7,
         max_tokens: int | None = None,
     ) -> str:
@@ -35,9 +36,13 @@ class OpenAIAdapter:
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }
+        messages: list[dict[str, str]] = []
+        if system:
+            messages.append({"role": "system", "content": system})
+        messages.append({"role": "user", "content": prompt})
         body: dict[str, object] = {
             "model": self._model,
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": messages,
             "temperature": temperature,
         }
         if max_tokens is not None:
@@ -61,8 +66,9 @@ class OpenAIAdapter:
                 raise LLMRateLimitError("OpenAI API 速率限制，请稍后重试") from e
             if status == 400 and "token" in str(e.response.text).lower():
                 raise LLMTokenLimitError("Token 超限，请缩短输入") from e
-            logger.error("OpenAI HTTP %d 错误: %s", status, e)
-            raise LLMError(f"OpenAI API 返回错误 {status}") from e
+            resp_body = e.response.text[:500] if e.response.text else ""
+            logger.error("OpenAI HTTP %d: %s", status, resp_body)
+            raise LLMError(f"OpenAI API {status}: {resp_body[:200]}") from e
 
     async def generate_stream(
         self,

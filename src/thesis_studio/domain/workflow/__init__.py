@@ -1,5 +1,18 @@
-"""工作流引擎（兼容保留）。工作流步骤定义保留在此，编排逻辑待实现。"""
+﻿"""Workflow engine for Thesis Studio."""
 
 from .base import StepResult, WorkflowContext, WorkflowStep
+from .exploring_graph import build_exploring_graph, run_exploring
+from .exploring_state import ExploringState, IntentResult, NodeContext, ProgressCallback, Suggestion
 
-__all__ = ["WorkflowStep", "WorkflowContext", "StepResult"]
+__all__ = [
+    "WorkflowStep",
+    "WorkflowContext",
+    "StepResult",
+    "ExploringState",
+    "IntentResult",
+    "NodeContext",
+    "ProgressCallback",
+    "Suggestion",
+    "build_exploring_graph",
+    "run_exploring",
+]

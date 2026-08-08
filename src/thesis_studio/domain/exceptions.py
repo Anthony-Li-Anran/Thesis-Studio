@@ -1,49 +1,61 @@
-"""领域异常层级。所有业务异常继承 ThesisStudioError。"""
+"""领域异常层次。所有异常继承自 ThesisStudioError。"""
 
 
 class ThesisStudioError(Exception):
-    """所有 Thesis Studio 领域异常的基类。"""
+    """Thesis Studio 所有异常的基类。"""
 
 
 class ConfigError(ThesisStudioError):
-    """配置相关错误。"""
+    """配置缺失或非法。"""
 
 
 class LLMError(ThesisStudioError):
-    """LLM 调用相关错误。"""
+    """LLM 调用失败。"""
 
 
 class LLMUnavailableError(LLMError):
-    """LLM 服务不可用（如 Ollama 未启动）。"""
+    """LLM 不可用，如 Ollama 未启动。"""
 
 
 class LLMRateLimitError(LLMError):
-    """LLM API 速率限制。"""
+    """LLM API 触发限流。"""
 
 
 class LLMTokenLimitError(LLMError):
-    """LLM Token 超限。"""
+    """LLM 超出 Token 上限。"""
 
 
 class DatabaseError(ThesisStudioError):
-    """数据库操作相关错误。"""
+    """数据库读写异常。"""
 
 
 class WorkflowError(ThesisStudioError):
-    """工作流执行相关错误。"""
+    """工作流编排异常。"""
 
 
 class LiteratureError(ThesisStudioError):
-    """文献检索相关错误。"""
+    """文献检索异常。"""
 
 
 class AnalysisError(ThesisStudioError):
-    """数据分析相关错误。"""
+    """分析阶段异常。"""
 
 
 class WritingError(ThesisStudioError):
-    """论文撰写相关错误。"""
+    """写作阶段异常。"""
 
 
 class ValidationError(ThesisStudioError):
-    """领域验证错误。"""
+    """输入校验失败。"""
+
+
+class AuthError(ThesisStudioError):
+    """认证授权异常。"""
+
+
+class AuthConflictError(AuthError):
+    """注册冲突，如邮箱已存在。"""
+
+
+class AuthCredentialError(AuthError):
+    """登录凭据无效。"""

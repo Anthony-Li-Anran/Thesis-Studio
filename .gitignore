@@ -1,19 +1,48 @@
+# Python bytecode / virtual env
 __pycache__/
 *.py[cod]
+*.pyo
 *.egg-info/
 dist/
 build/
 .venv/
 venv/
 env/
+
+# Editor / local config
 .idea/
 .vscode/
 *.swp
+
+# Environment / secrets
 .env
+.env.*
+
+# App runtime data and local DB
+.data/
 data/
+*.db
+*.sqlite3
+*.sqlite
+
+# Test / coverage / quality artifacts
+tests/
 .pytest_cache/
+.pytest_cache
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 .mypy_cache/
 .ruff_cache/
+*.log
+
+# UI / local storage temp files
+.nicegui/
+.nicegui/**
 .ua/
+
+# Temporary or generated local repair files
+_fix_data.json
+fix_data.json
+*.tmp

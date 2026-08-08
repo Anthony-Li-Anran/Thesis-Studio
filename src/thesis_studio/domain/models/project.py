@@ -7,13 +7,26 @@ from uuid import uuid4
 
 
 class ProjectStatus(StrEnum):
-    """项目状态。"""
+    """项目状态机。"""
 
-    DRAFT = "draft"  # 草稿
-    LITERATURE_REVIEW = "literature_review"  # 文献综述中
-    WRITING = "writing"  # 撰写中
-    REVISING = "revising"  # 修改中
-    COMPLETED = "completed"  # 已完成
+    INIT = "init"
+    EXPLORING = "exploring"
+    DESIGNING = "designing"
+    RESEARCHING = "researching"
+    WRITING = "writing"
+    POLISHING = "polishing"
+    COMPLETED = "completed"
+
+
+STATUS_FLOW: list[ProjectStatus] = [
+    ProjectStatus.INIT,
+    ProjectStatus.EXPLORING,
+    ProjectStatus.DESIGNING,
+    ProjectStatus.RESEARCHING,
+    ProjectStatus.WRITING,
+    ProjectStatus.POLISHING,
+    ProjectStatus.COMPLETED,
+]
 
 
 @dataclass
@@ -23,11 +36,12 @@ class Project:
     title: str
     description: str = ""
     id: str = field(default_factory=lambda: uuid4().hex[:12])
+    user_id: str = ""
     research_question: str = ""
     hypothesis: str = ""
     methodology: str = ""
     keywords: list[str] = field(default_factory=list)
-    status: ProjectStatus = ProjectStatus.DRAFT
+    status: ProjectStatus = ProjectStatus.INIT
     paper_ids: list[str] = field(default_factory=list)
     outline: list[str] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.now)

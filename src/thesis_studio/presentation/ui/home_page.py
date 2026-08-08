@@ -1,8 +1,24 @@
 """Prism dark theme homepage: project list (desktop only)."""
 
-from nicegui import ui
+import contextlib
+import re as _re
 
+from nicegui import app, ui
+
+from ...infrastructure.bootstrap import clear_guest_projects, get_current_user_repo
+from .auth_card import auth_card
+from .delete_confirm_card import delete_confirm_card
+from .edit_project_card import edit_project_card
+from .exploring.exploring_page import exploring_page  # noqa: F401
+from .i18n import get_lang, status_color, t, toggle_lang
+from .new_project_card import new_project_card
+from .project_menu import project_menu
+from .project_page import project_page  # noqa: F401
+from .settings_card import gear_icon, settings_card
 from .theme import apply_theme, logo
+
+# View & sort state (module-level, shared across page renders)
+_VIEW_STATE = {"view": "list", "sort_field": "updated_at", "sort_dir": "desc", "search": ""}
 
 _SEARCH_INPUT = (
     "ts-text-editor-primary ts-bg-input ts-border-input ts-search-input "
@@ -264,27 +280,8 @@ if (document.readyState === 'loading') {
 _HEADER_JS = """\
 <script>
 function tsInitHeader() {
-  const tsI18n = {
-    'ts-i18n-nav-projects': { en: 'Your Projects', zh: '\u4f60\u7684\u9879\u76ee' },
-    'ts-i18n-title': { en: 'Your Projects', zh: '\u4f60\u7684\u9879\u76ee' },
-    'ts-i18n-import': { en: 'Import', zh: '\u5bfc\u5165' },
-   'ts-i18n-new': { en: 'New', zh: '\u65b0\u5efa' },
-    'ts-i18n-signin': { en: 'Sign in', zh: '\u767b\u5f55' },
-    'ts-i18n-sort-name': { en: 'Name', zh: '\u540d\u79f0' },
-    'ts-i18n-sort-date': { en: 'Last edited', zh: '\u6700\u8fd1\u7f16\u8f91' }
-  };
-  const tsSearchPh = { en: 'Search', zh: '\u641c\u7d22' };
-  function tsApplyLang(lang) {
-    Object.keys(tsI18n).forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) el.textContent = tsI18n[id][lang];
-    });
-    var search = document.querySelector('.ts-search-input');
-    if (search) search.setAttribute('placeholder', tsSearchPh[lang]);
-  }
   const themeBtn = document.getElementById('ts-theme-toggle');
-  const langBtn = document.getElementById('ts-lang-switch');
-  if (!themeBtn || !langBtn) return false;
+  if (!themeBtn) return false;
   if (themeBtn.dataset.tsBound) return true;
   themeBtn.dataset.tsBound = '1';
   themeBtn.addEventListener('click', function() {
@@ -301,13 +298,6 @@ function tsInitHeader() {
       if (sun) sun.style.display = 'none';
       if (moon) moon.style.display = '';
     }
-  });
-  langBtn.addEventListener('click', function() {
-    const label = langBtn.querySelector('.ts-lang-label');
-    if (!label) return;
-    const isEn = label.textContent === 'EN';
-    label.textContent = isEn ? '\u4e2d' : 'EN';
-    tsApplyLang(isEn ? 'zh' : 'en');
   });
   function tsInitSortBtn(btnId, chevId) {
     const btn = document.getElementById(btnId);
@@ -355,18 +345,19 @@ def home_page() -> None:
     with ui.element("div").classes("flex h-full min-h-0 w-full flex-col"):
         with ui.element("div").classes("min-h-0 flex-1"):
             with ui.element("div").classes("flex h-full w-full flex-col"):
+                dialog = auth_card()
                 with ui.element("main").classes("ts-bg-app min-h-0 w-full flex-1"):
                     with ui.element("div").classes(
                         "w-full h-full ts-bg-app box-border "
                         "transition-colors border-2 border-transparent"
                     ):
-                        _build_desktop()
+                        _build_desktop(dialog)
 
 
-def _build_desktop() -> None:
+def _build_desktop(dialog: ui.dialog) -> None:
     with ui.element("div").classes("w-full h-full relative"):
         with ui.element("div").classes("flex h-full w-full"):
-            _build_sidebar()
+            _build_sidebar(dialog)
             with (
                 ui.element("div")
                 .classes(
@@ -379,10 +370,10 @@ def _build_desktop() -> None:
                 ui.element("div").classes(
                     "rounded-full bg-transparent transition-colors duration-150 h-full w-0.5"
                 )
-            _build_main_panel()
+            _build_main_panel(dialog)
 
 
-def _build_sidebar() -> None:
+def _build_sidebar(dialog: ui.dialog) -> None:
     with (
         ui.element("div")
         .classes("ts-bg-app z-[2000] w-72 shrink-0 transition-[width] duration-200")
@@ -398,12 +389,25 @@ def _build_sidebar() -> None:
             with ui.element("div").classes("flex flex-col flex-1 w-full px-6 gap-4"):
                 with ui.element("div").classes("flex flex-col pt-3"):
                     with ui.element("div").classes("rounded-lg transition-colors"):
-                        _nav_item("Your Projects")
+                        _nav_item(t("nav.projects"))
                 ui.element("div").classes("grow")
             with ui.element("div").classes("text-sm text-white border-t ts-border-outline"):
                 with ui.element("div").classes("flex items-center gap-2 h-12 px-4"):
-                    _sign_in_button()
+                    if app.storage.user.get("user_id"):
+                        _user_info()
+                    else:
+                        _sign_in_button(dialog)
                     ui.element("div").classes("grow")
+                    _settings_gear_button()
+
+
+def _settings_gear_button() -> None:
+    settings_dialog = settings_card()
+    with ui.element("button").classes(
+        "ts-btn-tertiary inline-flex items-center justify-center "
+        "rounded-full cursor-pointer w-7 h-7"
+    ).on("click", lambda: settings_dialog.open()):
+        ui.html(gear_icon())
 
 
 def _sidebar_toggle() -> None:
@@ -434,18 +438,24 @@ def _theme_toggle_button() -> None:
 
 
 def _language_switch_button() -> None:
-    with (
-        ui.element("button")
-        .classes(
-            "ts-btn-tertiary inline-flex items-center justify-center "
-            "rounded-full cursor-pointer h-[38px] px-3 text-sm font-medium"
-        )
-        .props("id=ts-lang-switch")
-    ):
-        ui.label("EN").classes("ts-lang-label")
+    """语言切换按钮。"""
+    lang = get_lang()
+    label = "中" if lang == "zh" else "EN"
+    btn = ui.element("button").classes(
+        "ts-btn-tertiary inline-flex items-center justify-center "
+        "rounded-full cursor-pointer h-[38px] px-3 text-sm font-medium"
+    )
+
+    def _switch(_: object) -> None:
+        toggle_lang()
+        ui.navigate.reload()
+
+    btn.on("click", _switch)
+    with btn:
+        ui.label(label).classes("ts-lang-label")
 
 
-def _build_main_panel() -> None:
+def _build_main_panel(dialog: ui.dialog) -> None:
     with ui.element("div").classes("p-2 h-full grow min-w-0 relative"):
         with ui.element("div").classes("ts-bg-sidepanel h-full rounded rounded-xl"):
             with ui.element("div").classes("flex flex-col gap-0 h-full"):
@@ -453,10 +463,10 @@ def _build_main_panel() -> None:
                     "flex flex-row justify-between items-center "
                     "px-5 py-3 gap-3 border-b ts-border-divider"
                 ):
-                    ui.label("Your Projects").classes(
+                    ui.label(t("nav.projects")).classes(
                         "font-semibold text-lg font-inter ts-text-nav "
                         "flex-1 text-nowrap overflow-hidden text-ellipsis"
-                    ).props("id=ts-i18n-title")
+                    )
                     _theme_toggle_button()
                     _language_switch_button()
                     with ui.element("div").classes("relative shrink-0 w-[300px]"):
@@ -465,57 +475,88 @@ def _build_main_panel() -> None:
                             "items-center ps-3.5 pointer-events-none"
                         ):
                             ui.html(_SEARCH_ICON)
-                        ui.element("input").props('placeholder="Search"').classes(_SEARCH_INPUT)
-                    _button_group()
+                        search_input = ui.element("input").props(
+                            'placeholder="' + t("search") + '"'
+                        ).classes(_SEARCH_INPUT)
+                        _bind_search(search_input)
+                    _button_group(dialog)
                 with ui.element("div").classes("flex min-h-0 flex-1 flex-col overflow-auto"):
                     with ui.element("div").classes("flex flex-col ts-divide-list"):
                         _build_sort_header()
-                        _build_skeleton_items()
+                        _build_project_list()
 
 
-def _button_group() -> None:
+def _button_group(auth_dialog: ui.dialog) -> None:
     with ui.element("div").classes(
         "flex flex-row items-center gap-2 ts-bg-input h-[38px] rounded-full"
     ):
         _list_view_button()
         _grid_view_button()
         _import_button()
-        _new_button()
+        new_dialog = new_project_card()
+        _new_button(auth_dialog, new_dialog)
 
 
 def _list_view_button() -> None:
-    with ui.element("button").classes(
-        "ts-btn-view-active inline-flex items-center justify-center "
+    is_active = _VIEW_STATE["view"] == "list"
+    cls = "ts-btn-view-active" if is_active else "ts-btn-view-inactive"
+    btn = ui.element("button").classes(
+        f"{cls} inline-flex items-center justify-center "
         "rounded-full cursor-pointer p-1.5 h-[38px] w-[38px]"
-    ):
+    )
+    btn.on("click", lambda: _switch_view("list"))
+    with btn:
         ui.html(_LIST_ICON)
 
 
 def _grid_view_button() -> None:
-    with ui.element("button").classes(
-        "ts-btn-view-inactive inline-flex items-center justify-center "
+    is_active = _VIEW_STATE["view"] == "grid"
+    cls = "ts-btn-view-active" if is_active else "ts-btn-view-inactive"
+    btn = ui.element("button").classes(
+        f"{cls} inline-flex items-center justify-center "
         "rounded-full cursor-pointer p-1.5 h-[38px] w-[38px]"
-    ):
+    )
+    btn.on("click", lambda: _switch_view("grid"))
+    with btn:
         ui.html(_GRID_ICON)
 
 
+def _switch_view(view: str) -> None:
+    if _VIEW_STATE["view"] == view:
+        return
+    _VIEW_STATE["view"] = view
+    ui.navigate.reload()
+
+
 def _import_button() -> None:
-    with ui.element("button").classes(
+    btn = ui.element("button").classes(
         "ts-btn-secondary inline-flex items-center justify-center gap-2 "
         "rounded-full cursor-pointer font-medium h-[38px] px-4 text-sm"
-    ):
-        ui.label("Import").props("id=ts-i18n-import")
+    )
+    btn.on("click", lambda _: ui.notify(
+        t("feature.unavailable"), type="info", position="top"))
+    with btn:
+        ui.label(t("button.import"))
         ui.html(_CHEVRON_DOWN)
 
 
-def _new_button() -> None:
-    with ui.element("button").classes(
+def _new_button(auth_dialog: ui.dialog, new_dialog: ui.dialog) -> None:
+    btn = ui.element("button").classes(
         "ts-btn-primary inline-flex items-center justify-center gap-2 "
         "rounded-full cursor-pointer font-medium h-[38px] px-4 text-sm"
-    ):
+    )
+
+    def _on_click(_: object) -> None:
+        if app.storage.user.get("user_id"):
+            new_dialog.open()
+        else:
+            auth_dialog.open()
+
+    btn.on("click", _on_click)
+    with btn:
         ui.html(_PLUS_ICON)
         with ui.element("span").classes("inline-flex items-center gap-2"):
-            ui.label("New").props("id=ts-i18n-new")
+            ui.label(t("button.new"))
             ui.html(_CHEVRON_DOWN)
 
 
@@ -532,11 +573,12 @@ def _build_sort_header() -> None:
                 "flex-1"
             )
             .props("id=ts-sort-name-toggle")
-        ):
-            ui.label("Name").props("id=ts-i18n-sort-name")
+        ) as name_btn:
+            ui.label(t("sort.name"))
             ui.html(_CHEVRON_DOWN).props("id=ts-sort-name-chevron").classes(
                 "transition-transform duration-150"
             )
+        name_btn.on("click", lambda _: _toggle_sort("title", _))
         with (
             ui.element("button")
             .classes(
@@ -545,12 +587,190 @@ def _build_sort_header() -> None:
                 "shrink-0 whitespace-nowrap"
             )
             .props("id=ts-sort-toggle")
-        ):
-            ui.label("Last edited").props("id=ts-i18n-sort-date")
+        ) as date_btn:
+            ui.label(t("sort.date"))
             ui.html(_CHEVRON_DOWN).props("id=ts-sort-chevron").classes(
                 "transition-transform duration-150"
             )
+        date_btn.on("click", lambda _: _toggle_sort("updated_at", _))
         ui.element("div").classes("w-[26px] flex-none")
+
+
+def _toggle_sort(field: str, _: object) -> None:
+    if _VIEW_STATE["sort_field"] == field:
+        _VIEW_STATE["sort_dir"] = "asc" if _VIEW_STATE["sort_dir"] == "desc" else "desc"
+    else:
+        _VIEW_STATE["sort_field"] = field
+        _VIEW_STATE["sort_dir"] = "desc"
+    _refresh_project_list()
+
+
+_SEARCH_DEBOUNCE_MS = 300
+
+
+def _bind_search(search_input) -> None:
+    _debounce = [None]
+
+    def _do_search() -> None:
+        _refresh_project_list()
+
+    async def _on_input() -> None:
+        val = await ui.run_javascript(
+            "document.querySelector('.ts-search-input').value"
+        )
+        _VIEW_STATE["search"] = (val or "").strip()
+        if _debounce[0] is not None:
+            with contextlib.suppress(Exception):
+                _debounce[0].cancel()
+        _debounce[0] = ui.timer(0.4, _do_search, once=True)
+
+    search_input.on("keyup", _on_input)
+
+
+
+def _filter_projects(projects: list) -> list:
+    pattern = _VIEW_STATE.get("search", "").strip()
+    if not pattern:
+        return projects
+    try:
+        regex = _re.compile(pattern, _re.IGNORECASE)
+    except _re.error:
+        escaped = _re.escape(pattern)
+        regex = _re.compile(escaped, _re.IGNORECASE)
+
+    def _matches(p) -> bool:
+        if regex.search(p.title):
+            return True
+        if p.description and regex.search(p.description):
+            return True
+        return any(regex.search(kw) for kw in p.keywords)
+
+    return [p for p in projects if _matches(p)]
+
+
+def _build_project_list() -> None:
+    container = ui.element("div")
+    _VIEW_STATE["_list_container"] = container
+
+    async def _load():
+        repo = get_current_user_repo()
+        projects = await repo.list_all()
+        _sort_projects(projects)
+        projects = _filter_projects(projects)
+        with container:
+            _render_projects(projects)
+
+    ui.timer(0.05, _load, once=True)
+
+
+def _refresh_project_list() -> None:
+    container = _VIEW_STATE.get("_list_container")
+    if container is None:
+        return
+
+    async def _reload():
+        container.clear()
+        repo = get_current_user_repo()
+        projects = await repo.list_all()
+        _sort_projects(projects)
+        projects = _filter_projects(projects)
+        with container:
+            _render_projects(projects)
+
+    ui.timer(0.1, _reload, once=True)
+
+
+def _sort_projects(projects: list) -> None:
+    field = _VIEW_STATE["sort_field"]
+    reverse = _VIEW_STATE["sort_dir"] == "desc"
+    if field == "title":
+        projects.sort(key=lambda p: p.title.lower(), reverse=reverse)
+    else:
+        projects.sort(key=lambda p: p.updated_at, reverse=reverse)
+
+
+def _render_projects(projects: list) -> None:
+    if _VIEW_STATE["view"] == "grid":
+        with ui.element("div").classes("grid grid-cols-2 gap-3 p-3"):
+            for p in projects:
+                _project_card(p)
+    else:
+        for p in projects:
+            _project_row(p)
+
+
+def _project_row(project) -> None:
+    with ui.element("div").classes(
+        "flex items-center gap-3 px-5 py-2 text-sm font-normal "
+        "group cursor-pointer"
+    ):
+        with ui.element("div").classes(
+            "w-[50px] h-[40px] overflow-hidden relative "
+            "flex-none flex items-center justify-center"
+        ):
+            with ui.element("div").classes(
+                "h-[40px] w-[40px] rounded-lg flex items-center justify-center "
+                "ts-bg-input text-xs font-medium ts-text-nav-secondary"
+            ):
+                ui.label(project.title[:1].upper() if project.title else "?")
+        with ui.element("div").classes(
+            "flex flex-col justify-center flex-1 h-full overflow-hidden w-full"
+        ).on("click", lambda p=project: ui.navigate.to(f"/project/{p.id}")):
+            ui.label(project.title).classes(
+                "ts-text-nav text-sm font-medium truncate group-hover:ts-text-primary"
+            )
+        _status_badge(project.status.value)
+        with ui.element("div").classes(
+            "ts-text-nav-secondary text-xs font-light text-nowrap py-2 w-20 text-right"
+        ):
+            ui.label(project.updated_at.strftime("%Y-%m-%d"))
+        with ui.element("div").classes("ts-text-tertiary flex-none py-2"):
+            edit_dialog = edit_project_card(project, on_saved=lambda: ui.navigate.reload())
+            delete_dialog = delete_confirm_card(project.id, project.title, on_deleted=lambda: ui.navigate.reload())
+            project_menu(
+                on_edit=lambda d=edit_dialog: d.open(),
+                on_delete=lambda d=delete_dialog: d.open(),
+            )
+
+
+def _project_card(project) -> None:
+    with ui.element("div").classes(
+        "ts-bg-input rounded-xl overflow-hidden group "
+        "transition-colors hover:ring-1 hover:ring-gray-500"
+    ):
+        with ui.element("div").classes("flex items-start justify-between p-4 pb-2"):
+            with ui.element("div").classes(
+                "h-10 w-10 rounded-lg flex items-center justify-center "
+                "ts-bg-sidepanel text-sm font-medium ts-text-nav-secondary flex-none"
+            ):
+                ui.label(project.title[:1].upper() if project.title else "?")
+            with ui.element("div").classes("relative flex-none"):
+                edit_dialog = edit_project_card(project, on_saved=lambda: ui.navigate.reload())
+                delete_dialog = delete_confirm_card(project.id, project.title, on_deleted=lambda: ui.navigate.reload())
+                project_menu(
+                    on_edit=lambda d=edit_dialog: d.open(),
+                    on_delete=lambda d=delete_dialog: d.open(),
+                )
+        with ui.element("div").classes(
+            "px-4 pb-1 cursor-pointer"
+        ).on("click", lambda p=project: ui.navigate.to(f"/project/{p.id}")):
+            ui.label(project.title).classes(
+                "ts-text-nav text-sm font-medium line-clamp-2 group-hover:ts-text-primary mb-1"
+            )
+            if project.description:
+                ui.label(project.description).classes(
+                    "ts-text-nav-secondary text-xs line-clamp-2"
+                )
+        with ui.element("div").classes("px-4 pb-2"):
+            _status_badge(project.status.value)
+        with ui.element("div").classes("flex items-center gap-2 px-4 py-3 border-t ts-border-outline"):
+            ui.label(project.updated_at.strftime("%Y-%m-%d")).classes(
+                "ts-text-nav-secondary text-xs"
+            )
+            if project.keywords:
+                ui.label(f"{len(project.keywords)} keywords").classes(
+                    "ts-text-tertiary text-xs"
+                )
 
 
 def _build_skeleton_items(count: int = 6) -> None:
@@ -579,6 +799,16 @@ def _build_skeleton_items(count: int = 6) -> None:
                     ui.element("div").classes("w-[26px] h-[18px] ts-skeleton-bg")
 
 
+
+def _status_badge(status_value: str) -> None:
+    """Render a colored status badge."""
+    bg = status_color(status_value)
+    label = t(f"status.{status_value}")
+    ui.label(label).style(
+        f"font-size:11px;font-weight:500;color:var(--text-nav-primary);background:{bg};"
+        "padding:2px 8px;border-radius:999px;display:inline-block;line-height:1.5"
+    )
+
 def _nav_item(text: str) -> None:
     cls = (
         "flex w-full items-center gap-2 transition-colors cursor-pointer "
@@ -586,15 +816,49 @@ def _nav_item(text: str) -> None:
         "text-nowrap overflow-hidden text-ellipsis ts-nav-active rounded-lg"
     )
     with ui.element("button").classes(cls):
-        label = ui.label(text).classes("flex-1 text-left")
-        label.props("id=ts-i18n-nav-projects")
+        ui.label(text).classes("flex-1 text-left")
 
 
-def _sign_in_button() -> None:
+_SIGN_OUT_ICON = (
+    '<svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" '
+    'stroke="currentColor" width="16" height="16" '
+    'xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="shrink-0">'
+    '<path stroke-linecap="round" stroke-linejoin="round" '
+    'd="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 12l-3 3m0 0l3 3m-3-3h12.75"/>'
+    '</svg>'
+)
+
+
+def _sign_in_button(dialog: ui.dialog) -> None:
     cls = (
         "flex items-center gap-1.5 cursor-pointer rounded-full "
         "py-0.5 pr-1.5 ts-sign-in transition-colors"
     )
-    with ui.element("button").classes(cls):
-        ui.label("Sign in").classes("text-sm ts-text-nav").props("id=ts-i18n-signin")
+    btn = ui.element("button").classes(cls)
+    btn.on("click", lambda _: dialog.open())
+    with btn:
+        ui.label(t("signin")).classes("text-sm ts-text-nav")
         ui.html(_CHEVRON_UP_DOWN)
+
+
+def _user_info() -> None:
+    is_guest = app.storage.user.get("is_guest", False)
+    name = t("user.guest") if is_guest else app.storage.user.get("user_name", "User")
+    with ui.element("div").classes("flex items-center gap-2"):
+        with ui.element("div").classes(
+            "w-7 h-7 rounded-full flex items-center justify-center "
+            "ts-btn-secondary text-xs font-medium"
+        ):
+            ui.label(name[:1].upper() if name else "?")
+        ui.label(name).classes("text-sm ts-text-nav flex-1")
+        with ui.element("button").classes(
+            "ts-btn-tertiary inline-flex items-center justify-center "
+            "rounded-full cursor-pointer p-1.5"
+        ).on("click", _sign_out):
+            ui.html(_SIGN_OUT_ICON)
+
+
+def _sign_out() -> None:
+    clear_guest_projects()
+    app.storage.user.clear()
+    ui.navigate.reload()

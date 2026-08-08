@@ -11,6 +11,7 @@ class LLMProvider(Protocol):
         self,
         prompt: str,
         *,
+        system: str | None = None,
         temperature: float = 0.7,
         max_tokens: int | None = None,
     ) -> str: ...
