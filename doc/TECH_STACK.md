@@ -1,4 +1,4 @@
-# Thesis Studio 技术栈
+﻿# Thesis Studio 技术栈
 
 ## 概述
 
@@ -206,7 +206,7 @@ LLM:
   - bibtexparser（引用管理）
 
 开发工具:
-  - Poetry/uv（依赖管理）
+  - hatchling/pip（依赖管理）
   - Git + GitHub（版本控制）
   - pytest（测试）
 
