@@ -26,9 +26,24 @@ _MOON_ICON = (
 )
 
 @ui.page("/project/{project_id}", title="Thesis Studio")
-def project_page(project_id: str) -> None:
-    """Redirect to EXPLORING phase."""
-    ui.navigate.to(f"/project/{project_id}/exploring")
+async def project_page(project_id: str) -> None:
+    """Redirect to current phase based on project status."""
+    from ...infrastructure.bootstrap import get_current_user_repo
+    project = await get_current_user_repo().get(project_id)
+    if project is None:
+        ui.navigate.to("/")
+        return
+    phase_map = {
+        "init": "exploring",
+        "exploring": "exploring",
+        "designing": "designing",
+        "researching": "researching",
+        "writing": "writing",
+        "polishing": "polishing",
+        "completed": "exploring",
+    }
+    phase = phase_map.get(project.status.value, "exploring")
+    ui.navigate.to(f"/project/{project_id}/{phase}")
 
 async def _build_header(project_id: str) -> None:
     project = await get_current_user_repo().get(project_id)

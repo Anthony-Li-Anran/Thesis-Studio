@@ -1,29 +1,35 @@
-"""SQLite async engine, ORM models, and session management."""
+"""SQLite database engine, ORM models, and session management."""
 
-from collections.abc import AsyncIterator
+from __future__ import annotations
 
-from sqlalchemy import Column, Integer, String, Text
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from typing import Any
+
+import asyncio
+import threading
+from pathlib import Path
+
+from sqlalchemy import Column, Integer, String, Text, inspect, text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from ...config.settings import get_settings
 from ..logging import get_logger
 
 logger = get_logger(__name__)
 
+DB_PATH = Path(__file__).resolve().parent.parent.parent.parent.parent / "data" / "thesis_studio.db"
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-# ---------------------------------------------------------------------------
-# ORM base and models (internal infrastructure, not exposed to domain)
-# ---------------------------------------------------------------------------
+_engine = create_async_engine(
+    f"sqlite+aiosqlite:///{DB_PATH}",
+    echo=False,
+    connect_args={"check_same_thread": False},
+)
+_async_session_factory = async_sessionmaker(_engine, expire_on_commit=False)
+_lock = threading.Lock()
 
 
 class Base(DeclarativeBase):
-    """Base class for all ORM models."""
+    pass
 
 
 class PaperModel(Base):
@@ -43,6 +49,7 @@ class PaperModel(Base):
     keywords = Column(Text, default="")
     citation_count = Column(Integer, default=0)
     status = Column(String(50), default="discovered")
+    project_id = Column(String(50), default="", index=True)
     local_path = Column(String(500), nullable=True)
     notes = Column(Text, default="")
     created_at = Column(Text, default="")
@@ -65,6 +72,7 @@ class ProjectModel(Base):
     status = Column(String(50), default="init")
     paper_ids = Column(Text, default="")
     outline = Column(Text, default="")
+    exploring_state = Column(Text, default="")  # JSON: EXPLORING session state
     created_at = Column(Text, default="")
     updated_at = Column(Text, default="")
 
@@ -76,61 +84,55 @@ class UserModel(Base):
 
     id = Column(String(50), primary_key=True)
     email = Column(String(200), nullable=False, unique=True, index=True)
+    password_hash = Column(String(200), nullable=False)
     name = Column(String(100), default="")
-    password_hash = Column(Text, default="")
     created_at = Column(Text, default="")
+
+
 class UserSettingsModel(Base):
-    """User settings ORM model. JSON stored in TEXT column."""
+    """User settings ORM model."""
 
     __tablename__ = "user_settings"
 
     user_id = Column(String(50), primary_key=True)
     settings_json = Column(Text, default="")
 
-# ---------------------------------------------------------------------------
-# Engine and session management
-# ---------------------------------------------------------------------------
 
-_engine: AsyncEngine | None = None
-_session_factory: async_sessionmaker[AsyncSession] | None = None
-
-
-def get_engine() -> AsyncEngine:
-    """Get global async engine singleton."""
-    global _engine
-    if _engine is None:
-        settings = get_settings()
-        settings.db_path.parent.mkdir(parents=True, exist_ok=True)
-        _engine = create_async_engine(
-            f"sqlite+aiosqlite:///{settings.db_path}",
-            echo=False,
-        )
-        logger.info("SQLite engine initialized: %s", settings.db_path)
+def get_engine() -> Any:
     return _engine
 
 
-def get_session_factory() -> async_sessionmaker[AsyncSession]:
-    """Get session factory."""
-    global _session_factory
-    if _session_factory is None:
-        _session_factory = async_sessionmaker(
-            get_engine(),
-            expire_on_commit=False,
-        )
-    return _session_factory
+def get_session_factory() -> Any:
+    return _async_session_factory
 
 
-async def get_session() -> AsyncIterator[AsyncSession]:
-    """FastAPI dependency: get database session."""
-    factory = get_session_factory()
-    async with factory() as session:
-        yield session
+def get_session() -> Any:
+    """Create a new async session (convenience)."""
+    return _async_session_factory()
+
+
+async def _ensure_column(table_name: str, column_name: str, column_type: str) -> None:
+    """Ensure a column exists in the table, add it if missing."""
+    async with _engine.begin() as conn:
+
+        def _check(connection: Any) -> bool:
+            insp = inspect(connection)
+            cols = {c["name"] for c in insp.get_columns(table_name)}
+            return column_name in cols
+
+        exists = await conn.run_sync(_check)
+        if not exists:
+            await conn.execute(
+                text(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type}")
+            )
+            logger.info("Added column %s to %s", column_name, table_name)
 
 
 async def init_db() -> None:
-    """Initialize database tables."""
-    engine = get_engine()
-    async with engine.begin() as conn:
+    """Initialize database tables and migrate as needed."""
+    async with _engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    # Ensure new columns exist on existing tables
+    await _ensure_column("projects", "exploring_state", "TEXT DEFAULT ''")
+    await _ensure_column("papers", "project_id", "TEXT DEFAULT ''")
     logger.info("Database tables initialized")
-

@@ -42,6 +42,9 @@ htmlcov/
 .nicegui/**
 .ua/
 
+# Chainlit framework auto-generated translations (regenerated on startup)
+.chainlit/translations/
+
 # Temporary or generated local repair files
 _fix_data.json
 fix_data.json

@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
+import json
+
 from datetime import datetime
 from pathlib import Path
 from tempfile import gettempdir
@@ -11,10 +14,11 @@ from nicegui import ui
 
 from ....application.exploring.agent_service import AgentService
 from ....domain.models.project import ProjectStatus
-from ....infrastructure.bootstrap import get_current_user_repo, get_llm_for_agent
+from ....infrastructure.bootstrap import get_current_user_repo, get_llm_for_agent, get_paper_repo
 from ..i18n import get_lang, t, toggle_lang
 from ..theme import apply_theme, logo
 from .chat_room import ChatRoom
+from .literature_library import LiteratureLibrary
 from .stage_progress import stage_progress
 
 _CHEVRON_LEFT = (
@@ -118,9 +122,8 @@ _CLUSTER_COLORS = [
 
 async def _get_agent_service() -> AgentService:
     llm = await get_llm_for_agent("researcher")
-    return AgentService(llm)
-
-
+    paper_repo = get_paper_repo()
+    return AgentService(llm, paper_repo)
 @ui.page("/project/{project_id}/exploring", title="Thesis Studio")  # type: ignore[untyped-decorator]
 def exploring_page(project_id: str) -> None:
     """EXPLORING phase page entry."""
@@ -134,12 +137,19 @@ async def _build_page(project_id: str) -> None:
     if project is None:
         _not_found()
         return
-    state: dict[str, str] = {"html": "", "topic": ""}
+    state: dict[str, Any] = {"html": "", "topic": "", "messages": []}
+    # Restore saved session
+    saved = project.exploring_state
+    if saved:
+        state["html"] = str(saved.get("html_content", ""))
+        state["topic"] = str(saved.get("topic", ""))
+        state["messages"] = saved.get("messages", [])
     graph_container: list[ui.element | None] = [None]
 
     def _on_review(topic: str, html_content: str) -> None:
         state["html"] = html_content
         state["topic"] = topic
+        asyncio.ensure_future(_save_session(project_id, dict(state)))
 
     def _on_graph(
         clusters: list[dict[str, Any]], papers: list[dict[str, Any]]
@@ -150,6 +160,79 @@ async def _build_page(project_id: str) -> None:
         gc.clear()
         with gc:
             _render_graph(clusters, papers)
+            state["clusters"] = clusters
+            state["papers"] = papers
+            asyncio.ensure_future(_save_session(project_id, dict(state)))
+
+    # Paper detail helpers (closures over graph_container, detail_paper, detail_panel_ref)
+    detail_paper: dict[str, Any] = {}
+    detail_panel_ref: list[ui.element | None] = [None]
+
+    def _render_paper_detail(paper: dict[str, Any]) -> None:
+        """Render paper detail in the right panel."""
+        dp = detail_panel_ref[0]
+        if dp is None:
+            return
+        dp.clear()
+        with dp:
+            with ui.element("div").classes("p-6 space-y-4"):
+                ui.button(
+                    icon="arrow_back", on_click=lambda: _restore_graph()
+                ).props("flat round").classes("mb-2")
+                title = paper.get("title", "") or "Untitled"
+                ui.label(title).classes("text-xl font-bold")
+                authors = paper.get("authors", [])
+                if isinstance(authors, list) and authors:
+                    ui.label(", ".join(authors)).classes("text-sm ts-text-secondary")
+                year = paper.get("year", "")
+                source = paper.get("source", "")
+                if year or source:
+                    ui.label(f"{year}  |  {source}").classes("text-xs ts-text-muted")
+                abstract = paper.get("abstract", "")
+                if abstract:
+                    zh = get_lang() == "zh"
+                    ui.label("摘要" if zh else "Abstract").classes("text-sm font-bold mt-4")
+                    ui.label(abstract).classes("text-sm ts-text-secondary leading-relaxed")
+                url = paper.get("url", "")
+                if url:
+                    ui.link(
+                    "查看原文" if zh else "View Original",
+                    url, new_tab=True,
+                ).classes("text-xs")
+
+    def _restore_graph() -> None:
+        """Restore knowledge graph view."""
+        detail_paper.clear()
+        gc = graph_container[0]
+        if gc is not None:
+            gc.clear()
+            with gc:
+                detail_panel_ref[0] = _build_graph_panel(project_id, detail_panel_ref)
+
+    def _on_graph_click(
+    event: Any,
+    clusters: list[dict[str, Any]],
+    papers: list[dict[str, Any]],
+) -> None:
+        """Handle click on ECharts graph node."""
+        name = ""
+        try:
+            name = event.args.get("name", "")
+        except Exception:
+            return
+        if not name.startswith("p_"):
+            return
+        pid = name[2:]
+        for p in papers:
+            if p.get("paper_id", "") == pid or p.get("title", "")[:60] == pid:
+                detail_paper.clear()
+                detail_paper.update(p)
+                gc = graph_container[0]
+                if gc is not None:
+                    gc.clear()
+                    with gc:
+                        _render_paper_detail(p)
+                return
 
     # Root: fixed to viewport, no page scroll
     with ui.element("div").style(
@@ -163,13 +246,50 @@ async def _build_page(project_id: str) -> None:
             with ui.element("div").classes(
                 "w-[45%] border-r ts-border-divider"
             ).style("display:flex;flex-direction:column;min-height:0"):
-                _build_chat_panel(project_id, _on_review, _on_graph)
+                _build_chat_panel(project_id, _on_review, _on_graph, state.get("messages"), state)
             with ui.element("div").classes("w-[55%]").style(
                 "display:flex;flex-direction:column;min-height:0"
             ):
-                graph_container[0] = _build_graph_panel()
-        _build_footer(state)
+                graph_container[0] = _build_graph_panel(project_id)
+        _build_footer(state, project_id)
 
+
+
+def _library_btn(project_id: str) -> None:
+    """文献库按钮。"""
+    async def _open() -> None:
+        repo = get_current_user_repo()
+        project = await repo.get(project_id)
+        papers = []
+        if project and project.exploring_state:
+            papers = project.exploring_state.get('papers', [])
+        lib = LiteratureLibrary(papers)
+        dlg = await lib.build()
+        dlg.open()
+    ui.button(
+        icon="library_books", on_click=_open
+    ).props("flat round dense").tooltip(
+        t("exploring.library")
+    )
+
+
+async def _save_session(project_id: str, state: dict[str, Any]) -> None:
+    """Persist EXPLORING session state to the project."""
+    try:
+        repo = get_current_user_repo()
+        project = await repo.get(project_id)
+        if project is None:
+            return
+        merged = {**project.exploring_state}
+        for k, v in state.items():
+            if k == "html":
+                merged["html_content"] = v
+                continue
+            merged[k] = v
+        project.exploring_state = merged
+        await repo.update(project)
+    except Exception:
+        pass
 
 def _not_found() -> None:
     with ui.element("div").classes(
@@ -195,12 +315,13 @@ def _build_header() -> None:
         with ui.element("div").classes("flex-1 flex justify-center"):
             stage_progress(ProjectStatus.EXPLORING.value)
         with ui.element("div").classes("flex items-center gap-2"):
+
             _theme_toggle_button()
             _lang_btn()
-
-
 def _build_chat_panel(
-    project_id: str, on_review: Any, on_graph: Any
+    project_id: str, on_review: Any, on_graph: Any,
+    saved_messages: list[dict[str, str]] | None = None,
+    state: dict[str, Any] | None = None,
 ) -> None:
     with ui.element("div").style(
         "display:flex;flex-direction:column;height:100%;min-height:0"
@@ -215,32 +336,52 @@ def _build_chat_panel(
             "flex:1;min-height:0;overflow:hidden"
         )
 
+        chat_ref: list[ChatRoom | None] = [None]
+
+        def _save_messages() -> None:
+            c = chat_ref[0]
+            if c is not None and state is not None:
+                state["messages"] = [{"role": m["role"], "content": m["content"], "agent": m.get("agent", "")} for m in c._messages]
+                asyncio.ensure_future(_save_session(project_id, dict(state)))
+
         async def _init_chat() -> None:
             svc = await _get_agent_service()
             chat = ChatRoom()
             chat.agent_service = svc
+            chat_ref[0] = chat
+            chat.on_save(_save_messages)
             chat.project_id = project_id
             chat.on_review(on_review)
             chat.on_graph(on_graph)
             with wrapper:
                 chat.build()
-            chat.add_message(
-                "researcher", t("exploring.welcome"), "researcher"
-            )
+            if saved_messages:
+                for msg in saved_messages:
+                    chat.add_message(
+                        msg.get("role", "user"),
+                        msg.get("content", ""),
+                        msg.get("agent", ""),
+                    )
+            else:
+                chat.add_message(
+                    "researcher", t("exploring.welcome"), "researcher"
+                )
 
         ui.timer(0, _init_chat, once=True)
 
 
-def _build_graph_panel() -> ui.element:
+def _build_graph_panel(project_id: str, detail_panel_ref: list | None = None) -> ui.element:
     with ui.element("div").style(
         "display:flex;flex-direction:column;height:100%;min-height:0"
     ):
         with ui.element("div").classes(
             "px-4 py-3 border-b ts-border-divider"
+            " flex items-center justify-between"
         ):
             ui.label(t("exploring.graph")).classes(
                 "text-sm font-medium ts-text-nav"
             )
+            _library_btn(project_id)
         chart_area = ui.element("div").classes("p-4").style(
             "flex:1;min-height:0;overflow:hidden"
         )
@@ -256,11 +397,13 @@ def _build_graph_panel() -> ui.element:
                     ui.label(t("exploring.graph_hint")).classes(
                         "ts-text-nav-secondary text-sm"
                     )
+    if detail_panel_ref is not None:
+        detail_panel_ref[0] = chart_area
     return chart_area
 
-
 def _render_graph(
-    clusters: list[dict[str, Any]], papers: list[dict[str, Any]]
+    clusters: list[dict[str, Any]], papers: list[dict[str, Any]],
+    on_graph_click: Any = None,
 ) -> None:
     """Render ECharts force-directed knowledge graph."""
     cluster_nodes = []
@@ -377,29 +520,32 @@ def _render_graph(
         }],
     }
 
-    ui.echart(option).classes("w-full h-full")
+    ui.echart(option).classes("w-full h-full").on(
+        "click",
+        lambda e: on_graph_click(e, clusters, papers) if on_graph_click else None,
+    )
 
 
-def _build_footer(state: dict[str, str]) -> None:
+def _build_footer(state: dict[str, str], project_id: str = "") -> None:
     with ui.element("div").classes(
         "flex items-center justify-between px-5 py-3"
         " border-t ts-border-divider"
     ):
-        def _view_review() -> None:
+        async def _view_review() -> None:
             if not state["html"]:
                 ui.notify(
                     t("exploring.no_review_yet"), type="warning"
                 )
                 return
-            # Sanitize filename: topic_Literature_Review_time
-            raw_topic = (state["topic"] or "review").split("\n")[0].strip()
-            safe = "".join(c for c in raw_topic if c.isascii() and (c.isalnum() or c in "_-"))
-            safe = safe.strip("_-")[:50] or "review"
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            name = f"{safe}-Literature_Review-{ts}.html"
-            path = Path(gettempdir()) / name
-            path.write_text(state["html"], encoding="utf-8")
-            ui.download(str(path))
+            with ui.dialog() as dlg, ui.card().classes("w-full max-w-3xl max-h-[80vh]"):
+                with ui.card_section().classes("flex items-center justify-between"):
+                    ui.label(
+                        "文献综述" if get_lang() == "zh" else "Literature Review"
+                    ).classes("text-lg font-bold")
+                    ui.button(icon="close", on_click=lambda: dlg.close()).props("flat round")
+                with ui.card_section().classes("overflow-auto max-h-[65vh]"):
+                    ui.html(state["html"])
+            dlg.open()
 
         ui.button(
             t("exploring.review_btn"), on_click=_view_review
@@ -424,7 +570,19 @@ def _build_footer(state: dict[str, str]) -> None:
             ui.button(
                 t("exploring.download_html"), on_click=_download
             ).classes("ts-btn-secondary").props("no-caps")
-            ui.button(t("exploring.confirm_btn")).classes(
+            async def _confirm() -> None:
+                if not state["html"]:
+                    ui.notify(t("exploring.no_review_yet"), type="warning")
+                    return
+                await _save_session(project_id, dict(state))
+                repo = get_current_user_repo()
+                project = await repo.get(project_id)
+                if project:
+                    project.status = ProjectStatus.DESIGNING
+                    await repo.update(project)
+                    ui.navigate.to(f"/project/{project_id}/designing")
+
+            ui.button(t("exploring.confirm_btn"), on_click=_confirm).classes(
                 "ts-btn-primary"
             ).props("no-caps")
 

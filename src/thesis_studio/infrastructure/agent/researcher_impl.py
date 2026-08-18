@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import asyncio
+
 from typing import Any
 
 from ...domain.agent.base import SandboxConfig
+from ...domain.models.paper import Paper
 from ...domain.ports.llm_port import LLMProvider
+from ...domain.ports.repository_port import PaperRepository
 from ...domain.workflow import NodeContext, ProgressCallback, run_exploring
 from ..logging import get_logger
 from ..sandbox import Sandbox
@@ -28,8 +32,9 @@ class ResearcherImpl:
         timeout_seconds=300,
     )
 
-    def __init__(self, llm: LLMProvider) -> None:
+    def __init__(self, llm: LLMProvider, paper_repo: PaperRepository | None = None) -> None:
         self._llm = llm
+        self._paper_repo = paper_repo
         self._sandbox = Sandbox(self.sandbox)
         self._search_skill = AcademicSearchSkill()
         self._parser_skill = PaperParserSkill()
@@ -62,6 +67,7 @@ class ResearcherImpl:
                 history=history,
                 existing_state=self._persisted_state,
             )
+            asyncio.ensure_future(self._persist_papers(result.get("papers", []), context.get("project_id", "")))
             self._persisted_state = {
                 "papers": result.get("papers", []),
                 "clusters": result.get("clusters", []),
@@ -93,6 +99,21 @@ class ResearcherImpl:
                 "intent": "",
                 "topic": topic,
             }
+
+    async def _persist_papers(self, papers: list[dict[str, object]], project_id: str = "") -> None:
+        """将 EXPLORING 产出的论文持久化到数据库。"""
+        if not self._paper_repo or not papers:
+            return
+        try:
+            for p in papers:
+                entity = Paper.from_researcher_dict(p); entity.project_id = project_id
+                await self._paper_repo.add(entity)
+        except Exception:
+            logger.exception("Failed to persist papers")
+
+    def get_persisted_state(self) -> dict[str, Any]:
+        """Return the accumulated session state for persistence."""
+        return dict(self._persisted_state)
 
     def update_llm(self, llm: LLMProvider) -> None:
         self._llm = llm

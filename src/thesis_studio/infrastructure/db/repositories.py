@@ -45,6 +45,7 @@ class SQLitePaperRepository:
                 keywords=json.dumps(paper.keywords, ensure_ascii=False),
                 citation_count=paper.citation_count,
                 status=paper.status.value,
+                project_id=paper.project_id,
                 local_path=paper.local_path,
                 notes=paper.notes,
                 created_at=paper.created_at.isoformat(),
@@ -106,6 +107,14 @@ class SQLitePaperRepository:
                 await session.delete(model)
                 await session.commit()
 
+    async def list_by_project(self, project_id: str, limit: int = 200) -> list[Paper]:
+        """List papers for a specific project."""
+        session = await self._get_session()
+        async with session:
+            stmt = select(PaperModel).where(PaperModel.project_id == project_id).limit(limit)
+            result = await session.execute(stmt)
+            return [self._to_domain(m) for m in result.scalars().all()]
+
     @staticmethod
     def _to_domain(model: PaperModel) -> Paper:
         """ORM model to domain entity."""
@@ -124,6 +133,7 @@ class SQLitePaperRepository:
             status=PaperStatus(str(model.status)),
             local_path=str(model.local_path or ""),
             notes=str(model.notes or ""),
+            project_id=str(model.project_id or ""),
         )
 
 
@@ -157,6 +167,7 @@ class SQLiteProjectRepository:
                 status=project.status.value,
                 paper_ids=json.dumps(project.paper_ids, ensure_ascii=False),
                 outline=json.dumps(project.outline, ensure_ascii=False),
+                exploring_state=json.dumps(project.exploring_state, ensure_ascii=False),
                 created_at=project.created_at.isoformat(),
                 updated_at=project.updated_at.isoformat(),
             )
@@ -202,6 +213,7 @@ class SQLiteProjectRepository:
                 model.status = project.status.value  # type: ignore[assignment]
                 model.paper_ids = json.dumps(project.paper_ids, ensure_ascii=False)  # type: ignore[assignment]
                 model.outline = json.dumps(project.outline, ensure_ascii=False)  # type: ignore[assignment]
+                model.exploring_state = json.dumps(project.exploring_state, ensure_ascii=False)  # type: ignore[assignment]
                 model.updated_at = datetime.now().isoformat()  # type: ignore[assignment]
                 await session.commit()
 

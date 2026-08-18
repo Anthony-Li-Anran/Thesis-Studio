@@ -47,12 +47,13 @@
 - [x] 微信式聊天室（流式消息、@Agent 内联选择、头像+气泡）
 - [x] EXPLORING 后端核心（AgentProtocol + Skill 协议 + Sandbox + 4 Skill 实现）
 - [x] 学术搜索客户端（Semantic Scholar + arXiv API 对接）
-- [x] Researcher Agent 实现（LLM 驱动：查询扩展→检索→解析→AI 聚类→综述生成）
-- [x] AgentService（消息路由 + 流式 SSE 桥接 + 前端集成）
-- [ ] 文献知识图谱（echarts 力导向图，AI 分析关系连线，点击节点→详情）
-- [ ] 文献详情面板（右侧滑出，标题/作者/摘要/方法/结论/关联）
-- [ ] 文献综述材料输出（结构化模板，按主题分类，可导出）
-- [ ] DESIGNING 阶段（研究问题定义、方法设计、开题报告生成）
+- [x] Researcher Agent 实现（LangGraph 工作流：意图路由→查询扩展→检索→解析→AI 聚类→综述→报告）
+- [x] AgentService（消息路由 + 流式 SSE 桥接 + 7 意图分发 + 前端集成）
+- [x] 文献知识图谱（echarts 力导向图，聚类节点+论文连线，双区联动）
+- [x] 文献详情面板（右侧滑出，标题/作者/摘要/方法/结论/关联）
+- [x] 文献综述材料输出（HTML 报告生成 + 下载按钮，按主题聚类）
+- [x] EXPLORING 阶段持久化（论文落库 PaperRepository、项目状态推进、确认按钮接入）
+- [x] DESIGNING 阶段（研究问题定义、方法设计、开题报告生成）
 - [ ] RESEARCHING 阶段（数据收集、清洗、分析、假设验证）
 - [ ] WRITING 阶段（IMRaD 大纲、逐章撰写、引用管理、图表生成）
 - [ ] POLISHING 阶段（润色、查重、格式规范、答辩 PPT 生成）

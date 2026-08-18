@@ -1,6 +1,6 @@
-# Thesis Studio 架构文档
+﻿# Thesis Studio 架构文档
 
-> 基于 **Clean Architecture + Hexagonal Architecture + SOLID** 原则构建的 AI 论文研究助手。
+> 基于 **Clean Architecture + Hexagonal Architecture + SOLID** 原则构建的 AI 论文研究助手。场景B：用户带明确题目入场，系统辅助全流程落地。
 
 ---
 

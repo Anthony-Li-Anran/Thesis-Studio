@@ -8,6 +8,7 @@ from nicegui import app, ui
 from ...infrastructure.bootstrap import clear_guest_projects, get_current_user_repo
 from .auth_card import auth_card
 from .delete_confirm_card import delete_confirm_card
+from .designing.designing_page import designing_page  # noqa: F401
 from .edit_project_card import edit_project_card
 from .exploring.exploring_page import exploring_page  # noqa: F401
 from .i18n import get_lang, status_color, t, toggle_lang

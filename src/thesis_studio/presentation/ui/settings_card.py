@@ -1,6 +1,7 @@
-﻿"""Settings dialog with two tabs: AI API configs and External API configs."""
+"""Settings dialog with two tabs: AI API configs and External API configs."""
 
 import asyncio
+from typing import Any
 
 import httpx
 from nicegui import app, ui
@@ -15,6 +16,17 @@ from ...domain.models.settings import (
 from ...infrastructure.bootstrap import get_current_user_settings_repo
 from ...infrastructure.logging import get_logger
 from .i18n import t
+
+def _get_event_value(e: Any) -> str:
+    """Safely extract string value from NiceGUI event args."""
+    if not e.args:
+        return ""
+    if isinstance(e.args, str):
+        return e.args
+    if isinstance(e.args, (tuple, list)):
+        return str(e.args[0]) if e.args else ""
+    return str(e.args)
+
 
 logger = get_logger(__name__)
 
@@ -261,16 +273,21 @@ def _open_ai_form(state: dict, provider: str | None, editing_cfg: AIConfig | Non
     """Open the AI config form."""
     state["view"] = "form"
     state["editing_id"] = editing_cfg.id if editing_cfg else None
-    state.pop("form_name", None)
-    state.pop("form_endpoint", None)
-    state.pop("form_key", None)
-    state.pop("form_model", None)
     if editing_cfg:
+        state["form_name"] = editing_cfg.name
+        state["form_endpoint"] = editing_cfg.api_endpoint
+        state["form_key"] = editing_cfg.api_key
+        state["form_model"] = editing_cfg.model
         state["form_agents"] = list(editing_cfg.agents)
-    elif provider == "ollama":
-        state["form_agents"] = list(AGENT_ROLES)
     else:
-        state["form_agents"] = []
+        state.pop("form_name", None)
+        state.pop("form_endpoint", None)
+        state.pop("form_key", None)
+        state.pop("form_model", None)
+        if provider == "ollama":
+            state["form_agents"] = list(AGENT_ROLES)
+        else:
+            state["form_agents"] = []
     state["form_provider"] = provider
     _render(state)
 
@@ -297,21 +314,21 @@ def _render_ai_form(state: dict) -> None:
 
     with ui.element("div").classes("ts-dialog-form"):
         name_input = _field(t("settings.field.name"), t("settings.ph.name"), name_val)
-        name_input.on("update:model-value", lambda e: state.update({"form_name": str(e.args[0]) if e.args else ""}))
+        name_input.on("update:model-value", lambda e: state.update({"form_name": _get_event_value(e)}))
         endpoint_input = _field(t("settings.field.endpoint"), t("settings.ph.endpoint"), endpoint_val)
-        endpoint_input.on("update:model-value", lambda e: state.update({"form_endpoint": str(e.args[0]) if e.args else ""}))
+        endpoint_input.on("update:model-value", lambda e: state.update({"form_endpoint": _get_event_value(e)}))
         key_input, _ = _key_field(t("settings.field.key"), t("settings.ph.key"), key_val)
-        key_input.on("update:model-value", lambda e: state.update({"form_key": str(e.args[0]) if e.args else ""}))
+        key_input.on("update:model-value", lambda e: state.update({"form_key": _get_event_value(e)}))
         model_input = _field(t("settings.field.model"), t("settings.ph.model"), model_val)
-        model_input.on("update:model-value", lambda e: state.update({"form_model": str(e.args[0]) if e.args else ""}))
+        model_input.on("update:model-value", lambda e: state.update({"form_model": _get_event_value(e)}))
 
         _render_agent_dropdown(state)
 
         def _save() -> None:
-            name = name_input.value.strip()
-            endpoint = endpoint_input.value.strip()
-            key = key_input.value.strip()
-            model = model_input.value.strip()
+            name = (state.get("form_name") or name_input.value or "").strip()
+            endpoint = (state.get("form_endpoint") or endpoint_input.value or "").strip()
+            key = (state.get("form_key") or key_input.value or "").strip()
+            model = (state.get("form_model") or model_input.value or "").strip()
             if not name:
                 error_label.text = t("settings.name_required")
                 return
@@ -484,7 +501,7 @@ def _render_external_api_card(state: dict, api: ExternalAPIConfig) -> None:
                     with ui.element("div").classes("ts-dialog-field flex-1"):
                         ui.label(t("settings.external.field.key")).classes("ts-dialog-label")
                         key_input = ui.input(value=api.api_key).classes("ts-dialog-input").props("dark dense type=password")
-                        key_input.on("update:model-value", lambda e, a=api: _update_external_key(a, str(e.args[0] if e.args else "")))
+                        key_input.on("update:model-value", lambda e, a=api: _update_external_key(a, _get_event_value(e)))
 
             with ui.element("div").classes("ts-external-toggle"):
                 toggle = ui.element("div").classes(

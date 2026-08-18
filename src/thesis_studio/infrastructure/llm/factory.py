@@ -18,6 +18,18 @@ def _create_ollama(settings: Settings) -> LLMProvider:
     return OllamaAdapter(url=settings.ollama_url, model=settings.ollama_model)
 
 
+def _create_deepseek(settings: Settings) -> LLMProvider:
+    """Create Deepseek adapter (OpenAI-compatible)."""
+    key = settings.deepseek_api_key or settings.openai_api_key
+    if not key:
+        raise ConfigError("Deepseek API key required")
+    return OpenAIAdapter(
+        api_key=key,
+        model=settings.deepseek_model,
+        base_url=settings.deepseek_base_url,
+    )
+
+
 def _create_openai(settings: Settings) -> LLMProvider:
     """Create OpenAI adapter."""
     if not settings.openai_api_key:
@@ -31,6 +43,7 @@ class LLMFactory:
     _registry: ClassVar[dict[str, LLMCreator]] = {
         "ollama": _create_ollama,
         "openai": _create_openai,
+        "deepseek": _create_deepseek,
     }
 
     def __init__(self, settings: Settings | None = None) -> None:

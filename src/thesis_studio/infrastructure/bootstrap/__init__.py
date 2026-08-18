@@ -18,12 +18,21 @@ from ..db.repositories import (
     SQLiteSettingsRepository,
 )
 from ..llm.factory import LLMFactory
+from ..llm.mock_adapter import MockLLMProvider
 
 
 @lru_cache
 def get_llm_provider() -> LLMProvider:
-    """Get LLM provider singleton from .env settings."""
-    return LLMFactory(get_settings()).create()
+    """Get LLM provider singleton from .env settings.
+
+    Falls back to MockLLMProvider when no API key is configured,
+    so the UI can render without crashing.
+    """
+    from ...domain.exceptions import ConfigError
+    try:
+        return LLMFactory(get_settings()).create()
+    except ConfigError:
+        return MockLLMProvider()
 
 
 async def get_llm_for_agent(agent_name: str = "researcher") -> LLMProvider:
@@ -45,6 +54,10 @@ async def get_llm_for_agent(agent_name: str = "researcher") -> LLMProvider:
     for cfg in settings.configs:
         if agent_name in cfg.agents:
             return LLMFactory.create_from_config(cfg)
+    # ?????agent?????????????????????agent?
+    if settings.configs:
+        return LLMFactory.create_from_config(settings.configs[0])
+    # ?????????????.env??
     return get_llm_provider()
 
 

@@ -61,6 +61,7 @@ class ChatRoom:
         self._project_id: str = ""
         self._on_review_callback: Callable[[str, str], None] | None = None
         self._on_graph_callback: GraphCallback | None = None
+        self._on_save_callback: Callable[[], None] | None = None
 
     @property
     def agent_service(self) -> Any:
@@ -78,11 +79,20 @@ class ChatRoom:
     def project_id(self, pid: str) -> None:
         self._project_id = pid
 
+    def get_session_data(self) -> dict[str, Any]:
+        """Return accumulated session state for persistence."""
+        if self._agent_service is not None:
+            return self._agent_service.get_session_data()
+        return {}
+
     def on_review(self, callback: Callable[[str, str], None]) -> None:
         self._on_review_callback = callback
 
     def on_graph(self, callback: GraphCallback) -> None:
         self._on_graph_callback = callback
+
+    def on_save(self, callback: Callable[[], None]) -> None:
+        self._on_save_callback = callback
 
     def build(self) -> None:
         """Render the full chat room."""
@@ -178,6 +188,8 @@ class ChatRoom:
                     suggestions = event.get("suggestions", [])
                     if suggestions:
                         self._render_suggestions(suggestions)
+                    if self._on_save_callback:
+                        self._on_save_callback()
 
                 elif etype == "review":
                     html_content = event.get("html_content", "")
@@ -217,6 +229,8 @@ class ChatRoom:
                 self.add_message("researcher",
                     "“抱歉，处理请求时出错，请重试。”" if zh else "Sorry, request failed. Please retry.",
                     "researcher")
+            if self._on_save_callback:
+                self._on_save_callback()
 
     def _render_messages(self) -> None:
         if self._container is None:

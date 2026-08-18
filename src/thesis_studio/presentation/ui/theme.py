@@ -1,4 +1,4 @@
-"""Prism 暗色主题设计令牌与 UI 基础元素。"""
+﻿"""Prism 暗色主题设计令牌与 UI 基础元素。"""
 
 from typing import Any
 
@@ -333,6 +333,20 @@ input { outline: none; }
 .ts-external-toggle-switch--on { background: #22c55e; }
 .ts-external-toggle-knob { width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: left 0.15s; }
 .ts-external-toggle-switch--on .ts-external-toggle-knob { left: 20px; }
+
+
+
+@keyframes ts-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: ts-fade-in 0.25s ease-out; }
+.ts-msg-bubble {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s;
+  border: 1px solid var(--border-outline);
+}
+.ts-msg-bubble:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
 </style>
 """

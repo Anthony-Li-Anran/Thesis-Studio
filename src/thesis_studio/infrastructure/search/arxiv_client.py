@@ -26,13 +26,17 @@ class ArxivClient:
         """Search arXiv by keyword."""
         arxiv_query = arxiv.Search(
             query=query.keywords,
-            max_results=min(query.max_results, 30),
+            max_results=min(query.max_results, 15),
             sort_by=arxiv.SortCriterion.Relevance,
         )
         try:
-            results = await asyncio.to_thread(
-                list, self._client.results(arxiv_query)
+            results = await asyncio.wait_for(
+                asyncio.to_thread(list, self._client.results(arxiv_query)),
+                timeout=60.0,
             )
+        except TimeoutError:
+            logger.error("arXiv search timed out after 60s")
+            raise LiteratureError("arXiv search timed out")
         except Exception as e:
             logger.error("arXiv search error: %s", e)
             raise LiteratureError(

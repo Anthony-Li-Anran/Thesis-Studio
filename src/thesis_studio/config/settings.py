@@ -17,11 +17,16 @@ class Settings(BaseSettings):
     )
 
     # LLM
-    llm_provider: Literal["ollama", "openai"] = "ollama"
+    llm_provider: Literal["ollama", "openai", "deepseek"] = "openai"
     ollama_url: str = "http://localhost:11434"
     ollama_model: str = "qwen2.5"
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o"
+
+    # Deepseek (OpenAI-compatible)
+    deepseek_api_key: str | None = None
+    deepseek_model: str = "deepseek-chat"
+    deepseek_base_url: str = "https://api.deepseek.com/v1"
 
     # 存储
     db_path: Path = Path("data/thesis_studio.db")

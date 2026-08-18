@@ -1,4 +1,4 @@
-"""Agent service — message routing and streaming bridge."""
+﻿"""Agent service — message routing and streaming bridge."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from typing import Any
 
 from ...domain.agent.base import AgentMessage
 from ...domain.ports.llm_port import LLMProvider
+from ...domain.ports.repository_port import PaperRepository
 from ...infrastructure.agent import ResearcherImpl
 from ...infrastructure.logging import get_logger
 
@@ -18,9 +19,10 @@ logger = get_logger(__name__)
 class AgentService:
     """Routes messages to agents and bridges streaming output to frontend."""
 
-    def __init__(self, llm: LLMProvider) -> None:
+    def __init__(self, llm: LLMProvider, paper_repo: PaperRepository | None = None) -> None:
         self._llm = llm
-        self._researcher = ResearcherImpl(llm)
+        self._paper_repo = paper_repo
+        self._researcher = ResearcherImpl(llm, paper_repo)
 
     async def _refresh_llm(self) -> None:
         """Re-resolve LLM from settings card so config changes take effect."""
@@ -211,6 +213,14 @@ class AgentService:
             logger.error("Pipeline error: %s", e)
             yield json.dumps({"type": "error", "content": str(e)})
         yield json.dumps({"type": "done"})
+
+    def get_session_data(self) -> dict[str, Any]:
+        """Return accumulated session state for persistence."""
+        return self._researcher.get_persisted_state()
+
+    def reset_session(self) -> None:
+        """Reset the session state."""
+        self._researcher.reset_state()
 
     def _resolve_agent(self, name: str) -> ResearcherImpl:
         if name == "researcher":

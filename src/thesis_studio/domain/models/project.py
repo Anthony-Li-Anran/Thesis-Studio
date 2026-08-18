@@ -1,4 +1,4 @@
-"""研究项目领域实体。"""
+﻿"""研究项目领域实体。"""
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -44,6 +44,7 @@ class Project:
     status: ProjectStatus = ProjectStatus.INIT
     paper_ids: list[str] = field(default_factory=list)
     outline: list[str] = field(default_factory=list)
+    exploring_state: dict[str, object] = field(default_factory=dict)  # EXPLORING session state
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
 
